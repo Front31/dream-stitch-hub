@@ -32,7 +32,7 @@ const FeaturedSection = () => {
 
   const handleAddToCart = async (product: ShopifyProduct) => {
     const variant = product.node.variants.edges[0]?.node;
-    if (!variant) return;
+    if (!variant || !variant.availableForSale) return;
 
     await addItem({
       product,
@@ -153,12 +153,18 @@ const FeaturedSection = () => {
                       <span className="text-xl font-bold text-accent">
                         {product.node.priceRange.minVariantPrice.currencyCode} {parseFloat(product.node.priceRange.minVariantPrice.amount).toFixed(2)}
                       </span>
-                      <button
-                        onClick={() => handleAddToCart(product)}
-                        className="px-4 py-2 bg-accent text-accent-foreground text-sm font-medium rounded-lg hover:bg-accent/90 transition-colors"
-                      >
-                        In den Warenkorb
-                      </button>
+                      {product.node.variants.edges[0]?.node.availableForSale ? (
+                        <button
+                          onClick={() => handleAddToCart(product)}
+                          className="px-4 py-2 bg-accent text-accent-foreground text-sm font-medium rounded-lg hover:bg-accent/90 transition-colors"
+                        >
+                          In den Warenkorb
+                        </button>
+                      ) : (
+                        <span className="px-4 py-2 text-sm font-medium text-destructive">
+                          Ausverkauft
+                        </span>
+                      )}
                     </div>
                   </div>
                 </motion.div>
