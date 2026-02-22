@@ -13,13 +13,13 @@ const Index = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="min-h-screen relative"
-    >
+      className="min-h-screen relative">
+
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <svg className="absolute inset-0 w-full h-full opacity-[0.07]" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="page-grid" width="80" height="80" patternUnits="userSpaceOnUse">
-              <path d="M 80 0 L 0 0 0 80" fill="none" stroke="currentColor" strokeWidth="0.5"/>
+              <path d="M 80 0 L 0 0 0 80" fill="none" stroke="currentColor" strokeWidth="0.5" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#page-grid)" />
@@ -45,51 +45,51 @@ const Index = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
-            >
+              className="text-center mb-16">
+
               <span className="inline-block text-sm font-medium text-accent uppercase tracking-widest mb-4">
                 Kategorien
               </span>
               <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
-                Was suchst du <span className="text-gradient-accent">heute?</span>
+                Was suchst du <span className="text-gradient-accent text-primary">heute?</span>
               </h2>
             </motion.div>
 
             <div className="grid md:grid-cols-3 gap-8">
               {[
-                {
-                  title: 'Booster Displays',
-                  description: '36 Booster Packs pro Display. Das Herz jeder Sammlung.',
-                  icon: Box,
-                  color: 'from-secondary/30 to-secondary/10',
-                  link: '/collection?type=display'
-                },
-                {
-                  title: 'Elite Trainer Boxen',
-                  description: 'Das komplette Paket: Booster, Zubehör und exklusive Promos.',
-                  icon: Star,
-                  color: 'from-secondary/30 to-secondary/10',
-                  link: '/collection?type=etb'
-                },
-                {
-                  title: 'Special Collections',
-                  description: 'Limitierte Boxen mit einzigartigen Inhalten und Promos.',
-                  icon: Zap,
-                  color: 'from-secondary/30 to-secondary/10',
-                  link: '/collection?type=collection'
-                }
-              ].map((category, index) => (
-                <motion.div
-                  key={category.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                >
+              {
+                title: 'Booster Displays',
+                description: '36 Booster Packs pro Display. Das Herz jeder Sammlung.',
+                icon: Box,
+                color: 'from-primary/20 to-primary/5',
+                link: '/collection?type=display'
+              },
+              {
+                title: 'Elite Trainer Boxen',
+                description: 'Das komplette Paket: Booster, Zubehör und exklusive Promos.',
+                icon: Star,
+                color: 'from-accent/20 to-accent/5',
+                link: '/collection?type=etb'
+              },
+              {
+                title: 'Special Collections',
+                description: 'Limitierte Boxen mit einzigartigen Inhalten und Promos.',
+                icon: Zap,
+                color: 'from-highlight/20 to-highlight/5',
+                link: '/collection?type=collection'
+              }].
+              map((category, index) =>
+              <motion.div
+                key={category.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}>
+
                   <Link
-                    to={category.link}
-                    className="block group"
-                  >
+                  to={category.link}
+                  className="block group">
+
                     <div className={`bg-gradient-to-br ${category.color} rounded-3xl p-8 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-card h-full`}>
                       <div className="w-14 h-14 rounded-2xl bg-background flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <category.icon className="w-7 h-7 text-primary" />
@@ -106,7 +106,7 @@ const Index = () => {
                     </div>
                   </Link>
                 </motion.div>
-              ))}
+              )}
             </div>
           </div>
         </section>
@@ -118,8 +118,8 @@ const Index = () => {
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-              >
+                viewport={{ once: true }}>
+
                 <span className="inline-block text-sm font-medium uppercase tracking-widest mb-4 opacity-80">
                   Warum RiFa Cards
                 </span>
@@ -140,26 +140,26 @@ const Index = () => {
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                className="grid sm:grid-cols-2 gap-6"
-              >
+                className="grid sm:grid-cols-2 gap-6">
+
                 {[
-                  { number: '100%', label: 'Sealed Produkte', icon: ShieldCheck },
-                  { number: '24h', label: 'Versand', icon: Zap },
-                  { number: '1000+', label: 'Zufriedene Kunden', icon: Star },
-                  { number: '5★', label: 'Bewertung', icon: Star }
-                ].map((stat, index) => (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="bg-primary-foreground/10 backdrop-blur-sm rounded-2xl p-6 text-center"
-                  >
+                { number: '100%', label: 'Sealed Produkte', icon: ShieldCheck },
+                { number: '24h', label: 'Versand', icon: Zap },
+                { number: '1000+', label: 'Zufriedene Kunden', icon: Star },
+                { number: '5★', label: 'Bewertung', icon: Star }].
+                map((stat, index) =>
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-primary-foreground/10 backdrop-blur-sm rounded-2xl p-6 text-center">
+
                     <div className="font-display text-4xl font-bold mb-2">{stat.number}</div>
                     <div className="opacity-80 text-sm">{stat.label}</div>
                   </motion.div>
-                ))}
+                )}
               </motion.div>
             </div>
           </div>
@@ -172,8 +172,8 @@ const Index = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="max-w-3xl mx-auto"
-            >
+              className="max-w-3xl mx-auto">
+
               <h2 className="font-display text-3xl md:text-5xl font-bold mb-6">
                 Für echte <span className="text-gradient-accent">Sammler</span>
               </h2>
@@ -209,8 +209,8 @@ const Index = () => {
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
+              viewport={{ once: true }}>
+
               <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">
                 Bereit für dein nächstes <span className="text-gradient-primary">Abenteuer?</span>
               </h2>
@@ -229,8 +229,8 @@ const Index = () => {
       </main>
 
       <Footer />
-    </motion.div>
-  );
+    </motion.div>);
+
 };
 
 export default Index;
