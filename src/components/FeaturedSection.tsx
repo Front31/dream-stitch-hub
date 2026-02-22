@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Package } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { fetchProducts, type ShopifyProduct } from '@/lib/shopify';
+import { fetchCollectionProducts, fetchProducts, type ShopifyProduct } from '@/lib/shopify';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 
@@ -23,7 +23,14 @@ const FeaturedSection = () => {
   useEffect(() => {
     const loadProducts = async () => {
       setIsLoading(true);
-      const fetchedProducts = await fetchProducts(6);
+      // Try featured collection first, fallback to all products
+      let fetchedProducts = await fetchCollectionProducts('rifa-cards-empfiehlt', 6);
+      if (fetchedProducts.length === 0) {
+        fetchedProducts = await fetchCollectionProducts('featured', 6);
+      }
+      if (fetchedProducts.length === 0) {
+        fetchedProducts = await fetchProducts(6);
+      }
       setProducts(fetchedProducts);
       setIsLoading(false);
     };
