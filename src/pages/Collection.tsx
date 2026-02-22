@@ -85,8 +85,8 @@ const Collection = () => {
       className="min-h-screen"
     >
       <SEO
-        title="Pokémon TCG Kollektion kaufen – RiFa Cards"
-        description="Entdecke unser Sortiment an sealed Pokémon Booster Displays, Elite Trainer Boxen und Special Collections. Günstige Preise, schneller Versand."
+        title="TCG Produkte kaufen – RiFa Cards"
+        description="Entdecke unser Sortiment an sealed TCG Produkten: Booster Displays, Elite Trainer Boxen und Special Collections. Pokémon, Yu-Gi-Oh!, One Piece und mehr."
         canonical="/collection"
       />
       <FloatingHeader />
@@ -109,7 +109,7 @@ const Collection = () => {
               )}
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              {activeCollection?.node.description || 'Entdecke unsere kuratierte Auswahl an sealed Pokémon TCG Produkten. Jedes Produkt ist original versiegelt und 100% authentisch.'}
+              {activeCollection?.node.description || 'Entdecke unsere kuratierte Auswahl an sealed TCG Produkten. Jedes Produkt ist original versiegelt und 100% authentisch.'}
             </p>
           </motion.div>
 

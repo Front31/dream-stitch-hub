@@ -34,7 +34,7 @@ const Footer = () => {
               <img src={rifaLogo} alt="RiFa Cards" className="h-14 mb-4" />
             </Link>
             <p className="text-sm text-muted-foreground max-w-sm mb-4">
-              Premium Pokémon TCG Sealed Produkte. Booster Displays, Elite Trainer Boxen
+              Premium TCG Sealed Produkte. Booster Displays, Elite Trainer Boxen
               und Special Collections für echte Sammler.
             </p>
             <p className="text-xs text-muted-foreground">

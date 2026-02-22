@@ -13,7 +13,7 @@ const AGB = () => {
     >
       <SEO
         title="AGB – RiFa Cards"
-        description="Allgemeine Geschäftsbedingungen von RiFa Cards für den Kauf von Pokémon TCG Produkten."
+        description="Allgemeine Geschäftsbedingungen von RiFa Cards für den Kauf von TCG Produkten."
         canonical="/agb"
       />
       <FloatingHeader />
@@ -105,7 +105,7 @@ const AGB = () => {
               </p>
               <p className="text-muted-foreground">
                 <strong>Rückgabebedingungen:</strong> Die Waren müssen ungeöffnet, unbeschädigt und im
-                Originalzustand zurückgesendet werden. Bei versiegelten Produkten (Sealed Pokémon TCG)
+                Originalzustand zurückgesendet werden. Bei versiegelten Produkten (Sealed TCG)
                 erlischt das Widerrufsrecht, wenn die Versiegelung entfernt wurde.
               </p>
             </section>

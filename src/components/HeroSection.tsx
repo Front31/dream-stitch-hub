@@ -75,7 +75,7 @@ const HeroSection = () => {
 
             <Sparkles className="w-4 h-4 text-accent" />
             <span className="text-sm font-medium text-muted-foreground">
-              Premium Pokémon TCG Produkte
+              Premium TCG Produkte
             </span>
           </motion.div>
 
