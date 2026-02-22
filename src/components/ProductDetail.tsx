@@ -1,12 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ShoppingBag, Shield, Package, Check, Info, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, Shield, Package, Check, Info, Loader2, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { fetchProductByHandle } from '@/lib/shopify';
 import { useCartStore } from '@/stores/cartStore';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
+
+interface MediaItem {
+  type: 'image' | 'video' | 'external_video';
+  url: string;
+  alt: string | null;
+  thumbnailUrl?: string;
+  mimeType?: string;
+  embeddedUrl?: string;
+}
 
 interface ProductNode {
   id: string;
@@ -24,6 +33,18 @@ interface ProductNode {
       node: {
         url: string;
         altText: string | null;
+      };
+    }>;
+  };
+  media?: {
+    edges: Array<{
+      node: {
+        mediaContentType: string;
+        alt: string | null;
+        image?: { url: string; altText: string | null };
+        sources?: Array<{ url: string; mimeType: string }>;
+        embeddedUrl?: string;
+        host?: string;
       };
     }>;
   };
@@ -48,6 +69,43 @@ interface ProductNode {
     name: string;
     values: string[];
   }>;
+}
+
+function buildMediaItems(product: ProductNode): MediaItem[] {
+  if (product.media?.edges?.length) {
+    return product.media.edges.map((edge) => {
+      const node = edge.node;
+      if (node.mediaContentType === 'VIDEO' && node.sources?.length) {
+        return {
+          type: 'video' as const,
+          url: node.sources[0].url,
+          mimeType: node.sources[0].mimeType,
+          alt: node.alt,
+          thumbnailUrl: node.image?.url,
+        };
+      }
+      if (node.mediaContentType === 'EXTERNAL_VIDEO') {
+        return {
+          type: 'external_video' as const,
+          url: node.embeddedUrl || '',
+          alt: node.alt,
+          embeddedUrl: node.embeddedUrl,
+          thumbnailUrl: node.image?.url,
+        };
+      }
+      return {
+        type: 'image' as const,
+        url: node.image?.url || '',
+        alt: node.image?.altText || node.alt,
+      };
+    }).filter(item => item.url);
+  }
+  // Fallback to images
+  return product.images.edges.map((edge) => ({
+    type: 'image' as const,
+    url: edge.node.url,
+    alt: edge.node.altText,
+  }));
 }
 
 const ProductDetail = () => {
@@ -94,7 +152,8 @@ const ProductDetail = () => {
 
   const currentVariant = product.variants.edges[selectedVariant]?.node;
   const price = currentVariant?.price || product.priceRange.minVariantPrice;
-  const mainImage = product.images.edges[selectedImage]?.node || product.images.edges[0]?.node;
+  const mediaItems = buildMediaItems(product);
+  const currentMedia = mediaItems[selectedImage] || mediaItems[0];
 
   const handleAddToCart = async () => {
     if (!currentVariant) return;
@@ -111,6 +170,66 @@ const ProductDetail = () => {
     toast.success('Zum Warenkorb hinzugefügt!', {
       description: product.title
     });
+  };
+
+  const renderMainMedia = () => {
+    if (!currentMedia) {
+      return (
+        <div className="w-full h-full flex items-center justify-center">
+          <Package className="w-20 h-20 text-muted-foreground" />
+        </div>
+      );
+    }
+
+    if (currentMedia.type === 'video') {
+      return (
+        <video
+          key={selectedImage}
+          src={currentMedia.url}
+          controls
+          autoPlay
+          playsInline
+          className="w-full h-full object-contain"
+        />
+      );
+    }
+
+    if (currentMedia.type === 'external_video') {
+      const embedUrl = currentMedia.embeddedUrl || currentMedia.url;
+      // Convert YouTube/Vimeo URLs to embed format
+      let src = embedUrl;
+      if (embedUrl.includes('youtube.com/watch')) {
+        const videoId = new URL(embedUrl).searchParams.get('v');
+        src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      } else if (embedUrl.includes('youtu.be/')) {
+        const videoId = embedUrl.split('youtu.be/')[1]?.split('?')[0];
+        src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+      } else if (embedUrl.includes('vimeo.com/')) {
+        const videoId = embedUrl.split('vimeo.com/')[1]?.split('?')[0];
+        src = `https://player.vimeo.com/video/${videoId}?autoplay=1`;
+      }
+      return (
+        <iframe
+          key={selectedImage}
+          src={src}
+          className="w-full h-full"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+        />
+      );
+    }
+
+    return (
+      <motion.img
+        key={selectedImage}
+        src={currentMedia.url}
+        alt={currentMedia.alt || product.title}
+        className="w-full h-full object-contain p-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      />
+    );
   };
 
   return (
@@ -138,34 +257,20 @@ const ProductDetail = () => {
           >
             <div className="relative w-full max-w-lg">
               <div className="aspect-square bg-secondary/30 rounded-3xl overflow-hidden border border-border relative group/img">
-                {mainImage ? (
-                  <motion.img
-                    key={selectedImage}
-                    src={mainImage.url}
-                    alt={mainImage.altText || product.title}
-                    className="w-full h-full object-contain p-4"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <Package className="w-20 h-20 text-muted-foreground" />
-                  </div>
-                )}
+                {renderMainMedia()}
 
                 {/* Prev/Next arrows */}
-                {product.images.edges.length > 1 && (
+                {mediaItems.length > 1 && (
                   <>
                     <button
-                      onClick={() => setSelectedImage((prev) => prev === 0 ? product.images.edges.length - 1 : prev - 1)}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-background/80 border border-border flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity hover:bg-background"
+                      onClick={() => setSelectedImage((prev) => prev === 0 ? mediaItems.length - 1 : prev - 1)}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-background/80 border border-border flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity hover:bg-background z-10"
                     >
                       <ChevronLeft className="w-5 h-5" />
                     </button>
                     <button
-                      onClick={() => setSelectedImage((prev) => prev === product.images.edges.length - 1 ? 0 : prev + 1)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-background/80 border border-border flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity hover:bg-background"
+                      onClick={() => setSelectedImage((prev) => prev === mediaItems.length - 1 ? 0 : prev + 1)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-background/80 border border-border flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity hover:bg-background z-10"
                     >
                       <ChevronRight className="w-5 h-5" />
                     </button>
@@ -173,28 +278,47 @@ const ProductDetail = () => {
                 )}
               </div>
 
-              <div className="absolute top-4 left-4">
+              <div className="absolute top-4 left-4 z-10">
                 <Badge className="bg-accent text-accent-foreground px-3 py-1 text-sm">
                   <Check className="w-3 h-3 mr-1" />
                   Sealed
                 </Badge>
               </div>
 
-              {product.images.edges.length > 1 && (
-                <div className="flex gap-3 mt-4 justify-center">
-                  {product.images.edges.map((image, index) => (
+              {mediaItems.length > 1 && (
+                <div className="flex gap-3 mt-4 justify-center flex-wrap">
+                  {mediaItems.map((item, index) => (
                     <button
                       key={index}
                       onClick={() => setSelectedImage(index)}
-                      className={`w-16 h-16 rounded-lg overflow-hidden border-2 transition-colors ${
+                      className={`w-16 h-16 rounded-lg overflow-hidden border-2 transition-colors relative ${
                         selectedImage === index ? 'border-primary ring-2 ring-primary/20' : 'border-border hover:border-primary/50'
                       }`}
                     >
-                      <img
-                        src={image.node.url}
-                        alt={image.node.altText || `${product.title} ${index + 1}`}
-                        className="w-full h-full object-cover"
-                      />
+                      {item.type === 'image' ? (
+                        <img
+                          src={item.url}
+                          alt={item.alt || `${product.title} ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <>
+                          {item.thumbnailUrl ? (
+                            <img
+                              src={item.thumbnailUrl}
+                              alt={item.alt || `Video ${index + 1}`}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-secondary flex items-center justify-center">
+                              <Play className="w-4 h-4 text-muted-foreground" />
+                            </div>
+                          )}
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+                            <Play className="w-4 h-4 text-white" fill="white" />
+                          </div>
+                        </>
+                      )}
                     </button>
                   ))}
                 </div>

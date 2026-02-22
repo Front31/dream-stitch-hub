@@ -166,6 +166,33 @@ export const PRODUCT_BY_HANDLE_QUERY = `
           }
         }
       }
+      media(first: 20) {
+        edges {
+          node {
+            mediaContentType
+            alt
+            ... on MediaImage {
+              id
+              image {
+                url
+                altText
+              }
+            }
+            ... on Video {
+              id
+              sources {
+                url
+                mimeType
+              }
+            }
+            ... on ExternalVideo {
+              id
+              host
+              embeddedUrl
+            }
+          }
+        }
+      }
       variants(first: 20) {
         edges {
           node {
