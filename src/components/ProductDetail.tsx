@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ShoppingBag, Shield, Package, Check, Info, Loader2 } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, Shield, Package, Check, Info, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { fetchProductByHandle } from '@/lib/shopify';
 import { useCartStore } from '@/stores/cartStore';
 import { Button } from '@/components/ui/button';
@@ -55,6 +55,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState<ProductNode | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedVariant, setSelectedVariant] = useState<number>(0);
+  const [selectedImage, setSelectedImage] = useState<number>(0);
   const addItem = useCartStore(state => state.addItem);
   const isAddingToCart = useCartStore(state => state.isLoading);
 
@@ -93,7 +94,7 @@ const ProductDetail = () => {
 
   const currentVariant = product.variants.edges[selectedVariant]?.node;
   const price = currentVariant?.price || product.priceRange.minVariantPrice;
-  const mainImage = product.images.edges[0]?.node;
+  const mainImage = product.images.edges[selectedImage]?.node || product.images.edges[0]?.node;
 
   const handleAddToCart = async () => {
     if (!currentVariant) return;
@@ -136,20 +137,39 @@ const ProductDetail = () => {
             className="flex items-center justify-center"
           >
             <div className="relative w-full max-w-lg">
-              <div className="aspect-square bg-secondary/30 rounded-3xl overflow-hidden border border-border">
+              <div className="aspect-square bg-secondary/30 rounded-3xl overflow-hidden border border-border relative group/img">
                 {mainImage ? (
                   <motion.img
+                    key={selectedImage}
                     src={mainImage.url}
                     alt={mainImage.altText || product.title}
-                    className="w-full h-full object-cover"
-                    initial={{ scale: 1.1, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.6 }}
+                    className="w-full h-full object-contain p-4"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
                   />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <Package className="w-20 h-20 text-muted-foreground" />
                   </div>
+                )}
+
+                {/* Prev/Next arrows */}
+                {product.images.edges.length > 1 && (
+                  <>
+                    <button
+                      onClick={() => setSelectedImage((prev) => prev === 0 ? product.images.edges.length - 1 : prev - 1)}
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-background/80 border border-border flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity hover:bg-background"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={() => setSelectedImage((prev) => prev === product.images.edges.length - 1 ? 0 : prev + 1)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-background/80 border border-border flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity hover:bg-background"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  </>
                 )}
               </div>
 
@@ -162,10 +182,13 @@ const ProductDetail = () => {
 
               {product.images.edges.length > 1 && (
                 <div className="flex gap-3 mt-4 justify-center">
-                  {product.images.edges.slice(0, 4).map((image, index) => (
+                  {product.images.edges.map((image, index) => (
                     <button
                       key={index}
-                      className="w-16 h-16 rounded-lg overflow-hidden border-2 border-border hover:border-primary transition-colors"
+                      onClick={() => setSelectedImage(index)}
+                      className={`w-16 h-16 rounded-lg overflow-hidden border-2 transition-colors ${
+                        selectedImage === index ? 'border-primary ring-2 ring-primary/20' : 'border-border hover:border-primary/50'
+                      }`}
                     >
                       <img
                         src={image.node.url}
