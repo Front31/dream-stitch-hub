@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link, useSearchParams } from 'react-router-dom';
 import FloatingHeader from '@/components/FloatingHeader';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { fetchProducts, fetchCollectionProducts, fetchCollections, type ShopifyProduct, type ShopifyCollection } from '@/lib/shopify';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
@@ -83,6 +84,11 @@ const Collection = () => {
       transition={{ duration: 0.5 }}
       className="min-h-screen"
     >
+      <SEO
+        title="Pokémon TCG Kollektion kaufen – RiFa Cards"
+        description="Entdecke unser Sortiment an sealed Pokémon Booster Displays, Elite Trainer Boxen und Special Collections. Günstige Preise, schneller Versand."
+        canonical="/collection"
+      />
       <FloatingHeader />
 
       <main className="pt-32 pb-16">

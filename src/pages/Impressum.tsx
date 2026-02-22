@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import FloatingHeader from '@/components/FloatingHeader';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 
 const Impressum = () => {
   return (
@@ -10,6 +11,11 @@ const Impressum = () => {
       transition={{ duration: 0.5 }}
       className="min-h-screen"
     >
+      <SEO
+        title="Impressum – RiFa Cards"
+        description="Impressum und rechtliche Angaben von RiFa Cards."
+        canonical="/impressum"
+      />
       <FloatingHeader />
 
       <main className="pt-32 pb-20">

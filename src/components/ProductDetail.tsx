@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ShoppingBag, Shield, Package, Check, Info, Loader2, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { fetchProductByHandle } from '@/lib/shopify';
+import SEO from '@/components/SEO';
 import { useCartStore } from '@/stores/cartStore';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -232,8 +233,33 @@ const ProductDetail = () => {
     );
   };
 
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": product.title,
+    "description": product.description,
+    "image": product.images.edges[0]?.node.url,
+    "offers": {
+      "@type": "Offer",
+      "price": parseFloat(price.amount).toFixed(2),
+      "priceCurrency": price.currencyCode,
+      "availability": currentVariant?.availableForSale
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+      "url": `https://rifacards.de/product/${handle}`
+    }
+  };
+
   return (
     <div className="min-h-screen pt-32 pb-16">
+      <SEO
+        title={`${product.title} kaufen – RiFa Cards`}
+        description={product.description?.substring(0, 155) || `${product.title} – Factory Sealed Pokémon TCG Produkt bei RiFa Cards kaufen.`}
+        canonical={`/product/${handle}`}
+        type="product"
+        image={product.images.edges[0]?.node.url}
+        jsonLd={productJsonLd}
+      />
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, x: -20 }}

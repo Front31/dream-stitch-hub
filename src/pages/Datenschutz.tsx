@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import FloatingHeader from '@/components/FloatingHeader';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 
 const Datenschutz = () => {
   return (
@@ -10,6 +11,11 @@ const Datenschutz = () => {
       transition={{ duration: 0.5 }}
       className="min-h-screen"
     >
+      <SEO
+        title="Datenschutzerklärung – RiFa Cards"
+        description="Datenschutzerklärung und Informationen zum Umgang mit deinen Daten bei RiFa Cards."
+        canonical="/datenschutz"
+      />
       <FloatingHeader />
 
       <main className="pt-32 pb-20">

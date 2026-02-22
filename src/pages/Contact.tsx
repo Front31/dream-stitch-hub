@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import emailjs from '@emailjs/browser';
 import FloatingHeader from '@/components/FloatingHeader';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -57,6 +58,11 @@ const Contact = () => {
       transition={{ duration: 0.5 }}
       className="min-h-screen"
     >
+      <SEO
+        title="Kontakt – RiFa Cards"
+        description="Nimm Kontakt mit RiFa Cards auf. Wir helfen dir gerne bei Fragen zu Bestellungen und Produkten."
+        canonical="/contact"
+      />
       <FloatingHeader />
 
       <main className="pt-32 pb-20">

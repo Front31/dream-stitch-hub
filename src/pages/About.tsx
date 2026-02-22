@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import FloatingHeader from '@/components/FloatingHeader';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Heart, Shield, Users, Sparkles } from 'lucide-react';
 
 const values = [
@@ -34,6 +35,11 @@ const About = () => {
       transition={{ duration: 0.5 }}
       className="min-h-screen"
     >
+      <SEO
+        title="Über RiFa Cards – Dein Pokémon TCG Händler"
+        description="Erfahre mehr über RiFa Cards: Von Sammlern für Sammler. 100% authentische, factory sealed Pokémon TCG Produkte."
+        canonical="/about"
+      />
       <FloatingHeader />
 
       <main className="pt-32 pb-20">

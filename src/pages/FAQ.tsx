@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import FloatingHeader from '@/components/FloatingHeader';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import {
   Accordion,
   AccordionContent,
@@ -78,6 +79,22 @@ const FAQ = () => {
       transition={{ duration: 0.5 }}
       className="min-h-screen"
     >
+      <SEO
+        title="Häufige Fragen – RiFa Cards Pokémon TCG Shop"
+        description="Antworten auf häufige Fragen zu Bestellung, Versand, Produkten und Rückgabe bei RiFa Cards."
+        canonical="/faq"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": faqs.flatMap(section =>
+            section.questions.map(q => ({
+              "@type": "Question",
+              "name": q.q,
+              "acceptedAnswer": { "@type": "Answer", "text": q.a }
+            }))
+          )
+        }}
+      />
       <FloatingHeader />
 
       <main className="pt-32 pb-20">
