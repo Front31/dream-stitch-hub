@@ -4,8 +4,22 @@ import HeroSection from '@/components/HeroSection';
 import FeaturedSection from '@/components/FeaturedSection';
 import TrustSection from '@/components/TrustSection';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Star, Box, ShieldCheck, Zap } from 'lucide-react';
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "RiFa Cards",
+  "url": "https://rifacards.de",
+  "description": "Dein Shop für factory sealed Pokémon TCG Produkte.",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "info@rifacards.de",
+    "contactType": "customer service"
+  }
+};
 
 const Index = () => {
   return (
@@ -15,6 +29,12 @@ const Index = () => {
       transition={{ duration: 0.5 }}
       className="min-h-screen relative">
 
+      <SEO
+        title="RiFa Cards – Premium Pokémon TCG Produkte | Factory Sealed"
+        description="Dein Shop für factory sealed Pokémon TCG Produkte. Booster Displays, Elite Trainer Boxen und Special Collections. 100% authentisch, schneller Versand."
+        canonical="/"
+        jsonLd={organizationJsonLd}
+      />
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <svg className="absolute inset-0 w-full h-full opacity-[0.07]" xmlns="http://www.w3.org/2000/svg">
           <defs>

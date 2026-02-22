@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import FloatingHeader from '@/components/FloatingHeader';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 import { Truck, Package, RefreshCw, Shield, Clock, MapPin } from 'lucide-react';
 
 const Shipping = () => {
@@ -11,6 +12,11 @@ const Shipping = () => {
       transition={{ duration: 0.5 }}
       className="min-h-screen"
     >
+      <SEO
+        title="Versand und Rückgabe – RiFa Cards"
+        description="Informationen zu Versandkosten, Lieferzeiten und Rückgabebedingungen bei RiFa Cards."
+        canonical="/shipping"
+      />
       <FloatingHeader />
 
       <main className="pt-32 pb-20">

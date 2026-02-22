@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import FloatingHeader from '@/components/FloatingHeader';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
 
 const AGB = () => {
   return (
@@ -10,6 +11,11 @@ const AGB = () => {
       transition={{ duration: 0.5 }}
       className="min-h-screen"
     >
+      <SEO
+        title="AGB – RiFa Cards"
+        description="Allgemeine Geschäftsbedingungen von RiFa Cards für den Kauf von Pokémon TCG Produkten."
+        canonical="/agb"
+      />
       <FloatingHeader />
 
       <main className="pt-32 pb-20">
