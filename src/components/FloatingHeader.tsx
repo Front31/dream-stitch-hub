@@ -40,8 +40,8 @@ const FloatingHeader = () => {
         <div className="container mx-auto px-6 transition-all duration-500 ease-out"
           style={{ paddingTop: isScrolled ? '0.5rem' : '1rem', paddingBottom: isScrolled ? '0.5rem' : '1rem' }}
         >
-          <div className="flex items-center justify-between">
-            <div className="overflow-hidden" style={{ 
+          <div className="flex items-center justify-between relative">
+            <div className="overflow-hidden flex-shrink-0" style={{ 
               width: showLogo ? 'auto' : '0px',
               opacity: showLogo ? 1 : 0,
               transition: 'opacity 0.4s ease, width 0.4s ease'
@@ -57,7 +57,7 @@ const FloatingHeader = () => {
               </Link>
             </div>
 
-            <nav className="hidden lg:flex items-center gap-8">
+            <nav className="hidden lg:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
               {navItems.map((item) => (
                 <Link
                   key={item.path}
