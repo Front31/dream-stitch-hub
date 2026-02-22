@@ -1,6 +1,25 @@
 import { Link } from 'react-router-dom';
 import rifaLogo from '@/assets/rifa-logo.png';
 import { useCookieConsentStore } from '@/stores/cookieConsentStore';
+import visaIcon from '@/assets/payments/visa.svg';
+import mastercardIcon from '@/assets/payments/mastercard.svg';
+import amexIcon from '@/assets/payments/amex.svg';
+import maestroIcon from '@/assets/payments/maestro.svg';
+import paypalIcon from '@/assets/payments/paypal.svg';
+import klarnaIcon from '@/assets/payments/klarna.svg';
+import appleIcon from '@/assets/payments/apple.svg';
+import googleIcon from '@/assets/payments/google.svg';
+
+const paymentMethods = [
+  { name: 'PayPal', icon: paypalIcon },
+  { name: 'Klarna', icon: klarnaIcon },
+  { name: 'Visa', icon: visaIcon },
+  { name: 'Mastercard', icon: mastercardIcon },
+  { name: 'American Express', icon: amexIcon },
+  { name: 'Maestro', icon: maestroIcon },
+  { name: 'Apple Pay', icon: appleIcon },
+  { name: 'Google Pay', icon: googleIcon },
+];
 
 const Footer = () => {
   const openBanner = useCookieConsentStore((s) => s.openBanner);
@@ -90,50 +109,15 @@ const Footer = () => {
                   Sichere Zahlung mit
                 </span>
                 <div className="flex flex-wrap items-center gap-2 mt-3">
-                  {/* PayPal */}
-                  <span className="inline-flex items-center justify-center h-8 px-3 rounded bg-[#003087] text-white text-[10px] font-bold tracking-wide select-none">
-                    Pay<span className="text-[#009cde]">Pal</span>
-                  </span>
-                  {/* Klarna */}
-                  <span className="inline-flex items-center justify-center h-8 px-3 rounded bg-[#FFB3C7] text-[#0A0B09] text-[10px] font-bold tracking-wide select-none">
-                    Klarna.
-                  </span>
-                  {/* Visa */}
-                  <span className="inline-flex items-center justify-center h-8 px-3 rounded bg-white border border-border text-[#1A1F71] text-[10px] font-bold italic tracking-wide select-none">
-                    VISA
-                  </span>
-                  {/* Mastercard */}
-                  <span className="inline-flex items-center justify-center h-8 px-3 rounded bg-white border border-border select-none gap-0.5">
-                    <span className="w-4 h-4 rounded-full bg-[#EB001B] -mr-1.5" />
-                    <span className="w-4 h-4 rounded-full bg-[#F79E1B] opacity-80" />
-                  </span>
-                  {/* Amex */}
-                  <span className="inline-flex items-center justify-center h-8 px-3 rounded bg-[#006FCF] text-white text-[9px] font-bold tracking-wide select-none">
-                    AMEX
-                  </span>
-                  {/* Apple Pay */}
-                  <span className="inline-flex items-center justify-center h-8 px-3 rounded bg-black text-white text-[10px] font-medium tracking-wide select-none">
-                     Pay
-                  </span>
-                  {/* Google Pay */}
-                  <span className="inline-flex items-center justify-center h-8 px-3 rounded bg-white border border-border text-[10px] font-medium select-none">
-                    <span className="text-[#4285F4]">G</span>
-                    <span className="text-[#EA4335]">o</span>
-                    <span className="text-[#FBBC05]">o</span>
-                    <span className="text-[#4285F4]">g</span>
-                    <span className="text-[#34A853]">l</span>
-                    <span className="text-[#EA4335]">e</span>
-                    <span className="ml-0.5 text-muted-foreground">Pay</span>
-                  </span>
-                  {/* Shop Pay */}
-                  <span className="inline-flex items-center justify-center h-8 px-3 rounded bg-[#5A31F4] text-white text-[10px] font-bold tracking-wide select-none">
-                    Shop Pay
-                  </span>
-                  {/* Maestro */}
-                  <span className="inline-flex items-center justify-center h-8 px-2.5 rounded bg-white border border-border select-none gap-0.5">
-                    <span className="w-4 h-4 rounded-full bg-[#0099DF] -mr-1.5" />
-                    <span className="w-4 h-4 rounded-full bg-[#000] opacity-70" />
-                  </span>
+                  {paymentMethods.map((method) => (
+                    <div
+                      key={method.name}
+                      className="h-8 w-12 rounded border border-border bg-white flex items-center justify-center p-1"
+                      title={method.name}
+                    >
+                      <img src={method.icon} alt={method.name} className="h-full w-full object-contain" />
+                    </div>
+                  ))}
                 </div>
               </li>
             </ul>
