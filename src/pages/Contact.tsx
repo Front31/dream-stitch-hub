@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 import FloatingHeader from '@/components/FloatingHeader';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
@@ -9,18 +10,43 @@ import { Label } from '@/components/ui/label';
 import { Mail, Clock, MessageCircle } from 'lucide-react';
 import { toast } from 'sonner';
 
+const EMAILJS_SERVICE_ID = 'service_nqe86jm';
+const EMAILJS_TEMPLATE_NOTIFY = 'template_ngwv4wu';
+const EMAILJS_TEMPLATE_CONFIRM = 'template_j6siluo';
+const EMAILJS_PUBLIC_KEY = 'Dm-DfN6Xpxkip75sw';
+
 const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    toast.success('Nachricht gesendet!', {
-      description: 'Wir melden uns so schnell wie möglich bei dir.'
-    });
-    setIsSubmitting(false);
-    (e.target as HTMLFormElement).reset();
+
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const templateParams = {
+      from_name: formData.get('name') as string,
+      from_email: formData.get('email') as string,
+      subject: formData.get('subject') as string,
+      message: formData.get('message') as string,
+    };
+
+    try {
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_NOTIFY, templateParams, EMAILJS_PUBLIC_KEY);
+      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_CONFIRM, templateParams, EMAILJS_PUBLIC_KEY);
+
+      toast.success('Nachricht gesendet!', {
+        description: 'Wir melden uns so schnell wie möglich bei dir. Du erhältst eine Bestätigung per E-Mail.'
+      });
+      form.reset();
+    } catch (error) {
+      console.error('EmailJS error:', error);
+      toast.error('Fehler beim Senden', {
+        description: 'Bitte versuche es erneut oder schreibe uns direkt an info@rifacards.de'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -67,8 +93,8 @@ const Contact = () => {
                     </div>
                     <div>
                       <h3 className="font-semibold mb-1">E-Mail</h3>
-                      <a href="mailto:support@rifacards.de" className="text-accent hover:underline">
-                        support@rifacards.de
+                      <a href="mailto:info@rifacards.de" className="text-accent hover:underline">
+                        info@rifacards.de
                       </a>
                     </div>
                   </div>
@@ -122,23 +148,24 @@ const Contact = () => {
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="name">Name</Label>
-                      <Input id="name" required placeholder="Dein Name" />
+                      <Input id="name" name="name" required placeholder="Dein Name" />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">E-Mail</Label>
-                      <Input id="email" type="email" required placeholder="deine@email.de" />
+                      <Input id="email" name="email" type="email" required placeholder="deine@email.de" />
                     </div>
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="subject">Betreff</Label>
-                    <Input id="subject" required placeholder="Worum geht es?" />
+                    <Input id="subject" name="subject" required placeholder="Worum geht es?" />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="message">Nachricht</Label>
                     <Textarea
                       id="message"
+                      name="message"
                       required
                       placeholder="Deine Nachricht an uns..."
                       rows={5}
