@@ -128,21 +128,28 @@
     top: 0;
     left: 0;
     right: 0;
-    margin: 0 auto;
-    border-radius: 0;
-    background: transparent;
-    border: 1px solid transparent;
-    box-shadow: none;
-    transition: top 0.7s cubic-bezier(0.22, 1, 0.36, 1), left 0.7s cubic-bezier(0.22, 1, 0.36, 1), right 0.7s cubic-bezier(0.22, 1, 0.36, 1), border-radius 0.7s cubic-bezier(0.22, 1, 0.36, 1), background 0.5s ease, border 0.5s ease, box-shadow 0.5s ease;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    transition: padding 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    backdrop-filter: none;
   }
 
   .header-floating.scrolled {
-    top: 0;
-    left: 3rem;
-    right: 3rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  .header-floating-inner {
+    background: transparent;
+    border: 1px solid transparent;
+    box-shadow: none;
+    border-radius: 0;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .header-floating.scrolled .header-floating-inner {
     background: hsl(var(--background) / 0.85);
     border-radius: 9999px;
     backdrop-filter: blur(24px);
