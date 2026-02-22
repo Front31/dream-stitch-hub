@@ -93,7 +93,7 @@ export const CartDrawer = () => {
                   <span className="text-lg font-semibold">Gesamt</span>
                   <span className="text-xl font-bold text-accent">{items[0]?.price.currencyCode || 'EUR'} {totalPrice.toFixed(2)}</span>
                 </div>
-                <Button onClick={handleCheckout} className="w-full bg-primary hover:bg-primary/90" size="lg" disabled={items.length === 0 || isLoading || isSyncing}>
+                <Button onClick={handleCheckout} className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" size="lg" disabled={items.length === 0 || isLoading || isSyncing}>
                   {isLoading || isSyncing ? <Loader2 className="w-4 h-4 animate-spin" /> : <><ExternalLink className="w-4 h-4 mr-2" />Zur Kasse</>}
                 </Button>
               </div>

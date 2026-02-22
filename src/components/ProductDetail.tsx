@@ -236,7 +236,7 @@ const ProductDetail = () => {
             <div className="space-y-4 mb-8">
               <Button
                 size="lg"
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground h-14 text-lg"
+                className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-14 text-lg"
                 disabled={!currentVariant?.availableForSale || isAddingToCart}
                 onClick={handleAddToCart}
               >

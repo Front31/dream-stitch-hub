@@ -252,23 +252,23 @@
   .btn-hero {
     @apply relative inline-flex items-center justify-center px-8 py-4 font-semibold text-lg rounded-xl overflow-hidden;
     font-family: 'Space Grotesk', sans-serif;
-    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(140 55% 32%) 100%);
-    color: hsl(var(--primary-foreground));
-    box-shadow: 0 4px 20px -4px hsl(var(--primary) / 0.4);
+    background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(24 90% 48%) 100%);
+    color: hsl(var(--accent-foreground));
+    box-shadow: 0 4px 20px -4px hsl(var(--accent) / 0.4);
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   }
 
   .btn-hero::before {
     @apply absolute inset-0;
     content: '';
-    background: linear-gradient(135deg, hsl(140 60% 45%) 0%, hsl(var(--primary)) 100%);
+    background: linear-gradient(135deg, hsl(24 90% 60%) 0%, hsl(var(--accent)) 100%);
     opacity: 0;
     transition: opacity 0.4s ease;
   }
 
   .btn-hero:hover {
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 8px 30px -6px hsl(var(--primary) / 0.5);
+    box-shadow: 0 8px 30px -6px hsl(var(--accent) / 0.5);
   }
 
   .btn-hero:hover::before {
