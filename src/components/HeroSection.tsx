@@ -19,12 +19,12 @@ const HeroSection = () => {
   return (
     <section
       ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
+      className="relative min-h-screen flex items-center justify-center overflow-hidden">
+
       <motion.div
         className="absolute inset-0 pointer-events-none"
-        style={{ y: bgY }}
-      >
+        style={{ y: bgY }}>
+
         <div className="absolute top-20 left-[10%] w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
         <div className="absolute bottom-20 right-[10%] w-80 h-80 bg-accent/15 rounded-full blur-3xl" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-secondary/20 rounded-full blur-3xl" />
@@ -33,8 +33,8 @@ const HeroSection = () => {
       <div className="container mx-auto px-6 text-center relative z-10">
         <motion.div
           style={{ y: logoY, scale: logoScale }}
-          className="mb-8 md:mb-12"
-        >
+          className="mb-8 md:mb-12">
+
           <motion.img
             src={rifaLogo}
             alt="RiFa Cards"
@@ -43,36 +43,36 @@ const HeroSection = () => {
             animate={{
               opacity: 1,
               scale: 1,
-              filter: 'blur(0px)',
+              filter: 'blur(0px)'
             }}
-            transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
-          />
+            transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }} />
 
-          <motion.div
-            className="absolute inset-0 mx-auto w-64 h-32"
-            animate={{
-              boxShadow: [
-                '0 0 60px 20px hsl(140 50% 38% / 0)',
-                '0 0 80px 30px hsl(140 50% 38% / 0.15)',
-                '0 0 60px 20px hsl(140 50% 38% / 0)',
-              ]
-            }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-          />
+
+          
+
+
+
+
+
+
+
+
+
+
         </motion.div>
 
         <motion.div
           style={{ opacity: textOpacity }}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        >
+          transition={{ duration: 0.8, delay: 0.3 }}>
+
           <motion.div
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/80 backdrop-blur-sm border border-primary/20 mb-6"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.5 }}
-          >
+            transition={{ delay: 0.5 }}>
+
             <Sparkles className="w-4 h-4 text-accent" />
             <span className="text-sm font-medium text-muted-foreground">
               Premium Pokémon TCG Produkte
@@ -97,8 +97,8 @@ const HeroSection = () => {
               <motion.button
                 className="btn-hero group"
                 whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
+                whileTap={{ scale: 0.98 }}>
+
                 <span className="flex items-center gap-2">
                   Zur Sammlung
                   <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
@@ -110,8 +110,8 @@ const HeroSection = () => {
               href="#featured"
               className="btn-secondary"
               whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
+              whileTap={{ scale: 0.98 }}>
+
               Neue Drops entdecken
             </motion.a>
           </div>
@@ -121,23 +121,23 @@ const HeroSection = () => {
           className="absolute bottom-10 left-1/2 -translate-x-1/2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.5 }}
-        >
+          transition={{ delay: 1.5 }}>
+
           <motion.div
             animate={{ y: [0, 10, 0] }}
             transition={{ duration: 2, repeat: Infinity }}
-            className="w-6 h-10 rounded-full border-2 border-primary/30 flex items-start justify-center p-2"
-          >
+            className="w-6 h-10 rounded-full border-2 border-primary/30 flex items-start justify-center p-2">
+
             <motion.div
               animate={{ opacity: [0.5, 1, 0.5], y: [0, 8, 0] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="w-1.5 h-1.5 rounded-full bg-primary"
-            />
+              className="w-1.5 h-1.5 rounded-full bg-primary" />
+
           </motion.div>
         </motion.div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default HeroSection;
