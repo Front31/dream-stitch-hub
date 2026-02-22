@@ -1,96 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/*
+ * RiFa Cards Design System
+ * ========================
+ * High-end, motion-rich e-commerce for Pokémon TCG sealed products
+ * Color Palette based on Logo:
+ * - Primary: Forest Green (from "Ri" letters)
+ * - Secondary: Soft Blue (from Snorlax/Fa)
+ * - Accent: Warm Orange (from "CARDS" text)
+ * - Highlight: Cherry Pink/Red (from flower petals)
+ */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Core Palette - Light & Premium */
+    --background: 40 20% 98%;
+    --foreground: 150 30% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Card surfaces */
+    --card: 40 30% 97%;
+    --card-foreground: 150 30% 15%;
 
+    /* Popover */
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 150 30% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - Forest Green (from logo "Ri" letters) */
+    --primary: 140 50% 38%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - Soft Sky Blue (from Snorlax) */
+    --secondary: 200 45% 88%;
+    --secondary-foreground: 200 50% 25%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted tones */
+    --muted: 40 10% 94%;
+    --muted-foreground: 150 10% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent - Warm Orange (from "CARDS" text) */
+    --accent: 24 85% 55%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Highlight - Cherry Pink/Red (from flower petals) */
+    --highlight: 345 70% 55%;
+    --highlight-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Destructive */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
-    --radius: 0.5rem;
+    /* Borders & inputs */
+    --border: 140 15% 88%;
+    --input: 140 15% 90%;
+    --ring: 140 50% 38%;
 
-    --sidebar-background: 0 0% 98%;
+    --radius: 0.625rem;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Card-specific colors (1999 Pokémon card) */
+    --card-border-gold: 24 75% 55%;
+    --card-border-inner: 40 50% 80%;
+    --card-bg: 45 45% 96%;
+    --card-text: 150 30% 15%;
+    --card-energy-fire: 12 90% 55%;
+    --card-energy-water: 205 90% 50%;
+    --card-energy-grass: 140 60% 40%;
+    --card-energy-electric: 50 100% 50%;
+    --card-energy-psychic: 280 70% 55%;
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* Holographic effect colors */
+    --holo-1: 345 100% 70%;
+    --holo-2: 200 100% 65%;
+    --holo-3: 140 100% 50%;
+    --holo-4: 24 100% 65%;
 
-    --sidebar-primary-foreground: 0 0% 98%;
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(150 30% 15% / 0.08);
+    --shadow-card: 0 8px 32px -8px hsl(150 30% 15% / 0.12);
+    --shadow-card-hover: 0 20px 50px -12px hsl(150 30% 15% / 0.18);
+    --shadow-elevated: 0 25px 60px -15px hsl(150 30% 15% / 0.2);
 
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Sidebar */
+    --sidebar-background: 40 20% 97%;
+    --sidebar-foreground: 150 30% 20%;
+    --sidebar-primary: 140 50% 38%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 24 85% 55%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 140 15% 88%;
+    --sidebar-ring: 140 50% 38%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: 40 20% 98%;
+    --foreground: 150 30% 15%;
   }
 }
 
@@ -99,7 +105,263 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+  }
+}
+
+@layer components {
+  /* Floating Header Styles */
+  .header-floating {
+    @apply fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  .header-floating.scrolled {
+    @apply top-4 left-4 right-4 bg-background/85 shadow-elevated;
+    border-radius: 9999px;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid hsl(var(--border));
+  }
+
+  /* Pokemon Card 1999 Layout */
+  .pokemon-card {
+    --card-width: 280px;
+    --card-ratio: 1.4;
+    width: var(--card-width);
+    height: calc(var(--card-width) * var(--card-ratio));
+    @apply relative rounded-lg overflow-hidden;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--card-border-gold)) 0%,
+      hsl(var(--card-border-inner)) 50%,
+      hsl(var(--card-border-gold)) 100%
+    );
+    padding: 8px;
+    box-shadow: var(--shadow-card);
+    transform-style: preserve-3d;
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+                box-shadow 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .pokemon-card:hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  .pokemon-card-inner {
+    @apply w-full h-full rounded-md overflow-hidden flex flex-col;
+    background: hsl(var(--card-bg));
+    border: 2px solid hsl(var(--card-border-inner));
+  }
+
+  .pokemon-card-artwork {
+    @apply relative overflow-hidden;
+    height: 50%;
+    margin: 8px 8px 4px 8px;
+    border-radius: 4px;
+    border: 3px solid hsl(var(--card-border-gold) / 0.6);
+    background: linear-gradient(180deg, hsl(200 30% 95%) 0%, hsl(200 20% 90%) 100%);
+  }
+
+  .pokemon-card-artwork img {
+    @apply w-full h-full object-contain;
+    transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .pokemon-card:hover .pokemon-card-artwork img {
+    transform: scale(1.05);
+  }
+
+  .pokemon-card-name {
+    @apply px-3 py-1 font-bold text-sm truncate;
+    font-family: 'Space Grotesk', sans-serif;
+    color: hsl(var(--card-text));
+    background: linear-gradient(90deg, transparent, hsl(var(--card-border-inner) / 0.3), transparent);
+  }
+
+  .pokemon-card-stats {
+    @apply flex-1 px-3 py-2 text-xs space-y-1;
+    color: hsl(var(--muted-foreground));
+    font-family: 'Inter', sans-serif;
+  }
+
+  .pokemon-card-stats .stat-row {
+    @apply flex justify-between items-center;
+    padding: 2px 0;
+    border-bottom: 1px solid hsl(var(--border) / 0.5);
+  }
+
+  .pokemon-card-stats .stat-label {
+    @apply font-medium uppercase tracking-wider;
+    font-size: 9px;
+    color: hsl(var(--muted-foreground));
+  }
+
+  .pokemon-card-stats .stat-value {
+    @apply font-semibold;
+    color: hsl(var(--card-text));
+  }
+
+  .pokemon-card-flavor {
+    @apply px-3 pb-3 text-xs italic;
+    color: hsl(var(--muted-foreground));
+    font-size: 10px;
+    line-height: 1.4;
+  }
+
+  /* Holographic shine effect */
+  .holo-shine {
+    @apply absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300;
+    background: linear-gradient(
+      125deg,
+      transparent 0%,
+      hsl(var(--holo-1) / 0.15) 25%,
+      hsl(var(--holo-2) / 0.15) 40%,
+      hsl(var(--holo-3) / 0.15) 55%,
+      hsl(var(--holo-4) / 0.15) 70%,
+      transparent 100%
+    );
+    background-size: 200% 200%;
+    animation: holoShine 3s ease infinite paused;
+  }
+
+  .pokemon-card:hover .holo-shine {
+    @apply opacity-100;
+    animation-play-state: running;
+  }
+
+  @keyframes holoShine {
+    0% { background-position: 200% 0%; }
+    100% { background-position: -200% 0%; }
+  }
+
+  /* CTA Button Styles */
+  .btn-hero {
+    @apply relative inline-flex items-center justify-center px-8 py-4 font-semibold text-lg rounded-xl overflow-hidden;
+    font-family: 'Space Grotesk', sans-serif;
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(140 55% 32%) 100%);
+    color: hsl(var(--primary-foreground));
+    box-shadow: 0 4px 20px -4px hsl(var(--primary) / 0.4);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .btn-hero::before {
+    @apply absolute inset-0;
+    content: '';
+    background: linear-gradient(135deg, hsl(140 60% 45%) 0%, hsl(var(--primary)) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .btn-hero:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 30px -6px hsl(var(--primary) / 0.5);
+  }
+
+  .btn-hero:hover::before {
+    opacity: 1;
+  }
+
+  .btn-hero span {
+    @apply relative z-10;
+  }
+
+  .btn-accent {
+    @apply relative inline-flex items-center justify-center px-8 py-4 font-semibold text-lg rounded-xl overflow-hidden;
+    font-family: 'Space Grotesk', sans-serif;
+    background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(24 90% 50%) 100%);
+    color: hsl(var(--accent-foreground));
+    box-shadow: 0 4px 20px -4px hsl(var(--accent) / 0.4);
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .btn-accent:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 8px 30px -6px hsl(var(--accent) / 0.5);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 font-medium rounded-lg;
+    font-family: 'Space Grotesk', sans-serif;
+    background: hsl(var(--secondary));
+    color: hsl(var(--secondary-foreground));
+    border: 1px solid hsl(var(--border));
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    background: hsl(var(--muted));
+    border-color: hsl(var(--primary) / 0.3);
+    transform: translateY(-1px);
+  }
+
+  /* Binder Grid */
+  .binder-grid {
+    @apply grid gap-6;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    perspective: 1000px;
+  }
+
+  .binder-slot {
+    @apply relative flex items-center justify-center;
+    min-height: 400px;
+  }
+
+  /* Logo pulse animation */
+  .logo-pulse {
+    animation: logoPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes logoPulse {
+    0%, 100% {
+      filter: brightness(1) drop-shadow(0 0 0 transparent);
+    }
+    50% {
+      filter: brightness(1.1) drop-shadow(0 0 30px hsl(var(--primary) / 0.3));
+    }
+  }
+}
+
+@layer utilities {
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(140 60% 30%) 100%);
+  }
+
+  .text-gradient-accent {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(24 90% 45%) 100%);
+  }
+
+  .text-gradient-highlight {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--highlight)) 0%, hsl(345 80% 45%) 100%);
+  }
+
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(24 80% 45%) 100%);
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
   }
 }
