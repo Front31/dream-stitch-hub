@@ -24,7 +24,7 @@ const FeaturedSection = () => {
     const loadProducts = async () => {
       setIsLoading(true);
       // Try featured collection first, fallback to all products
-      let fetchedProducts = await fetchCollectionProducts('rifa-cards-empfiehlt', 6);
+      let fetchedProducts = await fetchCollectionProducts('startseite', 6);
       if (fetchedProducts.length === 0) {
         fetchedProducts = await fetchCollectionProducts('featured', 6);
       }
