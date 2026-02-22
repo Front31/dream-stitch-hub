@@ -130,7 +130,12 @@
   }
 
   .header-floating.scrolled {
-    @apply top-4 left-6 right-6 bg-background/85 shadow-elevated;
+    @apply top-4 bg-background/85 shadow-elevated mx-auto;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: calc(100% - 3rem);
+    max-width: 1200px;
     border-radius: 9999px;
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
