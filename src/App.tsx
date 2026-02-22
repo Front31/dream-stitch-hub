@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useCartSync } from "@/hooks/useCartSync";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import PasswordGate from "@/components/PasswordGate";
 import Index from "./pages/Index";
 import Collection from "./pages/Collection";
@@ -23,7 +24,9 @@ const AppContent = () => {
   useCartSync();
 
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       <Route path="/" element={<Index />} />
       <Route path="/collection" element={<Collection />} />
       <Route path="/product/:handle" element={<ProductPage />} />
@@ -36,6 +39,7 @@ const AppContent = () => {
       <Route path="/agb" element={<AGB />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
+    </>
   );
 };
 
