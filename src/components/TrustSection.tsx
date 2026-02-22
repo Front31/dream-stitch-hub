@@ -5,7 +5,7 @@ const trustItems = [
   {
     icon: Shield,
     title: '100% Authentisch',
-    description: 'Nur offizielle Pokémon TCG Produkte'
+    description: 'Nur offizielle TCG Produkte'
   },
   {
     icon: Package,

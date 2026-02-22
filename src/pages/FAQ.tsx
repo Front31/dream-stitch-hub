@@ -23,7 +23,7 @@ const faqs = [
       },
       {
         q: 'Woher bezieht ihr eure Produkte?',
-        a: 'Wir arbeiten nur mit autorisierten Distributoren und offiziellen Pokémon-Händlern zusammen. So können wir die Authentizität jedes Produkts garantieren.'
+        a: 'Wir arbeiten nur mit autorisierten Distributoren und offiziellen TCG-Händlern zusammen. So können wir die Authentizität jedes Produkts garantieren.'
       },
       {
         q: 'Welche Editionen bietet ihr an?',
@@ -80,7 +80,7 @@ const FAQ = () => {
       className="min-h-screen"
     >
       <SEO
-        title="Häufige Fragen – RiFa Cards Pokémon TCG Shop"
+        title="Häufige Fragen – RiFa Cards TCG Shop"
         description="Antworten auf häufige Fragen zu Bestellung, Versand, Produkten und Rückgabe bei RiFa Cards."
         canonical="/faq"
         jsonLd={{

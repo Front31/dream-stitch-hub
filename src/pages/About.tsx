@@ -36,8 +36,8 @@ const About = () => {
       className="min-h-screen"
     >
       <SEO
-        title="Über RiFa Cards – Dein Pokémon TCG Händler"
-        description="Erfahre mehr über RiFa Cards: Von Sammlern für Sammler. 100% authentische, factory sealed Pokémon TCG Produkte."
+        title="Über RiFa Cards – Dein TCG Händler"
+        description="Erfahre mehr über RiFa Cards: Von Sammlern für Sammler. 100% authentische, factory sealed TCG Produkte – Pokémon, Yu-Gi-Oh!, One Piece und mehr."
         canonical="/about"
       />
       <FloatingHeader />
@@ -56,7 +56,7 @@ const About = () => {
               Die Geschichte hinter <span className="text-gradient-primary">RiFa Cards</span>
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              RiFa Cards entstand aus der Leidenschaft für Pokémon Trading Cards.
+              RiFa Cards entstand aus der Leidenschaft für Trading Card Games.
               Was als Hobby begann, wurde zur Mission: Sammlern Zugang zu den besten
               sealed Produkten zu ermöglichen.
             </p>
@@ -77,7 +77,7 @@ const About = () => {
                 <div className="space-y-4 text-muted-foreground">
                   <p>
                     Alles begann mit der Frage: Wo bekommt man zuverlässig authentische,
-                    sealed Pokémon Produkte? Die Antwort war oft frustrierend –
+                    sealed TCG Produkte? Die Antwort war oft frustrierend –
                     überteuerte Preise, fragwürdige Quellen, oder einfach nicht verfügbar.
                   </p>
                   <p>

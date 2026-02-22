@@ -13,7 +13,7 @@ const organizationJsonLd = {
   "@type": "Organization",
   "name": "RiFa Cards",
   "url": "https://rifacards.de",
-  "description": "Dein Shop für factory sealed Pokémon TCG Produkte.",
+  "description": "Dein Shop für factory sealed TCG Produkte – Pokémon, Yu-Gi-Oh!, One Piece und mehr.",
   "contactPoint": {
     "@type": "ContactPoint",
     "email": "info@rifacards.de",
@@ -30,8 +30,8 @@ const Index = () => {
       className="min-h-screen relative">
 
       <SEO
-        title="RiFa Cards – Premium Pokémon TCG Produkte | Factory Sealed"
-        description="Dein Shop für factory sealed Pokémon TCG Produkte. Booster Displays, Elite Trainer Boxen und Special Collections. 100% authentisch, schneller Versand."
+        title="RiFa Cards – Premium TCG Produkte | Factory Sealed"
+        description="Dein Shop für factory sealed TCG Produkte. Booster Displays, Elite Trainer Boxen und Special Collections – Pokémon, Yu-Gi-Oh!, One Piece und mehr. 100% authentisch, schneller Versand."
         canonical="/"
         jsonLd={organizationJsonLd}
       />

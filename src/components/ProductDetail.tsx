@@ -254,7 +254,7 @@ const ProductDetail = () => {
     <div className="min-h-screen pt-32 pb-16">
       <SEO
         title={`${product.title} kaufen – RiFa Cards`}
-        description={product.description?.substring(0, 155) || `${product.title} – Factory Sealed Pokémon TCG Produkt bei RiFa Cards kaufen.`}
+        description={product.description?.substring(0, 155) || `${product.title} – Factory Sealed TCG Produkt bei RiFa Cards kaufen.`}
         canonical={`/product/${handle}`}
         type="product"
         image={product.images.edges[0]?.node.url}
