@@ -71,7 +71,7 @@ const PasswordGate = ({ children }: { children: React.ReactNode }) => {
               Falsches Passwort
             </motion.p>
           )}
-          <Button type="submit" className="w-full">
+          <Button type="submit" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
             Zugang erhalten
           </Button>
         </form>

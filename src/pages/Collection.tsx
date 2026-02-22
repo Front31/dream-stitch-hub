@@ -133,7 +133,7 @@ const Collection = () => {
                         <button
                           onClick={(e) => handleAddToCart(product, e)}
                           disabled={isAddingToCart}
-                          className="absolute bottom-3 right-3 p-3 bg-primary text-primary-foreground rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 disabled:opacity-50"
+                          className="absolute bottom-3 right-3 p-3 bg-accent text-accent-foreground rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 disabled:opacity-50"
                           aria-label="Zum Warenkorb hinzufügen"
                         >
                           <ShoppingCart className="w-4 h-4" />
