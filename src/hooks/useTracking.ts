@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useCookieConsentStore } from '@/stores/cookieConsentStore';
-import { loadGoogleAnalytics, removeGoogleAnalytics } from '@/lib/tracking';
+import { loadGoogleAnalytics, removeGoogleAnalytics, loadFacebookPixel, removeFacebookPixel } from '@/lib/tracking';
 
 export function useTracking() {
   const { consentGiven, preferences } = useCookieConsentStore();
@@ -14,9 +14,10 @@ export function useTracking() {
       removeGoogleAnalytics();
     }
 
-    // TODO: Facebook Pixel – uncomment when ID is available
-    // if (preferences.marketing) {
-    //   loadFacebookPixel();
-    // }
+    if (preferences.marketing) {
+      loadFacebookPixel();
+    } else {
+      removeFacebookPixel();
+    }
   }, [consentGiven, preferences]);
 }
