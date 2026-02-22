@@ -139,7 +139,7 @@
   }
 
   .header-floating.scrolled {
-    top: 0;
+    top: 0.75rem;
     left: 3rem;
     right: 3rem;
     max-width: 1400px;

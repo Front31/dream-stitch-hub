@@ -38,7 +38,7 @@ const FloatingHeader = () => {
         style={{ opacity: headerOpacity }}
       >
         <div className="container mx-auto px-6 transition-all duration-500 ease-out"
-          style={{ paddingTop: '0.75rem', paddingBottom: '0.75rem' }}
+          style={{ paddingTop: isScrolled ? '0.5rem' : '0.75rem', paddingBottom: isScrolled ? '0.5rem' : '0.75rem' }}
         >
           <div className="flex items-center justify-between relative">
             <div className="overflow-hidden flex-shrink-0" style={{ 
