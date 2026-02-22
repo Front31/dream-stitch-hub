@@ -108,11 +108,11 @@ const Footer = () => {
                 <span className="text-xs text-muted-foreground">
                   Sichere Zahlung mit
                 </span>
-                <div className="flex flex-wrap items-center gap-2 mt-3">
+                <div className="flex flex-wrap items-center gap-2.5 mt-3">
                   {paymentMethods.map((method) => (
                     <div
                       key={method.name}
-                      className="h-8 w-12 rounded border border-border bg-white flex items-center justify-center p-1"
+                      className="h-9 w-14 rounded-md border border-border/50 bg-white flex items-center justify-center p-1.5 shadow-sm"
                       title={method.name}
                     >
                       <img src={method.icon} alt={method.name} className="h-full w-full object-contain" />
