@@ -1,36 +1,56 @@
 
 
-## Fehlende Unterseiten erstellen & Footer-Links aktualisieren
+# Kategorien und Featured-Produkte mit Shopify
 
-### Was wird gebaut
+## Was wird gemacht
 
-Drei neue rechtliche Seiten, die im Footer bereits verlinkt aber noch nicht vorhanden sind:
+Kategorien werden direkt mit Shopify **Collections** verbunden. Du kannst in Shopify Collections anlegen (z.B. "Booster Displays", "Elite Trainer Boxen", "Special Collections") und eine spezielle Collection (z.B. "RiFa Cards empfiehlt") erstellen, deren Produkte automatisch auf der Startseite angezeigt werden.
 
-1. **Impressum** (`/impressum`) - Gesetzlich vorgeschriebene Anbieterkennung mit Platzhaltern fur deine Daten (Name, Adresse, Kontakt, USt-IdNr. etc.)
-2. **Datenschutzerklarung** (`/datenschutz`) - DSGVO-konforme Datenschutzseite mit Abschnitten zu: Verantwortlicher, Datenerhebung, Cookies, Zahlungsanbieter, Rechte der Betroffenen, EmailJS-Hinweis
-3. **AGB** (`/agb`) - Allgemeine Geschaftsbedingungen mit Abschnitten zu: Geltungsbereich, Vertragsschluss, Preise, Zahlung, Lieferung, Widerrufsrecht, Gewahrleistung, Haftung
+## So funktioniert es
 
-Alle drei Seiten verwenden das gleiche Layout wie die bestehenden Unterseiten (FloatingHeader, Footer, framer-motion Animationen).
+- **Kategorien auf der Collection-Seite**: Wenn du auf "Booster Displays" klickst, werden nur Produkte aus der entsprechenden Shopify-Collection geladen
+- **Startseite**: Zeigt nur Produkte aus der Collection "RiFa Cards empfiehlt" (oder wie du sie nennen willst)
+- **Alles wird in Shopify verwaltet**: Du fügst Produkte einfach in Shopify zu einer Collection hinzu -- die Webseite zeigt sie automatisch an
 
-### Weitere Anpassungen
+## Was du in Shopify tun musst
 
-- **Footer** (`src/components/Footer.tsx`): Die drei Links (`#`) werden auf die richtigen Routen (`/impressum`, `/datenschutz`, `/agb`) geandert und als React Router `Link`-Komponenten umgebaut
-- **App.tsx**: Drei neue Routen hinzufugen
-- **Shipping.tsx**: `support@rifacards.de` wird auf `info@rifacards.de` geandert (wurde beim letzten Update vergessen)
+1. Collections anlegen: z.B. "Booster Displays", "Elite Trainer Boxen", "Special Collections"
+2. Eine Collection "RiFa Cards empfiehlt" (oder "featured") anlegen
+3. Produkte den jeweiligen Collections zuordnen
 
-### Technische Details
+---
 
-**Neue Dateien:**
-- `src/pages/Impressum.tsx`
-- `src/pages/Datenschutz.tsx`
-- `src/pages/AGB.tsx`
+## Technische Details
 
-**Geanderte Dateien:**
-- `src/App.tsx` - 3 neue Routen + Imports
-- `src/components/Footer.tsx` - `<a href="#">` durch `<Link to="/...">` ersetzen
-- `src/pages/Shipping.tsx` - E-Mail auf `info@rifacards.de` aktualisieren
+### 1. Neue GraphQL-Queries in `src/lib/shopify.ts`
 
-### Wichtiger Hinweis
+- `COLLECTION_BY_HANDLE_QUERY`: Produkte einer bestimmten Collection per Handle laden
+- `COLLECTIONS_QUERY`: Alle Collections laden (fuer dynamische Kategorie-Anzeige)
+- `productType` und `tags` zu allen bestehenden Produkt-Queries hinzufuegen
+- Neue Funktionen: `fetchCollectionProducts(handle)` und `fetchCollections()`
+- `ShopifyProduct` Interface um `productType` und `tags` erweitern
 
-Die rechtlichen Texte werden mit **Platzhaltern** erstellt (z.B. `[Dein vollstandiger Name]`, `[Deine Strasse]`). Du musst diese spater mit deinen echten Daten ersetzen. Fur rechtsverbindliche Texte empfehle ich einen Anwalt oder einen Generator wie eRecht24.
+### 2. Collection-Seite (`src/pages/Collection.tsx`)
+
+- URL-Parameter `?type=` auslesen (z.B. `/collection?type=booster-displays`)
+- Bei vorhandenem `type`-Parameter: Produkte aus der entsprechenden Shopify-Collection laden via `fetchCollectionProducts(handle)`
+- Ohne Parameter: alle Produkte laden (wie bisher)
+- Kategorie-Tabs oder Filter-Buttons oben anzeigen, basierend auf den vorhandenen Collections
+- Aktive Kategorie visuell hervorheben
+
+### 3. FeaturedSection (`src/components/FeaturedSection.tsx`)
+
+- Statt `fetchProducts(6)` wird `fetchCollectionProducts('rifa-cards-empfiehlt')` aufgerufen
+- Nur Produkte aus dieser speziellen Collection erscheinen auf der Startseite
+- Fallback auf alle Produkte, falls die Collection leer oder nicht vorhanden ist
+
+### 4. Kategorie-Links auf Startseite (`src/pages/Index.tsx`)
+
+- Links aktualisieren: `/collection?type=booster-displays`, `/collection?type=elite-trainer-boxen`, `/collection?type=special-collections`
+- Die Handles muessen mit den Shopify-Collection-Handles uebereinstimmen
+
+### 5. Mapping-Strategie
+
+Die Collection-Handles in Shopify werden direkt als URL-Parameter verwendet. Beispiel:
+- Shopify Collection "Booster Displays" -> Handle `booster-displays` -> URL `/collection?type=booster-displays`
 
