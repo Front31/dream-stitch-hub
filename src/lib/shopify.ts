@@ -273,3 +273,115 @@ export async function fetchProductByHandle(handle: string) {
     return null;
   }
 }
+
+export const COLLECTION_BY_HANDLE_QUERY = `
+  query GetCollectionByHandle($handle: String!, $first: Int!) {
+    collectionByHandle(handle: $handle) {
+      id
+      title
+      description
+      handle
+      products(first: $first) {
+        edges {
+          node {
+            id
+            title
+            description
+            handle
+            productType
+            tags
+            priceRange {
+              minVariantPrice {
+                amount
+                currencyCode
+              }
+            }
+            images(first: 5) {
+              edges {
+                node {
+                  url
+                  altText
+                }
+              }
+            }
+            variants(first: 10) {
+              edges {
+                node {
+                  id
+                  title
+                  price {
+                    amount
+                    currencyCode
+                  }
+                  availableForSale
+                  selectedOptions {
+                    name
+                    value
+                  }
+                }
+              }
+            }
+            options {
+              name
+              values
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export const COLLECTIONS_QUERY = `
+  query GetCollections($first: Int!) {
+    collections(first: $first) {
+      edges {
+        node {
+          id
+          title
+          handle
+          description
+          image {
+            url
+            altText
+          }
+        }
+      }
+    }
+  }
+`;
+
+export interface ShopifyCollection {
+  node: {
+    id: string;
+    title: string;
+    handle: string;
+    description: string;
+    image?: {
+      url: string;
+      altText: string | null;
+    } | null;
+  };
+}
+
+export async function fetchCollectionProducts(handle: string, first: number = 50): Promise<ShopifyProduct[]> {
+  try {
+    const data = await storefrontApiRequest(COLLECTION_BY_HANDLE_QUERY, { handle, first });
+    const products = data?.data?.collectionByHandle?.products?.edges || [];
+    // Wrap in { node: ... } format to match ShopifyProduct interface
+    return products.map((edge: { node: ShopifyProduct['node'] }) => ({ node: edge.node }));
+  } catch (error) {
+    console.error('Error fetching collection products:', error);
+    return [];
+  }
+}
+
+export async function fetchCollections(first: number = 20): Promise<ShopifyCollection[]> {
+  try {
+    const data = await storefrontApiRequest(COLLECTIONS_QUERY, { first });
+    return data?.data?.collections?.edges || [];
+  } catch (error) {
+    console.error('Error fetching collections:', error);
+    return [];
+  }
+}

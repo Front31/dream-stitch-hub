@@ -1,28 +1,56 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import FloatingHeader from '@/components/FloatingHeader';
 import Footer from '@/components/Footer';
-import { fetchProducts, type ShopifyProduct } from '@/lib/shopify';
+import { fetchProducts, fetchCollectionProducts, fetchCollections, type ShopifyProduct, type ShopifyCollection } from '@/lib/shopify';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import { Package, Loader2, ShoppingCart } from 'lucide-react';
 
 const Collection = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeType = searchParams.get('type') || '';
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
+  const [collections, setCollections] = useState<ShopifyCollection[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const addItem = useCartStore(state => state.addItem);
   const isAddingToCart = useCartStore(state => state.isLoading);
 
+  // Load collections for tabs
+  useEffect(() => {
+    const loadCollections = async () => {
+      const fetched = await fetchCollections(20);
+      // Filter out the featured collection from category tabs
+      const filtered = fetched.filter(c => c.node.handle !== 'rifa-cards-empfiehlt' && c.node.handle !== 'featured');
+      setCollections(filtered);
+    };
+    loadCollections();
+  }, []);
+
+  // Load products based on active type
   useEffect(() => {
     const loadProducts = async () => {
       setIsLoading(true);
-      const fetchedProducts = await fetchProducts(50);
+      let fetchedProducts: ShopifyProduct[];
+      if (activeType) {
+        fetchedProducts = await fetchCollectionProducts(activeType);
+      } else {
+        fetchedProducts = await fetchProducts(50);
+      }
       setProducts(fetchedProducts);
       setIsLoading(false);
     };
     loadProducts();
-  }, []);
+  }, [activeType]);
+
+  const handleCategoryClick = (handle: string) => {
+    if (handle === activeType) {
+      setSearchParams({});
+    } else {
+      setSearchParams({ type: handle });
+    }
+  };
 
   const handleAddToCart = async (product: ShopifyProduct, e: React.MouseEvent) => {
     e.preventDefault();
@@ -45,6 +73,9 @@ const Collection = () => {
     });
   };
 
+  const activeCollection = collections.find(c => c.node.handle === activeType);
+  const pageTitle = activeCollection?.node.title || 'Unsere Produkte';
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -65,13 +96,50 @@ const Collection = () => {
               Shop
             </span>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-              Unsere <span className="text-gradient-primary">Produkte</span>
+              {activeType ? (
+                <span className="text-gradient-primary">{pageTitle}</span>
+              ) : (
+                <>Unsere <span className="text-gradient-primary">Produkte</span></>
+              )}
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Entdecke unsere kuratierte Auswahl an sealed Pokémon TCG Produkten.
-              Jedes Produkt ist original versiegelt und 100% authentisch.
+              {activeCollection?.node.description || 'Entdecke unsere kuratierte Auswahl an sealed Pokémon TCG Produkten. Jedes Produkt ist original versiegelt und 100% authentisch.'}
             </p>
           </motion.div>
+
+          {/* Category Tabs */}
+          {collections.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="flex flex-wrap justify-center gap-3 mb-10"
+            >
+              <button
+                onClick={() => setSearchParams({})}
+                className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${
+                  !activeType
+                    ? 'bg-primary text-primary-foreground border-primary shadow-md'
+                    : 'bg-card text-muted-foreground border-border hover:border-primary/30 hover:text-foreground'
+                }`}
+              >
+                Alle Produkte
+              </button>
+              {collections.map((collection) => (
+                <button
+                  key={collection.node.id}
+                  onClick={() => handleCategoryClick(collection.node.handle)}
+                  className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${
+                    activeType === collection.node.handle
+                      ? 'bg-primary text-primary-foreground border-primary shadow-md'
+                      : 'bg-card text-muted-foreground border-border hover:border-primary/30 hover:text-foreground'
+                  }`}
+                >
+                  {collection.node.title}
+                </button>
+              ))}
+            </motion.div>
+          )}
 
           {isLoading ? (
             <div className="flex items-center justify-center py-20">
@@ -86,8 +154,18 @@ const Collection = () => {
               <Package className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
               <h2 className="font-display text-2xl font-bold mb-2">Keine Produkte verfügbar</h2>
               <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                Produkte werden geladen...
+                {activeType
+                  ? 'In dieser Kategorie sind aktuell keine Produkte vorhanden.'
+                  : 'Produkte werden geladen...'}
               </p>
+              {activeType && (
+                <button
+                  onClick={() => setSearchParams({})}
+                  className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
+                >
+                  Alle Produkte anzeigen
+                </button>
+              )}
             </motion.div>
           ) : (
             <>

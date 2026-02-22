@@ -62,21 +62,21 @@ const Index = () => {
                 description: '36 Booster Packs pro Display. Das Herz jeder Kollektion.',
                 icon: Box,
                 color: 'from-secondary/30 to-secondary/10',
-                link: '/collection?type=display'
+                link: '/collection?type=booster-displays'
               },
               {
                 title: 'Elite Trainer Boxen',
                 description: 'Das komplette Paket: Booster, Zubehör und exklusive Promos.',
                 icon: Star,
                 color: 'from-secondary/30 to-secondary/10',
-                link: '/collection?type=etb'
+                link: '/collection?type=elite-trainer-boxen'
               },
               {
                 title: 'Special Collections',
                 description: 'Limitierte Boxen mit einzigartigen Inhalten und Promos.',
                 icon: Zap,
                 color: 'from-secondary/30 to-secondary/10',
-                link: '/collection?type=collection'
+                link: '/collection?type=special-collections'
               }].
               map((category, index) =>
               <motion.div
