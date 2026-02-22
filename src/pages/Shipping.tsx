@@ -156,7 +156,7 @@ const Shipping = () => {
               <div>
                 <h3 className="font-semibold mb-2">So funktioniert's</h3>
                 <p className="text-muted-foreground">
-                  Kontaktiere uns unter <a href="mailto:support@rifacards.de" className="text-accent hover:underline">support@rifacards.de</a> mit
+                  Kontaktiere uns unter <a href="mailto:info@rifacards.de" className="text-accent hover:underline">info@rifacards.de</a> mit
                   deiner Bestellnummer. Wir senden dir alle weiteren Informationen für die Rücksendung zu.
                 </p>
               </div>
