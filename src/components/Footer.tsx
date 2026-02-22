@@ -75,8 +75,8 @@ const Footer = () => {
             <h4 className="font-display font-semibold mb-4 text-primary">Service</h4>
             <ul className="space-y-2">
               <li>
-                <a href="mailto:support@rifacards.de" className="text-sm text-muted-foreground hover:text-accent transition-colors">
-                  support@rifacards.de
+                <a href="mailto:info@rifacards.de" className="text-sm text-muted-foreground hover:text-accent transition-colors">
+                  info@rifacards.de
                 </a>
               </li>
               <li className="text-sm text-muted-foreground">
