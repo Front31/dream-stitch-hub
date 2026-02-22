@@ -148,6 +148,7 @@
   }
 
   .header-floating.scrolled {
+    padding-top: 0.625rem;
     padding-left: 3rem;
     padding-right: 3rem;
   }
