@@ -50,7 +50,7 @@ const FloatingHeader = () => {
                 <motion.img
                   src={rifaLogo}
                   alt="RiFa Cards"
-                  className="h-12 md:h-14 w-auto logo-pulse mix-blend-multiply dark:mix-blend-screen"
+                  className="h-12 md:h-14 w-auto"
                   whileHover={{ scale: 1.05 }}
                   transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                 />
