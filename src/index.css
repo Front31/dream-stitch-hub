@@ -16,6 +16,21 @@
  */
 
 @layer base {
+  body {
+    cursor: default;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  a, button, input, textarea, select, [role="button"], [contenteditable] {
+    cursor: pointer;
+  }
+
+  input, textarea, select, [contenteditable] {
+    -webkit-user-select: text;
+    user-select: text;
+    cursor: text;
+  }
   :root {
     /* Core Palette - Light & Premium */
     --background: 40 20% 98%;
