@@ -24,7 +24,6 @@ const FloatingHeader = () => {
   }, []);
 
   const navItems = [
-    { label: 'Home', path: '/' },
     { label: 'Produkte', path: '/collection' },
     { label: 'Über uns', path: '/about' },
     { label: 'FAQ', path: '/faq' },
