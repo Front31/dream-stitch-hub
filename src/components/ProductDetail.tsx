@@ -84,7 +84,7 @@ const ProductDetail = () => {
           <Package className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
           <h1 className="font-display text-2xl font-bold mb-4">Produkt nicht gefunden</h1>
           <Link to="/collection" className="text-primary hover:underline">
-            Zurück zur Sammlung
+            Zurück zu den Produkten
           </Link>
         </div>
       </div>
@@ -125,7 +125,7 @@ const ProductDetail = () => {
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            Zurück zur Sammlung
+            Zurück zu den Produkten
           </Link>
         </motion.div>
 

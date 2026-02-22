@@ -65,7 +65,7 @@ const Collection = () => {
               Shop
             </span>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-              Die <span className="text-gradient-primary">Sammlung</span>
+              Unsere <span className="text-gradient-primary">Produkte</span>
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Entdecke unsere kuratierte Auswahl an sealed Pokémon TCG Produkten.

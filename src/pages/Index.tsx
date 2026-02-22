@@ -59,7 +59,7 @@ const Index = () => {
               {[
               {
                 title: 'Booster Displays',
-                description: '36 Booster Packs pro Display. Das Herz jeder Sammlung.',
+                description: '36 Booster Packs pro Display. Das Herz jeder Kollektion.',
                 icon: Box,
                 color: 'from-primary/20 to-primary/5',
                 link: '/collection?type=display'
@@ -178,7 +178,7 @@ const Index = () => {
                 Für echte <span className="text-gradient-accent">Sammler</span>
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                RiFa Cards ist mehr als ein Shop – es ist eine kuratierte Sammlung
+                RiFa Cards ist mehr als ein Shop – es ist eine kuratierte Auswahl
                 für Kenner. Wir verkaufen ausschließlich factory sealed Produkte:
                 Booster Displays, Elite Trainer Boxen und Special Collections.
                 Keine Einzelkarten, keine Kompromisse.
@@ -215,7 +215,7 @@ const Index = () => {
                 Bereit für dein nächstes <span className="text-gradient-primary">Abenteuer?</span>
               </h2>
               <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
-                Entdecke jetzt unsere Sammlung und finde das perfekte Produkt für dich.
+                Entdecke jetzt unsere Produkte und finde das perfekte für dich.
               </p>
               <Link to="/collection" className="btn-hero inline-flex">
                 <span className="flex items-center gap-2">
