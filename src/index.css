@@ -126,22 +126,22 @@
   .header-floating {
     @apply fixed z-50;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 100%;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
     border-radius: 0;
     background: transparent;
     border: 1px solid transparent;
     box-shadow: none;
-    transition: top 0.7s cubic-bezier(0.22, 1, 0.36, 1), width 0.7s cubic-bezier(0.22, 1, 0.36, 1), max-width 0.7s cubic-bezier(0.22, 1, 0.36, 1), border-radius 0.7s cubic-bezier(0.22, 1, 0.36, 1), background 0.5s ease, border 0.5s ease, box-shadow 0.5s ease, backdrop-filter 0.5s ease;
+    transition: top 0.7s cubic-bezier(0.22, 1, 0.36, 1), left 0.7s cubic-bezier(0.22, 1, 0.36, 1), right 0.7s cubic-bezier(0.22, 1, 0.36, 1), border-radius 0.7s cubic-bezier(0.22, 1, 0.36, 1), background 0.5s ease, border 0.5s ease, box-shadow 0.5s ease;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }
 
   .header-floating.scrolled {
     top: 1rem;
-    width: calc(100% - 6rem);
+    left: 3rem;
+    right: 3rem;
     max-width: 1400px;
     background: hsl(var(--background) / 0.85);
     border-radius: 9999px;
