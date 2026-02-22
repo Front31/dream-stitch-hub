@@ -17,6 +17,7 @@ import Impressum from "./pages/Impressum";
 import Datenschutz from "./pages/Datenschutz";
 import AGB from "./pages/AGB";
 import NotFound from "./pages/NotFound";
+import CookieBanner from "./components/CookieBanner";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +40,7 @@ const AppContent = () => {
       <Route path="/agb" element={<AGB />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
+      <CookieBanner />
     </>
   );
 };

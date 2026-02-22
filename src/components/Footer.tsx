@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import rifaLogo from '@/assets/rifa-logo.png';
+import { useCookieConsentStore } from '@/stores/cookieConsentStore';
 
 const Footer = () => {
+  const openBanner = useCookieConsentStore((s) => s.openBanner);
+
   return (
     <footer className="bg-secondary/50 border-t border-border">
       <div className="container mx-auto px-6 py-12 md:py-16">
@@ -108,6 +111,9 @@ const Footer = () => {
             <Link to="/agb" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
               AGB
             </Link>
+            <button onClick={openBanner} className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+              Cookie-Einstellungen
+            </button>
           </div>
         </div>
       </div>
