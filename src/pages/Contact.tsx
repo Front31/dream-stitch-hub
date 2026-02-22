@@ -25,6 +25,7 @@ const Contact = () => {
     const form = e.target as HTMLFormElement;
     const formData = new FormData(form);
     const templateParams = {
+      to_email: 'info@rifacards.de',
       from_name: formData.get('name') as string,
       from_email: formData.get('email') as string,
       subject: formData.get('subject') as string,
