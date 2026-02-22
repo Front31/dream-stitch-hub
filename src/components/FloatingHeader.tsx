@@ -37,31 +37,25 @@ const FloatingHeader = () => {
         className={`header-floating ${isScrolled ? 'scrolled' : ''}`}
         style={{ opacity: headerOpacity }}
       >
-        <div className={`container mx-auto ${isScrolled ? 'px-4 py-2' : 'px-6 py-4'} transition-all duration-500`}>
+        <div className="container mx-auto px-6 transition-all duration-500 ease-out"
+          style={{ paddingTop: isScrolled ? '0.5rem' : '1rem', paddingBottom: isScrolled ? '0.5rem' : '1rem' }}
+        >
           <div className="flex items-center justify-between">
-            <AnimatePresence>
-              {showLogo ? (
-                <motion.div
-                  key="logo"
-                  initial={{ opacity: 0, scale: 0.8, width: 0 }}
-                  animate={{ opacity: 1, scale: 1, width: 'auto' }}
-                  exit={{ opacity: 0, scale: 0.8, width: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Link to="/" className="relative z-10">
-                    <motion.img
-                      src={rifaLogo}
-                      alt="RiFa Cards"
-                      className="h-12 md:h-14 w-auto logo-pulse"
-                      whileHover={{ scale: 1.05 }}
-                      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                    />
-                  </Link>
-                </motion.div>
-              ) : (
-                <div />
-              )}
-            </AnimatePresence>
+            <div className="overflow-hidden" style={{ 
+              width: showLogo ? 'auto' : '0px',
+              opacity: showLogo ? 1 : 0,
+              transition: 'opacity 0.4s ease, width 0.4s ease'
+            }}>
+              <Link to="/" className="relative z-10 block">
+                <motion.img
+                  src={rifaLogo}
+                  alt="RiFa Cards"
+                  className="h-12 md:h-14 w-auto logo-pulse"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                />
+              </Link>
+            </div>
 
             <nav className="hidden lg:flex items-center gap-8">
               {navItems.map((item) => (
