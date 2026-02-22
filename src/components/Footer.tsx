@@ -41,17 +41,17 @@ const Footer = () => {
               Keine Einzelkarten. Nur original versiegelte Produkte.
             </p>
             <div className="flex items-center gap-3 mt-4">
-              <a href="https://discord.gg/8AxJJMqhxq" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/20 transition-colors" aria-label="Discord">
-                <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M8.12 12.09c-.68 0-1.24.6-1.24 1.33 0 .73.57 1.33 1.24 1.33.68 0 1.24-.6 1.24-1.33.01-.73-.56-1.33-1.24-1.33zm7.76 0c-.68 0-1.24.6-1.24 1.33 0 .73.57 1.33 1.24 1.33.68 0 1.24-.6 1.24-1.33 0-.73-.56-1.33-1.24-1.33z"/><path d="M19.1 4.9S17.36 3.73 15.35 3.5l-.24.49a15.6 15.6 0 0 0-6.22 0L8.65 3.5C6.64 3.73 4.9 4.9 4.9 4.9S2.45 8.65 2 16.08a7.8 7.8 0 0 0 5.97 2.92s.72-.88 1.31-1.62a5.9 5.9 0 0 1-3.32-2.24l.53.33.42.24.41.18a14.3 14.3 0 0 0 9.36 0l.41-.18.42-.24.53-.33a5.92 5.92 0 0 1-3.34 2.24c.59.74 1.31 1.62 1.31 1.62A7.8 7.8 0 0 0 22 16.08C21.55 8.65 19.1 4.9 19.1 4.9z"/></svg>
+              <a href="https://discord.gg/8AxJJMqhxq" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/20 transition-colors" aria-label="Discord">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M9.09 9a3 3 0 0 0-2.83 2M15.91 9a3 3 0 0 1 2.83 2"/><path d="M8 15a3.5 3.5 0 0 0 4 0 3.5 3.5 0 0 0 4 0"/><path d="M20.2 5.2c-1.6-.8-3.3-1.4-5.1-1.7l-.7 1.3c-1.8-.3-3-.3-4.8 0l-.7-1.3c-1.8.3-3.5.9-5.1 1.7C1.5 9.3.8 13.3 1.2 17.2 3.2 18.8 5.1 19.8 7 20.3l1-1.4c-.9-.3-1.8-.8-2.6-1.3l.6-.5c2.5 1.2 5.5 1.2 8 0l.6.5c-.8.5-1.7 1-2.6 1.3l1 1.4c1.9-.5 3.8-1.5 5.8-3.1.4-4-.7-8-3.6-12.1z"/><circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/></svg>
               </a>
-              <a href="https://www.instagram.com/rifacards.de/" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/20 transition-colors" aria-label="Instagram">
-                <Instagram className="w-[18px] h-[18px]" />
+              <a href="https://www.instagram.com/rifacards.de/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/20 transition-colors" aria-label="Instagram">
+                <Instagram className="w-5 h-5" />
               </a>
-              <a href="https://www.tiktok.com/@rifacards.de" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/20 transition-colors" aria-label="TikTok">
-                <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+              <a href="https://www.tiktok.com/@rifacards.de" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/20 transition-colors" aria-label="TikTok">
+                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
               </a>
-              <a href="https://www.youtube.com/@RiFaCards" target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/20 transition-colors" aria-label="YouTube">
-                <Youtube className="w-[18px] h-[18px]" />
+              <a href="https://www.youtube.com/@RiFaCards" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/20 transition-colors" aria-label="YouTube">
+                <Youtube className="w-5 h-5" />
               </a>
             </div>
           </div>
