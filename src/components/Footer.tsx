@@ -42,16 +42,16 @@ const Footer = () => {
             </p>
             <div className="flex items-center gap-4 mt-4">
               <a href="https://discord.gg/8AxJJMqhxq" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/20 transition-colors" aria-label="Discord">
-                <svg className="w-7 h-7" viewBox="0 0 127.14 96.36" fill="none" stroke="currentColor" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round"><path d="M107.7 8.07A105.15 105.15 0 0 0 81.47 0a72.06 72.06 0 0 0-3.36 6.83 97.68 97.68 0 0 0-29.11 0A72.37 72.37 0 0 0 45.64 0a105.89 105.89 0 0 0-26.25 8.09C2.79 32.65-1.71 56.6.54 80.21a105.73 105.73 0 0 0 32.17 16.15 77.7 77.7 0 0 0 6.89-11.11 68.42 68.42 0 0 1-10.85-5.18c.91-.66 1.8-1.34 2.66-2a75.57 75.57 0 0 0 64.32 0c.87.71 1.76 1.39 2.66 2a68.68 68.68 0 0 1-10.87 5.19 77 77 0 0 0 6.89 11.1 105.25 105.25 0 0 0 32.19-16.14c2.64-27.38-4.51-51.11-18.9-72.15zM42.45 65.69C36.18 65.69 31 60 31 53.05s5-12.68 11.45-12.68S54 46.05 53.89 53.05 48.84 65.69 42.45 65.69zm42.24 0C78.41 65.69 73.25 60 73.25 53.05s5-12.68 11.44-12.68S96.23 46.05 96.12 53.05 91.08 65.69 84.69 65.69z"/></svg>
+                <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M18.93 5.34a16.89 16.89 0 0 0-4.07-1.23.06.06 0 0 0-.07.03c-.18.31-.38.72-.52 1.04a15.72 15.72 0 0 0-4.54 0 10.4 10.4 0 0 0-.53-1.04.06.06 0 0 0-.07-.03 16.84 16.84 0 0 0-4.07 1.23.06.06 0 0 0-.03.02C2.4 9.36 1.73 13.25 2.06 17.1a.07.07 0 0 0 .03.05 16.85 16.85 0 0 0 4.99 2.47.07.07 0 0 0 .07-.02 11.57 11.57 0 0 0 1.01-1.61.06.06 0 0 0-.04-.09 11.17 11.17 0 0 1-1.56-.73.06.06 0 0 1-.01-.1c.1-.08.21-.16.31-.24a.06.06 0 0 1 .07-.01 12.18 12.18 0 0 0 10.13 0 .06.06 0 0 1 .07.01c.1.08.21.17.31.24a.06.06 0 0 1 0 .1c-.5.29-1.02.53-1.56.73a.06.06 0 0 0-.04.09c.3.56.63 1.1 1.01 1.61a.07.07 0 0 0 .07.02 16.82 16.82 0 0 0 5-2.47.07.07 0 0 0 .03-.05c.39-4.03-.67-7.88-2.8-11.73a.05.05 0 0 0-.02-.03zM8.68 14.56c-1.05 0-1.91-.95-1.91-2.12s.84-2.12 1.91-2.12c1.07 0 1.93.96 1.91 2.12 0 1.17-.85 2.12-1.91 2.12zm7.06 0c-1.05 0-1.91-.95-1.91-2.12s.84-2.12 1.91-2.12 1.93.96 1.91 2.12c0 1.17-.84 2.12-1.91 2.12z"/></svg>
               </a>
               <a href="https://www.instagram.com/rifacards.de/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/20 transition-colors" aria-label="Instagram">
-                <Instagram className="w-7 h-7" />
+                <Instagram className="w-7 h-7" strokeWidth={1.75} />
               </a>
               <a href="https://www.tiktok.com/@rifacards.de" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/20 transition-colors" aria-label="TikTok">
                 <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
               </a>
               <a href="https://www.youtube.com/@RiFaCards" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/20 transition-colors" aria-label="YouTube">
-                <Youtube className="w-7 h-7" />
+                <Youtube className="w-7 h-7" strokeWidth={1.75} />
               </a>
             </div>
           </div>
