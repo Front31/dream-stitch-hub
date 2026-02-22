@@ -27,7 +27,7 @@ const Shipping = () => {
               Sicher & <span className="text-gradient-primary">schnell</span> zu dir
             </h1>
             <p className="text-lg text-muted-foreground">
-              Wir behandeln jedes Produkt wie unsere eigene Sammlung.
+              Wir behandeln jedes Produkt mit größter Sorgfalt.
               Premium Verpackung, schneller Versand, volle Absicherung.
             </p>
           </motion.div>

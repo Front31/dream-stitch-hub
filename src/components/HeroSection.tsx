@@ -80,7 +80,7 @@ const HeroSection = () => {
           </motion.div>
 
           <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
-            <span className="block">Deine Sammlung.</span>
+            <span className="block">Deine Produkte.</span>
             <span className="block">
               <span className="text-gradient-primary">Sealed.</span>{' '}
               <span className="text-gradient-accent">Premium.</span>
@@ -100,7 +100,7 @@ const HeroSection = () => {
                 whileTap={{ scale: 0.98 }}>
 
                 <span className="flex items-center gap-2">
-                  Zur Sammlung
+                  Zu den Produkten
                   <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                 </span>
               </motion.button>
