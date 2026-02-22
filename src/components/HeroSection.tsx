@@ -13,7 +13,7 @@ const HeroSection = () => {
 
   const logoY = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const logoScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 1]);
   const bgY = useTransform(scrollYProgress, [0, 1], [0, 150]);
 
   return (
