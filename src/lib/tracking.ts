@@ -1,10 +1,10 @@
 // Google Analytics & Facebook Pixel – loaded conditionally based on cookie consent
 
 const GA_ID = 'G-ZS44DFT9XT';
-// const FB_PIXEL_ID = ''; // TODO: Facebook Pixel ID hier eintragen
+const FB_PIXEL_ID = '1625906195211164';
 
 let gaLoaded = false;
-// let fbLoaded = false;
+let fbLoaded = false;
 
 export function loadGoogleAnalytics() {
   if (gaLoaded || !GA_ID) return;
@@ -28,7 +28,6 @@ export function removeGoogleAnalytics() {
   (window as any)[`ga-disable-${GA_ID}`] = true;
 }
 
-/*
 export function loadFacebookPixel() {
   if (fbLoaded || !FB_PIXEL_ID) return;
   fbLoaded = true;
@@ -45,7 +44,12 @@ export function loadFacebookPixel() {
   (window as any).fbq('init', FB_PIXEL_ID);
   (window as any).fbq('track', 'PageView');
 }
-*/
+
+export function removeFacebookPixel() {
+  // Disable FB tracking by removing the script
+  (window as any).fbq = null;
+  (window as any)._fbq = null;
+}
 
 declare global {
   interface Window {
