@@ -124,22 +124,26 @@
 @layer components {
   /* Floating Header Styles */
   .header-floating {
-    @apply fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out;
+    @apply fixed z-50;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }
 
   .header-floating.scrolled {
-    @apply top-4 bg-background/85 shadow-elevated;
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
+    top: 1rem;
     width: calc(100% - 6rem);
     max-width: 1400px;
+    background: hsl(var(--background) / 0.85);
     border-radius: 9999px;
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-elevated, 0 8px 30px -10px rgba(0,0,0,0.15));
   }
 
   /* Pokemon Card 1999 Layout */
