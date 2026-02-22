@@ -5,9 +5,21 @@
 import { toast } from 'sonner';
 
 const SHOPIFY_API_VERSION = '2025-07';
-const SHOPIFY_STORE_PERMANENT_DOMAIN = 'rifa-vision-n4uwr.myshopify.com';
-const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
-const SHOPIFY_STOREFRONT_TOKEN = '2430ff0301ce8d44f090a5fbb78b6b2e';
+
+const SHOPIFY_STORE_DOMAIN = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN || '';
+const SHOPIFY_STOREFRONT_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN || '';
+
+if (!SHOPIFY_STORE_DOMAIN || !SHOPIFY_STOREFRONT_TOKEN) {
+  console.error(
+    '⚠️ Shopify ist nicht konfiguriert!\n' +
+    'Bitte setze folgende Umgebungsvariablen:\n' +
+    '  VITE_SHOPIFY_STORE_DOMAIN=dein-store.myshopify.com\n' +
+    '  VITE_SHOPIFY_STOREFRONT_TOKEN=dein-storefront-access-token\n' +
+    'Siehe .env.example für Details.'
+  );
+}
+
+const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 
 export interface ShopifyProduct {
   node: {
