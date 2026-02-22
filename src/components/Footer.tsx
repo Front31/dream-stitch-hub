@@ -99,15 +99,15 @@ const Footer = () => {
             © {new Date().getFullYear()} RiFa Cards. Alle Rechte vorbehalten.
           </p>
           <div className="flex items-center gap-4">
-            <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="/impressum" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
               Impressum
-            </a>
-            <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+            </Link>
+            <Link to="/datenschutz" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
               Datenschutz
-            </a>
-            <a href="#" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+            </Link>
+            <Link to="/agb" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
               AGB
-            </a>
+            </Link>
           </div>
         </div>
       </div>
