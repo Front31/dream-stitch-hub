@@ -5,14 +5,6 @@ import { Menu, X, UserCircle } from 'lucide-react';
 import rifaLogo from '@/assets/rifa-logo.png';
 import CartDrawer from './CartDrawer';
 import { useCustomerStore } from '@/stores/customerStore';
-import { useShopifyMenu, type NavItem } from '@/hooks/useShopifyMenu';
-
-const fallbackNavItems: NavItem[] = [
-  { label: 'Produkte', path: '/collection' },
-  { label: 'Über uns', path: '/about' },
-  { label: 'FAQ', path: '/faq' },
-  { label: 'Kontakt', path: '/contact' },
-];
 
 const FloatingHeader = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -24,8 +16,21 @@ const FloatingHeader = () => {
   const headerOpacity = useTransform(scrollY, [0, 100], [0.95, 1]);
   const isLoggedIn = useCustomerStore((s) => s.isAuthenticated());
 
-  const { navItems: shopifyNavItems } = useShopifyMenu('main-menu');
-  const navItems = shopifyNavItems.length > 0 ? shopifyNavItems : fallbackNavItems;
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navItems = [
+    { label: 'Produkte', path: '/collection' },
+    { label: 'Über uns', path: '/about' },
+    { label: 'FAQ', path: '/faq' },
+    { label: 'Kontakt', path: '/contact' },
+  ];
 
   return (
     <>
