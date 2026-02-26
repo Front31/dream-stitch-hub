@@ -266,6 +266,11 @@ const de = {
   'general.loading': 'Laden...',
   'general.error': 'Fehler',
   'general.back': 'Zurück',
+
+  // Search
+  'search.placeholder': 'Produkte durchsuchen...',
+  'search.no_results': 'Keine Ergebnisse für „{query}"',
+  'search.clear': 'Suche löschen',
 } as const;
 
 export default de;

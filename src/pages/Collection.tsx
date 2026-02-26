@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useSearchParams } from 'react-router-dom';
 import FloatingHeader from '@/components/FloatingHeader';
@@ -7,7 +7,7 @@ import SEO from '@/components/SEO';
 import { fetchProducts, fetchCollectionProducts, fetchCollections, type ShopifyProduct, type ShopifyCollection } from '@/lib/shopify';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
-import { Package, Loader2, ShoppingCart } from 'lucide-react';
+import { Package, Loader2, ShoppingCart, Search, X } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 
 const Collection = () => {
@@ -16,9 +16,19 @@ const Collection = () => {
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
   const [collections, setCollections] = useState<ShopifyCollection[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
   const addItem = useCartStore(state => state.addItem);
   const isAddingToCart = useCartStore(state => state.isLoading);
   const { t, locale } = useTranslation();
+
+  const filteredProducts = useMemo(() => {
+    if (!searchQuery.trim()) return products;
+    const q = searchQuery.toLowerCase();
+    return products.filter(p =>
+      p.node.title.toLowerCase().includes(q) ||
+      (p.node.description && p.node.description.toLowerCase().includes(q))
+    );
+  }, [products, searchQuery]);
 
   useEffect(() => {
     const loadCollections = async () => {
@@ -74,7 +84,7 @@ const Collection = () => {
           </motion.div>
 
           {collections.length > 0 && (
-            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="flex flex-wrap justify-center gap-3 mb-10">
+            <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="flex flex-wrap justify-center gap-3 mb-6">
               <button onClick={() => setSearchParams({})} className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${!activeType ? 'bg-primary text-primary-foreground border-primary shadow-md' : 'bg-card text-muted-foreground border-border hover:border-primary/30 hover:text-foreground'}`}>
                 {t('footer.all_products')}
               </button>
@@ -86,22 +96,42 @@ const Collection = () => {
             </motion.div>
           )}
 
+          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} className="relative max-w-md mx-auto mb-10">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={t('search.placeholder')}
+              className="w-full h-11 pl-11 pr-10 rounded-full border border-border bg-card text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all"
+            />
+            {searchQuery && (
+              <button onClick={() => setSearchQuery('')} className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-secondary transition-colors" aria-label={t('search.clear')}>
+                <X className="w-4 h-4 text-muted-foreground" />
+              </button>
+            )}
+          </motion.div>
+
           {isLoading ? (
             <div className="flex items-center justify-center py-20"><Loader2 className="w-8 h-8 animate-spin text-primary" /></div>
-          ) : products.length === 0 ? (
+          ) : filteredProducts.length === 0 ? (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center py-20 bg-card rounded-2xl border border-border">
               <Package className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-              <h2 className="font-display text-2xl font-bold mb-2">{t('products.no_products')}</h2>
+              <h2 className="font-display text-2xl font-bold mb-2">{searchQuery ? t('search.no_results', { query: searchQuery }) : t('products.no_products')}</h2>
               <p className="text-muted-foreground mb-6 max-w-md mx-auto">{activeType ? t('products.no_products_category') : t('products.loading')}</p>
-              {activeType && <button onClick={() => setSearchParams({})} className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors">{t('products.show_all')}</button>}
+              {searchQuery ? (
+                <button onClick={() => setSearchQuery('')} className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors">{t('search.clear')}</button>
+              ) : activeType ? (
+                <button onClick={() => setSearchParams({})} className="px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors">{t('products.show_all')}</button>
+              ) : null}
             </motion.div>
           ) : (
             <>
               <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sm text-muted-foreground mb-8">
-                {t('products.found', { count: products.length.toString() })}
+                {t('products.found', { count: filteredProducts.length.toString() })}
               </motion.p>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {products.map((product, index) => (
+                {filteredProducts.map((product, index) => (
                   <motion.div key={product.node.id} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.05 }}>
                     <div className="group bg-card rounded-2xl border border-border overflow-hidden hover:border-primary/30 transition-all duration-300 hover:shadow-card">
                       <Link to={`/product/${product.node.handle}`}>

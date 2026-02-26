@@ -268,6 +268,11 @@ const en: Record<TranslationKey, string> = {
   'general.loading': 'Loading...',
   'general.error': 'Error',
   'general.back': 'Back',
+
+  // Search
+  'search.placeholder': 'Search products...',
+  'search.no_results': 'No results for "{query}"',
+  'search.clear': 'Clear search',
 };
 
 export default en;
