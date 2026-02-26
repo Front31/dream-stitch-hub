@@ -168,6 +168,17 @@ const Login = () => {
               </motion.div>
             )}
           </AnimatePresence>
+
+          {/* DEV ONLY – remove before production */}
+          <div className="mt-8 pt-6 border-t border-dashed border-muted-foreground/20">
+            <Button
+              variant="outline"
+              className="w-full border-dashed border-destructive/50 text-destructive hover:bg-destructive/10"
+              onClick={() => navigate('/account')}
+            >
+              🛠 Dev: Direkt zum Dashboard
+            </Button>
+          </div>
         </motion.div>
       </div>
       <Footer />
