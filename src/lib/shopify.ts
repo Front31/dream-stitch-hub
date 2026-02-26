@@ -412,3 +412,143 @@ export async function fetchCollections(first: number = 20): Promise<ShopifyColle
     return [];
   }
 }
+
+// --- Shop Policies ---
+export interface ShopifyPolicy {
+  title: string;
+  body: string;
+  url: string;
+}
+
+export const SHOP_POLICIES_QUERY = `
+  query GetShopPolicies {
+    shop {
+      name
+      description
+      privacyPolicy {
+        title
+        body
+        url
+      }
+      termsOfService {
+        title
+        body
+        url
+      }
+      refundPolicy {
+        title
+        body
+        url
+      }
+      shippingPolicy {
+        title
+        body
+        url
+      }
+    }
+  }
+`;
+
+export interface ShopPolicies {
+  name: string;
+  description: string;
+  privacyPolicy: ShopifyPolicy | null;
+  termsOfService: ShopifyPolicy | null;
+  refundPolicy: ShopifyPolicy | null;
+  shippingPolicy: ShopifyPolicy | null;
+}
+
+export async function fetchShopPolicies(): Promise<ShopPolicies | null> {
+  try {
+    const data = await storefrontApiRequest(SHOP_POLICIES_QUERY);
+    return data?.data?.shop || null;
+  } catch (error) {
+    console.error('Error fetching shop policies:', error);
+    return null;
+  }
+}
+
+// --- Shopify Pages ---
+export interface ShopifyPage {
+  id: string;
+  title: string;
+  handle: string;
+  body: string;
+}
+
+export const PAGES_QUERY = `
+  query GetPages($first: Int!) {
+    pages(first: $first) {
+      edges {
+        node {
+          id
+          title
+          handle
+          body
+        }
+      }
+    }
+  }
+`;
+
+export const PAGE_BY_HANDLE_QUERY = `
+  query GetPageByHandle($handle: String!) {
+    pageByHandle(handle: $handle) {
+      id
+      title
+      handle
+      body
+    }
+  }
+`;
+
+export async function fetchPages(first: number = 20): Promise<ShopifyPage[]> {
+  try {
+    const data = await storefrontApiRequest(PAGES_QUERY, { first });
+    return (data?.data?.pages?.edges || []).map((e: { node: ShopifyPage }) => e.node);
+  } catch (error) {
+    console.error('Error fetching pages:', error);
+    return [];
+  }
+}
+
+export async function fetchPageByHandle(handle: string): Promise<ShopifyPage | null> {
+  try {
+    const data = await storefrontApiRequest(PAGE_BY_HANDLE_QUERY, { handle });
+    return data?.data?.pageByHandle || null;
+  } catch (error) {
+    console.error('Error fetching page:', error);
+    return null;
+  }
+}
+
+// --- Shop Metafields ---
+export const SHOP_METAFIELDS_QUERY = `
+  query GetShopMetafields($identifiers: [HasMetafieldsIdentifier!]!) {
+    shop {
+      metafields(identifiers: $identifiers) {
+        namespace
+        key
+        value
+        type
+      }
+    }
+  }
+`;
+
+export interface ShopifyMetafield {
+  namespace: string;
+  key: string;
+  value: string;
+  type: string;
+}
+
+export async function fetchShopMetafields(identifiers: Array<{ namespace: string; key: string }>): Promise<(ShopifyMetafield | null)[]> {
+  try {
+    const data = await storefrontApiRequest(SHOP_METAFIELDS_QUERY, { identifiers });
+    return data?.data?.shop?.metafields || [];
+  } catch (error) {
+    console.error('Error fetching shop metafields:', error);
+    return [];
+  }
+}
