@@ -105,6 +105,30 @@ const Shipping = () => {
 
           <ShippingHighlights />
 
+          {/* Versandkosten-Tabelle – immer sichtbar */}
+          <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="max-w-3xl mx-auto mb-16">
+            <h2 className="font-display text-2xl font-bold mb-6 flex items-center gap-3">
+              <Truck className="w-6 h-6 text-primary" />Versandkosten
+            </h2>
+            <div className="bg-card border border-border rounded-2xl overflow-hidden">
+              <table className="w-full">
+                <thead className="bg-secondary/50">
+                  <tr>
+                    <th className="text-left p-4 font-medium">Land</th>
+                    <th className="text-left p-4 font-medium">Kosten</th>
+                    <th className="text-left p-4 font-medium">Lieferzeit</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  <tr><td className="p-4">Deutschland</td><td className="p-4"><span className="font-semibold">4,99 €</span><span className="text-sm text-muted-foreground ml-2">(ab 100€ kostenlos)</span></td><td className="p-4">1-3 Werktage</td></tr>
+                  <tr><td className="p-4">Österreich</td><td className="p-4"><span className="font-semibold">7,99 €</span><span className="text-sm text-muted-foreground ml-2">(ab 150€ kostenlos)</span></td><td className="p-4">2-4 Werktage</td></tr>
+                  <tr><td className="p-4">Schweiz</td><td className="p-4"><span className="font-semibold">12,99 €</span></td><td className="p-4">3-5 Werktage</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </motion.section>
+
+          {/* Shopify-Richtlinien oder Fallback */}
           {isLoading ? (
             <div className="flex justify-center py-12">
               <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
@@ -112,7 +136,7 @@ const Shipping = () => {
           ) : hasShopifyContent ? (
             <div className="max-w-3xl mx-auto space-y-12">
               {shippingPolicy?.body && (
-                <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+                <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
                   <h2 className="font-display text-2xl font-bold mb-6 flex items-center gap-3">
                     <Truck className="w-6 h-6 text-primary" />Versandrichtlinie
                   </h2>
@@ -122,7 +146,7 @@ const Shipping = () => {
                 </motion.section>
               )}
               {refundPolicy?.body && (
-                <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+                <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
                   <h2 className="font-display text-2xl font-bold mb-6 flex items-center gap-3">
                     <RefreshCw className="w-6 h-6 text-primary" />Rückgabe & Widerruf
                   </h2>
@@ -133,7 +157,25 @@ const Shipping = () => {
               )}
             </div>
           ) : (
-            <ShippingFallbackContent />
+            <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="max-w-3xl mx-auto mb-16">
+              <h2 className="font-display text-2xl font-bold mb-6 flex items-center gap-3">
+                <RefreshCw className="w-6 h-6 text-primary" />Rückgabe & Widerruf
+              </h2>
+              <div className="bg-card border border-border rounded-2xl p-6 space-y-4">
+                <div>
+                  <h3 className="font-semibold mb-2">14 Tage Widerrufsrecht</h3>
+                  <p className="text-muted-foreground">Du hast das Recht, binnen 14 Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.</p>
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-2">Rückgabebedingungen</h3>
+                  <ul className="text-muted-foreground space-y-2">
+                    <li className="flex items-start gap-2"><span className="text-primary">•</span>Produkte müssen ungeöffnet und im Originalzustand sein</li>
+                    <li className="flex items-start gap-2"><span className="text-primary">•</span>Die Originalverpackung muss unbeschädigt sein</li>
+                    <li className="flex items-start gap-2"><span className="text-primary">•</span>Rücksendung innerhalb von 14 Tagen nach Erhalt</li>
+                  </ul>
+                </div>
+              </div>
+            </motion.section>
           )}
 
           <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="max-w-3xl mx-auto mt-12">
