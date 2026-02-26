@@ -90,9 +90,7 @@ const AGB = () => {
                 <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
               </div>
             ) : policy?.body ? (
-              <div className="bg-card border border-border rounded-2xl p-6 md:p-8">
-                <ShopifyHtmlContent html={policy.body} />
-              </div>
+              <ShopifyHtmlContent html={policy.body} />
             ) : (
               <AGBFallback />
             )}

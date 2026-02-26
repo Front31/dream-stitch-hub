@@ -92,9 +92,7 @@ const Impressum = () => {
                 <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
               </div>
             ) : page?.body ? (
-              <div className="bg-card border border-border rounded-2xl p-6 md:p-8">
-                <ShopifyHtmlContent html={page.body} />
-              </div>
+              <ShopifyHtmlContent html={page.body} />
             ) : (
               <ImpressumFallback />
             )}

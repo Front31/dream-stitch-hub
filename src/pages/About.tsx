@@ -36,7 +36,7 @@ const About = () => {
           <div className="flex justify-center py-12"><Loader2 className="h-8 w-8 animate-spin text-muted-foreground" /></div>
         ) : page?.body ? (
           <section className="container mx-auto px-6 mb-20">
-            <div className="max-w-3xl mx-auto bg-card border border-border rounded-2xl p-6 md:p-8">
+            <div className="max-w-3xl mx-auto">
               <ShopifyHtmlContent html={page.body} />
             </div>
           </section>
