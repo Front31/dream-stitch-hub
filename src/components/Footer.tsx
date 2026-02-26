@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import { Instagram, Youtube } from 'lucide-react';
 import rifaLogo from '@/assets/rifa-logo.png';
 import { useCookieConsentStore } from '@/stores/cookieConsentStore';
+import { useShopifyMenu, type NavItem } from '@/hooks/useShopifyMenu';
+import { useShopifyLocalization } from '@/hooks/useShopifyLocalization';
 import visaIcon from '@/assets/payments/visa.svg';
 import mastercardIcon from '@/assets/payments/mastercard.svg';
 import amexIcon from '@/assets/payments/amex.svg';
@@ -22,8 +24,19 @@ const paymentMethods = [
   { name: 'Google Pay', icon: googleIcon },
 ];
 
+const fallbackFooterLinks: NavItem[] = [
+  { label: 'Alle Produkte', path: '/collection' },
+  { label: 'Über uns', path: '/about' },
+  { label: 'FAQ', path: '/faq' },
+  { label: 'Versand & Rückgabe', path: '/shipping' },
+  { label: 'Kontakt', path: '/contact' },
+];
+
 const Footer = () => {
   const openBanner = useCookieConsentStore((s) => s.openBanner);
+  const { navItems: footerNavItems } = useShopifyMenu('footer');
+  const { currentLanguage, currentCountry } = useShopifyLocalization();
+  const footerLinks = footerNavItems.length > 0 ? footerNavItems : fallbackFooterLinks;
 
   return (
     <footer className="bg-secondary/50 border-t border-border">
@@ -59,51 +72,38 @@ const Footer = () => {
           <div>
             <h4 className="font-display font-semibold mb-4 text-primary">Shop</h4>
             <ul className="space-y-2">
-              <li>
-                <Link to="/collection" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Alle Produkte
-                </Link>
-              </li>
-              <li>
-                <Link to="/collection?type=display" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Booster Displays
-                </Link>
-              </li>
-              <li>
-                <Link to="/collection?type=etb" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Elite Trainer Boxen
-                </Link>
-              </li>
-              <li>
-                <Link to="/collection?type=collection" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Special Collections
-                </Link>
-              </li>
+              {footerLinks.map((item) => (
+                <li key={item.path}>
+                  <Link to={item.path} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div>
-            <h4 className="font-display font-semibold mb-4 text-primary">Info</h4>
+            <h4 className="font-display font-semibold mb-4 text-primary">Rechtliches</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Über uns
+                <Link to="/impressum" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Impressum
                 </Link>
               </li>
               <li>
-                <Link to="/faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  FAQ
+                <Link to="/datenschutz" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Datenschutz
                 </Link>
               </li>
               <li>
-                <Link to="/shipping" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Versand & Rückgabe
+                <Link to="/agb" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  AGB
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Kontakt
-                </Link>
+                <button onClick={openBanner} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  Cookie-Einstellungen
+                </button>
               </li>
             </ul>
           </div>
@@ -119,6 +119,12 @@ const Footer = () => {
               <li className="text-sm text-muted-foreground">
                 Antwort innerhalb 24h
               </li>
+              {currentCountry && (
+                <li className="text-xs text-muted-foreground pt-2">
+                  🌍 {currentCountry.name} ({currentCountry.currency.symbol} {currentCountry.currency.isoCode})
+                  {currentLanguage && ` · ${currentLanguage.name}`}
+                </li>
+              )}
               <li className="pt-2">
                 <span className="text-xs text-muted-foreground">
                   Sichere Zahlung mit
@@ -143,20 +149,6 @@ const Footer = () => {
           <p className="text-xs text-muted-foreground">
             © {new Date().getFullYear()} RiFa Cards. Alle Rechte vorbehalten.
           </p>
-          <div className="flex items-center gap-4">
-            <Link to="/impressum" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-              Impressum
-            </Link>
-            <Link to="/datenschutz" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-              Datenschutz
-            </Link>
-            <Link to="/agb" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-              AGB
-            </Link>
-            <button onClick={openBanner} className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-              Cookie-Einstellungen
-            </button>
-          </div>
         </div>
       </div>
     </footer>
