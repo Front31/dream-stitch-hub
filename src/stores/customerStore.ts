@@ -234,6 +234,8 @@ export const useCustomerStore = create<CustomerStore>()(
       partialize: (state) => ({
         accessToken: state.accessToken,
         expiresAt: state.expiresAt,
+        devMode: state.devMode,
+        ...(state.devMode ? { customer: state.customer } : {}),
       }),
     }
   )
