@@ -65,13 +65,18 @@ export interface ShopifyProduct {
   };
 }
 
-export async function storefrontApiRequest(query: string, variables: Record<string, unknown> = {}) {
+export async function storefrontApiRequest(query: string, variables: Record<string, unknown> = {}, localeContext?: { language: string; country: string }) {
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
+  };
+  // Shopify Storefront API supports Accept-Language for localized content
+  if (localeContext) {
+    headers['Accept-Language'] = localeContext.language.toLowerCase();
+  }
   const response = await fetch(SHOPIFY_STOREFRONT_URL, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN
-    },
+    headers,
     body: JSON.stringify({ query, variables }),
   });
 
@@ -96,7 +101,7 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
 }
 
 export const PRODUCTS_QUERY = `
-  query GetProducts($first: Int!, $query: String) {
+  query GetProducts($first: Int!, $query: String, $country: CountryCode, $language: LanguageCode) @inContext(country: $country, language: $language) {
     products(first: $first, query: $query) {
       edges {
         node {
@@ -146,7 +151,7 @@ export const PRODUCTS_QUERY = `
 `;
 
 export const PRODUCT_BY_HANDLE_QUERY = `
-  query GetProductByHandle($handle: String!) {
+  query GetProductByHandle($handle: String!, $country: CountryCode, $language: LanguageCode) @inContext(country: $country, language: $language) {
     productByHandle(handle: $handle) {
       id
       title
@@ -281,9 +286,14 @@ export function isCartNotFoundError(userErrors: Array<{ field: string[] | null; 
   return userErrors.some(e => e.message.toLowerCase().includes('cart not found') || e.message.toLowerCase().includes('does not exist'));
 }
 
-export async function fetchProducts(first: number = 20): Promise<ShopifyProduct[]> {
+export async function fetchProducts(first: number = 20, localeCtx?: { language: string; country: string }): Promise<ShopifyProduct[]> {
   try {
-    const data = await storefrontApiRequest(PRODUCTS_QUERY, { first });
+    const variables: Record<string, unknown> = { first };
+    if (localeCtx) {
+      variables.country = localeCtx.country;
+      variables.language = localeCtx.language;
+    }
+    const data = await storefrontApiRequest(PRODUCTS_QUERY, variables, localeCtx);
     return data?.data?.products?.edges || [];
   } catch (error) {
     console.error('Error fetching products:', error);
@@ -291,9 +301,14 @@ export async function fetchProducts(first: number = 20): Promise<ShopifyProduct[
   }
 }
 
-export async function fetchProductByHandle(handle: string) {
+export async function fetchProductByHandle(handle: string, localeCtx?: { language: string; country: string }) {
   try {
-    const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle });
+    const variables: Record<string, unknown> = { handle };
+    if (localeCtx) {
+      variables.country = localeCtx.country;
+      variables.language = localeCtx.language;
+    }
+    const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, variables, localeCtx);
     return data?.data?.productByHandle || null;
   } catch (error) {
     console.error('Error fetching product:', error);

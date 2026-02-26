@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { Instagram, Youtube } from 'lucide-react';
 import rifaLogo from '@/assets/rifa-logo.png';
 import { useCookieConsentStore } from '@/stores/cookieConsentStore';
+import { useTranslation } from '@/hooks/useTranslation';
 import visaIcon from '@/assets/payments/visa.svg';
 import mastercardIcon from '@/assets/payments/mastercard.svg';
 import amexIcon from '@/assets/payments/amex.svg';
@@ -24,6 +25,7 @@ const paymentMethods = [
 
 const Footer = () => {
   const openBanner = useCookieConsentStore((s) => s.openBanner);
+  const { t } = useTranslation();
 
   return (
     <footer className="bg-secondary/50 border-t border-border">
@@ -34,15 +36,14 @@ const Footer = () => {
               <img src={rifaLogo} alt="RiFa Cards" className="h-14 mb-4" />
             </Link>
             <p className="text-sm text-muted-foreground max-w-sm mb-4">
-              Premium TCG Sealed Produkte. Booster Displays, Elite Trainer Boxen
-              und Special Collections für echte Sammler.
+              {t('footer.description')}
             </p>
             <p className="text-xs text-muted-foreground">
-              Keine Einzelkarten. Nur original versiegelte Produkte.
+              {t('footer.sealed_only')}
             </p>
             <div className="flex items-center gap-4 mt-4">
               <a href="https://discord.gg/8AxJJMqhxq" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/20 transition-colors" aria-label="Discord">
-                <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M18.93 5.34a16.89 16.89 0 0 0-4.07-1.23.06.06 0 0 0-.07.03c-.18.31-.38.72-.52 1.04a15.72 15.72 0 0 0-4.54 0 10.4 10.4 0 0 0-.53-1.04.06.06 0 0 0-.07-.03 16.84 16.84 0 0 0-4.07 1.23.06.06 0 0 0-.03.02C2.4 9.36 1.73 13.25 2.06 17.1a.07.07 0 0 0 .03.05 16.85 16.85 0 0 0 4.99 2.47.07.07 0 0 0 .07-.02 11.57 11.57 0 0 0 1.01-1.61.06.06 0 0 0-.04-.09 11.17 11.17 0 0 1-1.56-.73.06.06 0 0 1-.01-.1c.1-.08.21-.16.31-.24a.06.06 0 0 1 .07-.01 12.18 12.18 0 0 0 10.13 0 .06.06 0 0 1 .07.01c.1.08.21.17.31.24a.06.06 0 0 1 0 .1c-.5.29-1.02.53-1.56.73a.06.06 0 0 0-.04.09c.3.56.63 1.1 1.01 1.61a.07.07 0 0 0 .07.02 16.82 16.82 0 0 0 5-2.47.07.07 0 0 0 .03-.05c.39-4.03-.67-7.88-2.8-11.73a.05.05 0 0 0-.02-.03zM8.68 14.56c-1.05 0-1.91-.95-1.91-2.12s.84-2.12 1.91-2.12c1.07 0 1.93.96 1.91 2.12 0 1.17-.85 2.12-1.91 2.12zm7.06 0c-1.05 0-1.91-.95-1.91-2.12s.84-2.12 1.91-2.12 1.93.96 1.91 2.12c0 1.17-.84 2.12-1.91 2.12z"/></svg>
+                <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round"><path d="M18.93 5.34a16.89 16.89 0 0 0-4.07-1.23.06.06 0 0 0-.07.03c-.18.31-.38.72-.52 1.04a15.72 15.72 0 0 0-4.54 0 10.4 10.4 0 0 0-.53-1.04.06.06 0 0 0-.07-.03 16.84 16.84 0 0 0-4.07 1.23.06.06 0 0 0-.03.02C2.4 9.36 1.73 13.25 2.06 17.1a.07.07 0 0 0 .03.05 16.85 16.85 0 0 0 4.99 2.47.07.07 0 0 0 .07-.02 11.57 11.57 0 0 0 1.01-1.61.06.06 0 0 0-.04-.09 11.17 11.17 0 0 1-1.56-.73.06.06 0 0 1-.01-.1c.1-.08.21-.16.31-.24a.06.06 0 0 1 .07-.01 12.18 12.18 0 0 0 10.13 0 .06.06 0 0 1 .07.01c.1.08.21.17.31.24a.06.06 0 0 1 0 .1c-.5.29-1.02.53-1.56.73a.06.06 0 0 0-.04.09c.3.56.63 1.1 1.01 1.61a.07.07 0 0 0 .07.02 16.82 16.82 0 0 0 5-2.47.07.07 0 0 0 .03-.05c.39-4.03-.67-7.88-2.8-11.73a.05.05 0 0 0-.02-.03zM8.68 14.56c-1.05 0-1.91-.95-1.91-2.12s.84-2.12 1.91-2.12c1.07 0 1.93.96 1.91 2.12 0 1.17-.85 2.12-1.91 2.12zm7.06 0c-1.05 0-1.91-.95-1.91-2.12s.84-2.12 1.91-2.12s1.93.96 1.91 2.12c0 1.17-.84 2.12-1.91 2.12z"/></svg>
               </a>
               <a href="https://www.instagram.com/rifacards.de/" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/20 transition-colors" aria-label="Instagram">
                 <Instagram className="w-7 h-7" strokeWidth={1.75} />
@@ -57,79 +58,35 @@ const Footer = () => {
           </div>
 
           <div>
-            <h4 className="font-display font-semibold mb-4 text-primary">Shop</h4>
+            <h4 className="font-display font-semibold mb-4 text-primary">{t('footer.shop')}</h4>
             <ul className="space-y-2">
-              <li>
-                <Link to="/collection" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Alle Produkte
-                </Link>
-              </li>
-              <li>
-                <Link to="/collection?type=display" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Booster Displays
-                </Link>
-              </li>
-              <li>
-                <Link to="/collection?type=etb" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Elite Trainer Boxen
-                </Link>
-              </li>
-              <li>
-                <Link to="/collection?type=collection" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Special Collections
-                </Link>
-              </li>
+              <li><Link to="/collection" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('footer.all_products')}</Link></li>
+              <li><Link to="/collection?type=display" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('footer.booster_displays')}</Link></li>
+              <li><Link to="/collection?type=etb" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('footer.etb')}</Link></li>
+              <li><Link to="/collection?type=collection" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('footer.special_collections')}</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-display font-semibold mb-4 text-primary">Info</h4>
+            <h4 className="font-display font-semibold mb-4 text-primary">{t('footer.info')}</h4>
             <ul className="space-y-2">
-              <li>
-                <Link to="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Über uns
-                </Link>
-              </li>
-              <li>
-                <Link to="/faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link to="/shipping" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Versand & Rückgabe
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                  Kontakt
-                </Link>
-              </li>
+              <li><Link to="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.about')}</Link></li>
+              <li><Link to="/faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.faq')}</Link></li>
+              <li><Link to="/shipping" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.shipping')}</Link></li>
+              <li><Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.contact')}</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-display font-semibold mb-4 text-primary">Service</h4>
+            <h4 className="font-display font-semibold mb-4 text-primary">{t('footer.service')}</h4>
             <ul className="space-y-2">
-              <li>
-                <a href="mailto:info@rifacards.de" className="text-sm text-muted-foreground hover:text-accent transition-colors">
-                  info@rifacards.de
-                </a>
-              </li>
-              <li className="text-sm text-muted-foreground">
-                Antwort innerhalb 24h
-              </li>
+              <li><a href="mailto:info@rifacards.de" className="text-sm text-muted-foreground hover:text-accent transition-colors">info@rifacards.de</a></li>
+              <li className="text-sm text-muted-foreground">{t('footer.reply_time')}</li>
               <li className="pt-2">
-                <span className="text-xs text-muted-foreground">
-                  Sichere Zahlung mit
-                </span>
+                <span className="text-xs text-muted-foreground">{t('footer.secure_payment')}</span>
                 <div className="flex flex-wrap items-center gap-2.5 mt-3">
                   {paymentMethods.map((method) => (
-                    <div
-                      key={method.name}
-                      className="h-9 w-14 rounded-md border border-border/50 bg-white flex items-center justify-center p-1.5 shadow-sm"
-                      title={method.name}
-                    >
+                    <div key={method.name} className="h-9 w-14 rounded-md border border-border/50 bg-white flex items-center justify-center p-1.5 shadow-sm" title={method.name}>
                       <img src={method.icon} alt={method.name} className="h-full w-full object-contain" />
                     </div>
                   ))}
@@ -141,21 +98,13 @@ const Footer = () => {
 
         <div className="mt-12 pt-6 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} RiFa Cards. Alle Rechte vorbehalten.
+            {t('footer.rights', { year: new Date().getFullYear().toString() })}
           </p>
           <div className="flex items-center gap-4">
-            <Link to="/impressum" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-              Impressum
-            </Link>
-            <Link to="/datenschutz" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-              Datenschutz
-            </Link>
-            <Link to="/agb" className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-              AGB
-            </Link>
-            <button onClick={openBanner} className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-              Cookie-Einstellungen
-            </button>
+            <Link to="/impressum" className="text-xs text-muted-foreground hover:text-foreground transition-colors">{t('footer.impressum')}</Link>
+            <Link to="/datenschutz" className="text-xs text-muted-foreground hover:text-foreground transition-colors">{t('footer.datenschutz')}</Link>
+            <Link to="/agb" className="text-xs text-muted-foreground hover:text-foreground transition-colors">{t('footer.agb')}</Link>
+            <button onClick={openBanner} className="text-xs text-muted-foreground hover:text-foreground transition-colors">{t('footer.cookie_settings')}</button>
           </div>
         </div>
       </div>

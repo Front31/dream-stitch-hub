@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import rifaLogo from '@/assets/rifa-logo.png';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -10,6 +11,7 @@ const HeroSection = () => {
     target: containerRef,
     offset: ["start start", "end start"]
   });
+  const { t } = useTranslation();
 
   const logoY = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const logoScale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
@@ -24,7 +26,6 @@ const HeroSection = () => {
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{ y: bgY }}>
-
         <div className="absolute top-20 left-[10%] w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
         <div className="absolute bottom-20 right-[10%] w-80 h-80 bg-accent/15 rounded-full blur-3xl" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-secondary/20 rounded-full blur-3xl" />
@@ -34,31 +35,13 @@ const HeroSection = () => {
         <motion.div
           style={{ y: logoY, scale: logoScale }}
           className="mb-8 md:mb-12">
-
           <motion.img
             src={rifaLogo}
             alt="RiFa Cards"
             className="h-32 md:h-48 lg:h-56 w-auto mx-auto drop-shadow-2xl"
             initial={{ opacity: 0, scale: 0.8, filter: 'blur(20px)' }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              filter: 'blur(0px)'
-            }}
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
             transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }} />
-
-
-          
-
-
-
-
-
-
-
-
-
-
         </motion.div>
 
         <motion.div
@@ -72,24 +55,22 @@ const HeroSection = () => {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.5 }}>
-
             <Sparkles className="w-4 h-4 text-accent" />
             <span className="text-sm font-medium text-muted-foreground">
-              Premium TCG Produkte
+              {t('hero.badge')}
             </span>
           </motion.div>
 
           <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight">
-            <span className="block">Deine Produkte.</span>
+            <span className="block">{t('hero.title.line1')}</span>
             <span className="block">
-              <span className="text-gradient-primary">Sealed.</span>{' '}
-              <span className="text-gradient-accent">Premium.</span>
+              <span className="text-gradient-primary">{t('hero.title.sealed')}</span>{' '}
+              <span className="text-gradient-accent">{t('hero.title.premium')}</span>
             </span>
           </h1>
 
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            Entdecke exklusive Booster Displays, Elite Trainer Boxen und Special Collections.
-            Jedes Produkt sealed und mit Sorgfalt kuratiert.
+            {t('hero.description')}
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -98,9 +79,8 @@ const HeroSection = () => {
                 className="btn-hero group"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}>
-
                 <span className="flex items-center gap-2">
-                  Zu den Produkten
+                  {t('hero.cta')}
                   <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                 </span>
               </motion.button>
@@ -111,8 +91,7 @@ const HeroSection = () => {
               className="btn-secondary"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}>
-
-              Neue Drops entdecken
+              {t('hero.cta2')}
             </motion.a>
           </div>
         </motion.div>
@@ -122,22 +101,10 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}>
-
-          
-
-
-
-
-
-
-
-
-
-
         </motion.div>
       </div>
-    </section>);
-
+    </section>
+  );
 };
 
 export default HeroSection;

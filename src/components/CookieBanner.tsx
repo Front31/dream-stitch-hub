@@ -1,40 +1,22 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Cookie, Shield, BarChart3, Megaphone, X, Settings } from 'lucide-react';
+import { Cookie, Shield, BarChart3, Megaphone, Settings } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCookieConsentStore, type CookieCategory } from '@/stores/cookieConsentStore';
+import { useTranslation } from '@/hooks/useTranslation';
+import type { TranslationKey } from '@/i18n';
 
-const categories: { key: CookieCategory; label: string; description: string; icon: React.ReactNode; required?: boolean }[] = [
-  {
-    key: 'necessary',
-    label: 'Technisch notwendige Cookies',
-    description: 'Diese Cookies sind erforderlich, damit die Website ordnungsgemäß funktioniert, z. B. Funktionen wie die Anmeldung oder das Hinzufügen von Artikeln zum Warenkorb.',
-    icon: <Shield className="w-4 h-4" />,
-    required: true,
-  },
-  {
-    key: 'personalization',
-    label: 'Personalisierung',
-    description: 'Diese Cookies speichern Details zu Ihren Aktionen, um Ihren nächsten Besuch auf der Website zu personalisieren.',
-    icon: <Settings className="w-4 h-4" />,
-  },
-  {
-    key: 'marketing',
-    label: 'Marketing',
-    description: 'Diese Cookies werden von uns und unseren Partnern verwendet, einschließlich Shopify, um Marketingbotschaften zu optimieren und dir Werbung auf anderen Websites anzuzeigen.',
-    icon: <Megaphone className="w-4 h-4" />,
-  },
-  {
-    key: 'analytics',
-    label: 'Analysen',
-    description: 'Diese Cookies helfen uns zu verstehen, wie Sie mit der Website interagieren. Wir verwenden diese Daten, um verbesserungswürdige Bereiche zu identifizieren.',
-    icon: <BarChart3 className="w-4 h-4" />,
-  },
+const categoryConfig: { key: CookieCategory; labelKey: TranslationKey; descKey: TranslationKey; icon: React.ReactNode; required?: boolean }[] = [
+  { key: 'necessary', labelKey: 'cookie.necessary', descKey: 'cookie.necessary_desc', icon: <Shield className="w-4 h-4" />, required: true },
+  { key: 'personalization', labelKey: 'cookie.personalization', descKey: 'cookie.personalization_desc', icon: <Settings className="w-4 h-4" /> },
+  { key: 'marketing', labelKey: 'cookie.marketing', descKey: 'cookie.marketing_desc', icon: <Megaphone className="w-4 h-4" /> },
+  { key: 'analytics', labelKey: 'cookie.analytics', descKey: 'cookie.analytics_desc', icon: <BarChart3 className="w-4 h-4" /> },
 ];
 
 const CookieBanner = () => {
-  const { showBanner, showSettings, acceptAll, rejectAll, savePreferences, openSettings, closeSettings, preferences } = useCookieConsentStore();
+  const { showBanner, showSettings, acceptAll, rejectAll, savePreferences, openSettings, preferences } = useCookieConsentStore();
   const [localPrefs, setLocalPrefs] = useState<Record<CookieCategory, boolean>>({ ...preferences });
+  const { t } = useTranslation();
 
   if (!showBanner) return null;
 
@@ -53,24 +35,22 @@ const CookieBanner = () => {
         className="fixed bottom-0 left-0 right-0 z-[100] p-4 md:p-6"
       >
         <div className="max-w-2xl mx-auto bg-card border border-border rounded-2xl shadow-[var(--shadow-elevated)] overflow-hidden">
-          {/* Main Banner */}
           <div className="p-5 md:p-6">
             <div className="flex items-start gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center shrink-0">
                 <Cookie className="w-5 h-5 text-accent" />
               </div>
               <div>
-                <h3 className="font-display font-bold text-base mb-1">Wir respektieren deine Privatsphäre</h3>
+                <h3 className="font-display font-bold text-base mb-1">{t('cookie.title')}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">
-                  Wir verwenden Cookies, um dein Einkaufserlebnis zu verbessern. Du kannst selbst entscheiden, welche Cookies du zulassen möchtest.{' '}
+                  {t('cookie.description')}{' '}
                   <Link to="/datenschutz" className="text-accent hover:underline">
-                    Mehr erfahren
+                    {t('cookie.learn_more')}
                   </Link>
                 </p>
               </div>
             </div>
 
-            {/* Settings Panel */}
             <AnimatePresence>
               {showSettings && (
                 <motion.div
@@ -81,7 +61,7 @@ const CookieBanner = () => {
                   className="overflow-hidden"
                 >
                   <div className="space-y-3 mb-4 pt-4 border-t border-border">
-                    {categories.map((cat) => (
+                    {categoryConfig.map((cat) => (
                       <div
                         key={cat.key}
                         className="flex items-start gap-3 p-3 rounded-xl bg-secondary/50 hover:bg-secondary/80 transition-colors"
@@ -91,14 +71,12 @@ const CookieBanner = () => {
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between gap-2">
-                            <span className="font-display font-semibold text-sm">{cat.label}</span>
+                            <span className="font-display font-semibold text-sm">{t(cat.labelKey)}</span>
                             <button
                               onClick={() => handleToggle(cat.key)}
                               disabled={cat.required}
                               className={`relative w-10 h-5 rounded-full transition-colors shrink-0 ${
-                                localPrefs[cat.key]
-                                  ? 'bg-primary'
-                                  : 'bg-muted'
+                                localPrefs[cat.key] ? 'bg-primary' : 'bg-muted'
                               } ${cat.required ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
                             >
                               <span
@@ -108,7 +86,7 @@ const CookieBanner = () => {
                               />
                             </button>
                           </div>
-                          <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{cat.description}</p>
+                          <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{t(cat.descKey)}</p>
                         </div>
                       </div>
                     ))}
@@ -117,21 +95,20 @@ const CookieBanner = () => {
               )}
             </AnimatePresence>
 
-            {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-2">
               <button
                 onClick={acceptAll}
                 className="flex-1 px-4 py-2.5 rounded-xl font-display font-semibold text-sm text-accent-foreground transition-all hover:opacity-90"
                 style={{ background: 'linear-gradient(135deg, hsl(var(--accent)), hsl(24 90% 48%))' }}
               >
-                Alle akzeptieren
+                {t('cookie.accept_all')}
               </button>
               {showSettings ? (
                 <button
                   onClick={() => savePreferences(localPrefs)}
                   className="flex-1 px-4 py-2.5 rounded-xl font-display font-semibold text-sm bg-primary text-primary-foreground transition-all hover:opacity-90"
                 >
-                  Auswahl speichern
+                  {t('cookie.save')}
                 </button>
               ) : (
                 <button
@@ -139,14 +116,14 @@ const CookieBanner = () => {
                   className="flex-1 px-4 py-2.5 rounded-xl font-display font-semibold text-sm bg-secondary text-secondary-foreground border border-border transition-all hover:bg-muted flex items-center justify-center gap-2"
                 >
                   <Settings className="w-4 h-4" />
-                  Einstellungen
+                  {t('cookie.settings')}
                 </button>
               )}
               <button
                 onClick={rejectAll}
                 className="flex-1 px-4 py-2.5 rounded-xl font-display font-semibold text-sm bg-secondary text-secondary-foreground border border-border transition-all hover:bg-muted"
               >
-                Nur notwendige
+                {t('cookie.reject')}
               </button>
             </div>
           </div>

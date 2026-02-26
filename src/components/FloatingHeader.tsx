@@ -4,7 +4,9 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, UserCircle } from 'lucide-react';
 import rifaLogo from '@/assets/rifa-logo.png';
 import CartDrawer from './CartDrawer';
+import LocaleSwitcher from './LocaleSwitcher';
 import { useCustomerStore } from '@/stores/customerStore';
+import { useTranslation } from '@/hooks/useTranslation';
 
 const FloatingHeader = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -15,6 +17,7 @@ const FloatingHeader = () => {
   const { scrollY } = useScroll();
   const headerOpacity = useTransform(scrollY, [0, 100], [0.95, 1]);
   const isLoggedIn = useCustomerStore((s) => s.isAuthenticated());
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,10 +29,10 @@ const FloatingHeader = () => {
   }, []);
 
   const navItems = [
-    { label: 'Produkte', path: '/collection' },
-    { label: 'Über uns', path: '/about' },
-    { label: 'FAQ', path: '/faq' },
-    { label: 'Kontakt', path: '/contact' },
+    { label: t('nav.products'), path: '/collection' },
+    { label: t('nav.about'), path: '/about' },
+    { label: t('nav.faq'), path: '/faq' },
+    { label: t('nav.contact'), path: '/contact' },
   ];
 
   return (
@@ -81,7 +84,8 @@ const FloatingHeader = () => {
                 ))}
               </nav>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2">
+                <LocaleSwitcher />
                 <Link to={isLoggedIn ? '/account' : '/login'}>
                   <motion.div
                     whileHover={{ scale: 1.05 }}
@@ -97,7 +101,7 @@ const FloatingHeader = () => {
                   className="lg:hidden p-2 rounded-full hover:bg-secondary transition-colors"
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  aria-label="Menü"
+                  aria-label={t('nav.menu')}
                 >
                   {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                 </motion.button>
@@ -134,7 +138,7 @@ const FloatingHeader = () => {
                 className={`font-display font-medium text-lg py-2 border-b border-border/50
                   ${location.pathname === '/shipping' ? 'text-primary' : 'text-foreground'}`}
               >
-                Versand & Rückgabe
+                {t('nav.shipping')}
               </Link>
               <Link
                 to={isLoggedIn ? '/account' : '/login'}
@@ -142,7 +146,7 @@ const FloatingHeader = () => {
                 className={`font-display font-medium text-lg py-2 border-b border-border/50
                   ${['/login', '/account'].includes(location.pathname) ? 'text-primary' : 'text-foreground'}`}
               >
-                {isLoggedIn ? 'Mein Konto' : 'Anmelden'}
+                {isLoggedIn ? t('nav.account') : t('nav.login')}
               </Link>
             </nav>
           </motion.div>
