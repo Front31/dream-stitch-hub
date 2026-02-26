@@ -17,6 +17,8 @@ import Shipping from "./pages/Shipping";
 import Impressum from "./pages/Impressum";
 import Datenschutz from "./pages/Datenschutz";
 import AGB from "./pages/AGB";
+import Login from "./pages/Login";
+import Account from "./pages/Account";
 import NotFound from "./pages/NotFound";
 import CookieBanner from "./components/CookieBanner";
 
@@ -40,6 +42,8 @@ const AppContent = () => {
       <Route path="/impressum" element={<Impressum />} />
       <Route path="/datenschutz" element={<Datenschutz />} />
       <Route path="/agb" element={<AGB />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/account" element={<Account />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
       <CookieBanner />

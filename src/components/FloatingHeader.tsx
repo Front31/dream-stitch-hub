@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, UserCircle } from 'lucide-react';
 import rifaLogo from '@/assets/rifa-logo.png';
 import CartDrawer from './CartDrawer';
+import { useCustomerStore } from '@/stores/customerStore';
 
 const FloatingHeader = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -13,6 +14,7 @@ const FloatingHeader = () => {
   const showLogo = !isHomePage || isScrolled;
   const { scrollY } = useScroll();
   const headerOpacity = useTransform(scrollY, [0, 100], [0.95, 1]);
+  const isLoggedIn = useCustomerStore((s) => s.isAuthenticated());
 
   useEffect(() => {
     const handleScroll = () => {
@@ -80,6 +82,15 @@ const FloatingHeader = () => {
               </nav>
 
               <div className="flex items-center gap-3">
+                <Link to={isLoggedIn ? '/account' : '/login'}>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`p-2 rounded-full transition-colors ${isLoggedIn ? 'text-accent' : 'text-muted-foreground hover:text-foreground'}`}
+                  >
+                    <UserCircle className="h-5 w-5" />
+                  </motion.div>
+                </Link>
                 <CartDrawer />
 
                 <motion.button
@@ -124,6 +135,14 @@ const FloatingHeader = () => {
                   ${location.pathname === '/shipping' ? 'text-primary' : 'text-foreground'}`}
               >
                 Versand & Rückgabe
+              </Link>
+              <Link
+                to={isLoggedIn ? '/account' : '/login'}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`font-display font-medium text-lg py-2 border-b border-border/50
+                  ${['/login', '/account'].includes(location.pathname) ? 'text-primary' : 'text-foreground'}`}
+              >
+                {isLoggedIn ? 'Mein Konto' : 'Anmelden'}
               </Link>
             </nav>
           </motion.div>
