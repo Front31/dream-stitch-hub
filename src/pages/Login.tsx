@@ -5,6 +5,7 @@ import { Mail, ArrowRight, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
+import { useCustomerStore } from '@/stores/customerStore';
 import FloatingHeader from '@/components/FloatingHeader';
 import Footer from '@/components/Footer';
 import rifaLogo from '@/assets/rifa-logo.png';
@@ -174,7 +175,10 @@ const Login = () => {
             <Button
               variant="outline"
               className="w-full border-dashed border-destructive/50 text-destructive hover:bg-destructive/10"
-              onClick={() => navigate('/account')}
+              onClick={() => {
+                useCustomerStore.getState().setDevMode();
+                navigate('/account');
+              }}
             >
               🛠 Dev: Direkt zum Dashboard
             </Button>
