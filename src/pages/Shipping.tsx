@@ -128,54 +128,58 @@ const Shipping = () => {
             </div>
           </motion.section>
 
-          {/* Shopify-Richtlinien oder Fallback */}
+          {/* Shopify Versandrichtlinie oder Fallback */}
           {isLoading ? (
             <div className="flex justify-center py-12">
               <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
             </div>
-          ) : hasShopifyContent ? (
-            <div className="max-w-3xl mx-auto space-y-12">
-              {shippingPolicy?.body && (
-                <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-                  <h2 className="font-display text-2xl font-bold mb-6 flex items-center gap-3">
-                    <Truck className="w-6 h-6 text-primary" />Versandrichtlinie
-                  </h2>
-                  <div className="bg-card border border-border rounded-2xl p-6 md:p-8">
-                    <ShopifyHtmlContent html={shippingPolicy.body} />
-                  </div>
-                </motion.section>
-              )}
-              {refundPolicy?.body && (
-                <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
-                  <h2 className="font-display text-2xl font-bold mb-6 flex items-center gap-3">
-                    <RefreshCw className="w-6 h-6 text-primary" />Rückgabe & Widerruf
-                  </h2>
-                  <div className="bg-card border border-border rounded-2xl p-6 md:p-8">
-                    <ShopifyHtmlContent html={refundPolicy.body} />
-                  </div>
-                </motion.section>
-              )}
-            </div>
           ) : (
-            <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="max-w-3xl mx-auto mb-16">
-              <h2 className="font-display text-2xl font-bold mb-6 flex items-center gap-3">
-                <RefreshCw className="w-6 h-6 text-primary" />Rückgabe & Widerruf
-              </h2>
-              <div className="bg-card border border-border rounded-2xl p-6 space-y-4">
-                <div>
-                  <h3 className="font-semibold mb-2">14 Tage Widerrufsrecht</h3>
-                  <p className="text-muted-foreground">Du hast das Recht, binnen 14 Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.</p>
+            <div className="max-w-3xl mx-auto space-y-12">
+              {/* Versandrichtlinie */}
+              <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+                <h2 className="font-display text-2xl font-bold mb-6 flex items-center gap-3">
+                  <Truck className="w-6 h-6 text-primary" />Versandrichtlinie
+                </h2>
+                <div className="bg-card border border-border rounded-2xl p-6 md:p-8">
+                  {shippingPolicy?.body ? (
+                    <ShopifyHtmlContent html={shippingPolicy.body} />
+                  ) : (
+                    <div className="space-y-4 text-muted-foreground">
+                      <p>Bestellungen, die bis 14:00 Uhr eingehen, werden noch am selben Werktag versendet. Wir versenden mit DHL und DPD – versichert und mit Sendungsverfolgung.</p>
+                      <p>Nach dem Versand erhältst du automatisch eine E-Mail mit deiner Tracking-Nummer, über die du dein Paket jederzeit verfolgen kannst.</p>
+                      <p>Alle Pakete werden sorgfältig und sicher verpackt, damit deine Produkte in einwandfreiem Zustand bei dir ankommen.</p>
+                    </div>
+                  )}
                 </div>
-                <div>
-                  <h3 className="font-semibold mb-2">Rückgabebedingungen</h3>
-                  <ul className="text-muted-foreground space-y-2">
-                    <li className="flex items-start gap-2"><span className="text-primary">•</span>Produkte müssen ungeöffnet und im Originalzustand sein</li>
-                    <li className="flex items-start gap-2"><span className="text-primary">•</span>Die Originalverpackung muss unbeschädigt sein</li>
-                    <li className="flex items-start gap-2"><span className="text-primary">•</span>Rücksendung innerhalb von 14 Tagen nach Erhalt</li>
-                  </ul>
+              </motion.section>
+
+              {/* Rückgabe & Widerruf */}
+              <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
+                <h2 className="font-display text-2xl font-bold mb-6 flex items-center gap-3">
+                  <RefreshCw className="w-6 h-6 text-primary" />Rückgabe & Widerruf
+                </h2>
+                <div className="bg-card border border-border rounded-2xl p-6 md:p-8">
+                  {refundPolicy?.body ? (
+                    <ShopifyHtmlContent html={refundPolicy.body} />
+                  ) : (
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="font-semibold mb-2">14 Tage Widerrufsrecht</h3>
+                        <p className="text-muted-foreground">Du hast das Recht, binnen 14 Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.</p>
+                      </div>
+                      <div>
+                        <h3 className="font-semibold mb-2">Rückgabebedingungen</h3>
+                        <ul className="text-muted-foreground space-y-2">
+                          <li className="flex items-start gap-2"><span className="text-primary">•</span>Produkte müssen ungeöffnet und im Originalzustand sein</li>
+                          <li className="flex items-start gap-2"><span className="text-primary">•</span>Die Originalverpackung muss unbeschädigt sein</li>
+                          <li className="flex items-start gap-2"><span className="text-primary">•</span>Rücksendung innerhalb von 14 Tagen nach Erhalt</li>
+                        </ul>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
-            </motion.section>
+              </motion.section>
+            </div>
           )}
 
           <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="max-w-3xl mx-auto mt-12">
