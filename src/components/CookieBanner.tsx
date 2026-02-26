@@ -7,22 +7,28 @@ import { useCookieConsentStore, type CookieCategory } from '@/stores/cookieConse
 const categories: { key: CookieCategory; label: string; description: string; icon: React.ReactNode; required?: boolean }[] = [
   {
     key: 'necessary',
-    label: 'Notwendig',
-    description: 'Diese Cookies sind für die Grundfunktionen der Website erforderlich (z.B. Warenkorb, Sicherheit). Sie können nicht deaktiviert werden.',
+    label: 'Technisch notwendige Cookies',
+    description: 'Diese Cookies sind erforderlich, damit die Website ordnungsgemäß funktioniert, z. B. Funktionen wie die Anmeldung oder das Hinzufügen von Artikeln zum Warenkorb.',
     icon: <Shield className="w-4 h-4" />,
     required: true,
   },
   {
-    key: 'analytics',
-    label: 'Statistik',
-    description: 'Helfen uns zu verstehen, wie Besucher die Website nutzen. Alle Daten werden anonymisiert erhoben.',
-    icon: <BarChart3 className="w-4 h-4" />,
+    key: 'personalization',
+    label: 'Personalisierung',
+    description: 'Diese Cookies speichern Details zu Ihren Aktionen, um Ihren nächsten Besuch auf der Website zu personalisieren.',
+    icon: <Settings className="w-4 h-4" />,
   },
   {
     key: 'marketing',
     label: 'Marketing',
-    description: 'Werden verwendet, um Besuchern relevante Werbung und Angebote anzuzeigen.',
+    description: 'Diese Cookies werden von uns und unseren Partnern verwendet, einschließlich Shopify, um Marketingbotschaften zu optimieren und dir Werbung auf anderen Websites anzuzeigen.',
     icon: <Megaphone className="w-4 h-4" />,
+  },
+  {
+    key: 'analytics',
+    label: 'Analysen',
+    description: 'Diese Cookies helfen uns zu verstehen, wie Sie mit der Website interagieren. Wir verwenden diese Daten, um verbesserungswürdige Bereiche zu identifizieren.',
+    icon: <BarChart3 className="w-4 h-4" />,
   },
 ];
 
