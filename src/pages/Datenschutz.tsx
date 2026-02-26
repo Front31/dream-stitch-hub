@@ -11,18 +11,36 @@ const DatenschutzFallback = () => (
     <section className="bg-card border border-border rounded-2xl p-6 space-y-4">
       <h2 className="font-display text-xl font-bold">1. Verantwortlicher</h2>
       <div className="text-muted-foreground space-y-1">
-        <p>[Dein vollständiger Name / Firmenname]</p>
-        <p>[Deine Straße und Hausnummer]</p>
-        <p>[PLZ] [Ort]</p>
+        <p className="font-semibold text-foreground">RiFa Cards</p>
         <p>E-Mail: <a href="mailto:info@rifacards.de" className="text-accent hover:underline">info@rifacards.de</a></p>
       </div>
     </section>
-    <div className="bg-secondary/50 rounded-2xl p-6">
-      <p className="text-sm text-muted-foreground">
-        <strong>Hinweis:</strong> Hinterlege deine Datenschutzerklärung in den Shopify-Einstellungen unter
-        Einstellungen → Richtlinien → Datenschutzerklärung, damit sie hier automatisch angezeigt wird.
-      </p>
-    </div>
+
+    <section className="bg-card border border-border rounded-2xl p-6 space-y-4">
+      <h2 className="font-display text-xl font-bold">2. Erhebung und Speicherung personenbezogener Daten</h2>
+      <div className="text-muted-foreground space-y-2">
+        <p>Beim Besuch unserer Website werden automatisch Informationen allgemeiner Natur erfasst (Server-Logfiles). Diese Informationen beinhalten etwa die Art des Webbrowsers, das verwendete Betriebssystem, den Domainnamen Ihres Internet-Service-Providers und ähnliche Daten.</p>
+        <p>Bei einer Bestellung erheben wir folgende Daten: Name, Adresse, E-Mail-Adresse und Zahlungsinformationen. Diese Daten werden ausschließlich zur Abwicklung Ihrer Bestellung verwendet.</p>
+      </div>
+    </section>
+
+    <section className="bg-card border border-border rounded-2xl p-6 space-y-4">
+      <h2 className="font-display text-xl font-bold">3. Cookies</h2>
+      <p className="text-muted-foreground">Wir verwenden Cookies, um Ihnen die bestmögliche Nutzung unserer Website zu ermöglichen. Cookies sind kleine Textdateien, die auf Ihrem Endgerät gespeichert werden. Sie können die Verwendung von Cookies in Ihren Browsereinstellungen einschränken oder deaktivieren.</p>
+    </section>
+
+    <section className="bg-card border border-border rounded-2xl p-6 space-y-4">
+      <h2 className="font-display text-xl font-bold">4. Ihre Rechte</h2>
+      <div className="text-muted-foreground space-y-2">
+        <p>Sie haben jederzeit das Recht auf Auskunft über die bei uns zu Ihrer Person gespeicherten Daten. Ebenso haben Sie das Recht auf Berichtigung, Sperrung oder Löschung Ihrer personenbezogenen Daten.</p>
+        <p>Wenden Sie sich hierzu bitte an: <a href="mailto:info@rifacards.de" className="text-accent hover:underline">info@rifacards.de</a></p>
+      </div>
+    </section>
+
+    <section className="bg-card border border-border rounded-2xl p-6 space-y-4">
+      <h2 className="font-display text-xl font-bold">5. Zahlungsanbieter</h2>
+      <p className="text-muted-foreground">Wir nutzen externe Zahlungsdienstleister (z.B. Shopify Payments, PayPal). Bei der Zahlung werden Ihre Daten direkt an den Zahlungsdienstleister übermittelt. Es gelten die jeweiligen Datenschutzbestimmungen der Anbieter.</p>
+    </section>
   </div>
 );
 

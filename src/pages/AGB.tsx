@@ -10,17 +10,39 @@ const AGBFallback = () => (
   <div className="space-y-8">
     <section className="bg-card border border-border rounded-2xl p-6 space-y-4">
       <h2 className="font-display text-xl font-bold">§ 1 Geltungsbereich</h2>
-      <p className="text-muted-foreground">
-        Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Bestellungen über den
-        Online-Shop <strong>RiFa Cards</strong> (rifacards.de).
-      </p>
+      <p className="text-muted-foreground">Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Bestellungen über den Online-Shop <strong>RiFa Cards</strong> (rifacards.de). Mit der Bestellung erklären Sie sich mit diesen AGB einverstanden.</p>
     </section>
-    <div className="bg-secondary/50 rounded-2xl p-6">
-      <p className="text-sm text-muted-foreground">
-        <strong>Hinweis:</strong> Hinterlege deine AGB in den Shopify-Einstellungen unter
-        Einstellungen → Richtlinien → Nutzungsbedingungen, damit sie hier automatisch angezeigt werden.
-      </p>
-    </div>
+
+    <section className="bg-card border border-border rounded-2xl p-6 space-y-4">
+      <h2 className="font-display text-xl font-bold">§ 2 Vertragsschluss</h2>
+      <p className="text-muted-foreground">Die Darstellung der Produkte im Online-Shop stellt kein rechtlich bindendes Angebot dar. Durch Anklicken des Buttons „Kaufen" geben Sie eine verbindliche Bestellung ab. Die Bestätigung des Zugangs der Bestellung erfolgt per E-Mail. Der Kaufvertrag kommt mit Versand der Ware zustande.</p>
+    </section>
+
+    <section className="bg-card border border-border rounded-2xl p-6 space-y-4">
+      <h2 className="font-display text-xl font-bold">§ 3 Preise und Zahlung</h2>
+      <div className="text-muted-foreground space-y-2">
+        <p>Alle Preise verstehen sich in Euro inklusive der gesetzlichen Mehrwertsteuer, zuzüglich Versandkosten.</p>
+        <p>Wir akzeptieren folgende Zahlungsarten: Kreditkarte, PayPal, Klarna und weitere über Shopify Payments angebotene Zahlungsmethoden.</p>
+      </div>
+    </section>
+
+    <section className="bg-card border border-border rounded-2xl p-6 space-y-4">
+      <h2 className="font-display text-xl font-bold">§ 4 Lieferung</h2>
+      <p className="text-muted-foreground">Die Lieferung erfolgt an die von Ihnen angegebene Lieferadresse. Bestellungen, die bis 14:00 Uhr eingehen, werden noch am selben Werktag versendet. Die Lieferzeit beträgt in der Regel 1-3 Werktage innerhalb Deutschlands.</p>
+    </section>
+
+    <section className="bg-card border border-border rounded-2xl p-6 space-y-4">
+      <h2 className="font-display text-xl font-bold">§ 5 Widerrufsrecht</h2>
+      <div className="text-muted-foreground space-y-2">
+        <p>Sie haben das Recht, binnen 14 Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen. Die Widerrufsfrist beträgt 14 Tage ab dem Tag, an dem Sie oder ein von Ihnen benannter Dritter die Ware in Besitz genommen haben.</p>
+        <p>Um Ihr Widerrufsrecht auszuüben, senden Sie uns eine E-Mail an <a href="mailto:info@rifacards.de" className="text-accent hover:underline">info@rifacards.de</a>.</p>
+      </div>
+    </section>
+
+    <section className="bg-card border border-border rounded-2xl p-6 space-y-4">
+      <h2 className="font-display text-xl font-bold">§ 6 Gewährleistung</h2>
+      <p className="text-muted-foreground">Es gelten die gesetzlichen Gewährleistungsrechte. Alle Produkte sind factory sealed und 100% authentisch. Bei Mängeln wenden Sie sich bitte an unseren Kundenservice.</p>
+    </section>
   </div>
 );
 
