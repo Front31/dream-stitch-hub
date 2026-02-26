@@ -236,9 +236,10 @@ const Collection = () => {
                             <button
                               onClick={(e) => handleAddToCart(product, e)}
                               disabled={isAddingToCart}
-                              className="px-4 py-2 bg-accent text-accent-foreground text-sm font-medium rounded-lg hover:bg-accent/90 transition-colors disabled:opacity-50"
+                              className="p-2.5 bg-accent text-accent-foreground rounded-lg hover:bg-accent/90 transition-colors disabled:opacity-50"
+                              aria-label="In den Warenkorb"
                             >
-                              In den Warenkorb
+                              <ShoppingCart className="w-5 h-5" />
                             </button>
                           ) : (
                             <span className="px-4 py-2 text-sm font-medium text-destructive">
