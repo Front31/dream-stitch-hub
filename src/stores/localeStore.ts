@@ -4,9 +4,10 @@ export type SupportedLocale = 'de' | 'en';
 export type SupportedCurrency = 'EUR' | 'USD' | 'GBP' | 'CHF';
 
 // Map locale to Shopify language/country codes for @inContext
+// Country stays DE to keep prices in EUR
 export const localeToShopify: Record<SupportedLocale, { language: string; country: string }> = {
   de: { language: 'DE', country: 'DE' },
-  en: { language: 'EN', country: 'US' },
+  en: { language: 'EN', country: 'DE' },
 };
 
 export const currencySymbols: Record<SupportedCurrency, string> = {

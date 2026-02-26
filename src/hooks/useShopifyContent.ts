@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { fetchShopPolicies, fetchPageByHandle, fetchShopMetafields, type ShopPolicies, type ShopifyPage, type ShopifyMetafield } from '@/lib/shopify';
+import { useLocaleStore, localeToShopify } from '@/stores/localeStore';
 
 // Cache to avoid refetching on every page navigation
 const cache: Record<string, { data: unknown; timestamp: number }> = {};
@@ -18,36 +19,43 @@ function setCache(key: string, data: unknown) {
 }
 
 export function useShopPolicies() {
-  const [policies, setPolicies] = useState<ShopPolicies | null>(getCached<ShopPolicies>('policies'));
+  const locale = useLocaleStore((s) => s.locale);
+  const localeCtx = localeToShopify[locale];
+  const cacheKey = `policies-${locale}`;
+  const [policies, setPolicies] = useState<ShopPolicies | null>(getCached<ShopPolicies>(cacheKey));
   const [isLoading, setIsLoading] = useState(!policies);
 
   useEffect(() => {
-    if (policies) return;
+    const cached = getCached<ShopPolicies>(cacheKey);
+    if (cached) { setPolicies(cached); setIsLoading(false); return; }
     const load = async () => {
       setIsLoading(true);
-      const data = await fetchShopPolicies();
+      const data = await fetchShopPolicies(localeCtx);
       if (data) {
-        setCache('policies', data);
+        setCache(cacheKey, data);
         setPolicies(data);
       }
       setIsLoading(false);
     };
     load();
-  }, []);
+  }, [locale, cacheKey]);
 
   return { policies, isLoading };
 }
 
 export function useShopifyPage(handle: string) {
-  const cacheKey = `page-${handle}`;
+  const locale = useLocaleStore((s) => s.locale);
+  const localeCtx = localeToShopify[locale];
+  const cacheKey = `page-${handle}-${locale}`;
   const [page, setPage] = useState<ShopifyPage | null>(getCached<ShopifyPage>(cacheKey));
   const [isLoading, setIsLoading] = useState(!page);
 
   useEffect(() => {
-    if (page) return;
+    const cached = getCached<ShopifyPage>(cacheKey);
+    if (cached) { setPage(cached); setIsLoading(false); return; }
     const load = async () => {
       setIsLoading(true);
-      const data = await fetchPageByHandle(handle);
+      const data = await fetchPageByHandle(handle, localeCtx);
       if (data) {
         setCache(cacheKey, data);
         setPage(data);
@@ -55,7 +63,7 @@ export function useShopifyPage(handle: string) {
       setIsLoading(false);
     };
     load();
-  }, [handle]);
+  }, [handle, locale, cacheKey]);
 
   return { page, isLoading };
 }
