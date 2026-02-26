@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-export type CookieCategory = 'necessary' | 'analytics' | 'marketing';
+export type CookieCategory = 'necessary' | 'personalization' | 'marketing' | 'analytics';
 
 interface CookieConsentState {
   consentGiven: boolean;
@@ -31,8 +31,9 @@ const saveConsent = (preferences: Record<CookieCategory, boolean>) => {
 
 const defaultPreferences: Record<CookieCategory, boolean> = {
   necessary: true,
-  analytics: false,
+  personalization: false,
   marketing: false,
+  analytics: false,
 };
 
 const stored = loadConsent();
@@ -44,13 +45,13 @@ export const useCookieConsentStore = create<CookieConsentState>((set) => ({
   preferences: stored?.preferences ?? { ...defaultPreferences },
 
   acceptAll: () => {
-    const prefs = { necessary: true, analytics: true, marketing: true };
+    const prefs = { necessary: true, personalization: true, marketing: true, analytics: true };
     saveConsent(prefs);
     set({ consentGiven: true, showBanner: false, showSettings: false, preferences: prefs });
   },
 
   rejectAll: () => {
-    const prefs = { necessary: true, analytics: false, marketing: false };
+    const prefs = { necessary: true, personalization: false, marketing: false, analytics: false };
     saveConsent(prefs);
     set({ consentGiven: true, showBanner: false, showSettings: false, preferences: prefs });
   },
