@@ -436,7 +436,7 @@ export interface ShopifyPolicy {
 }
 
 export const SHOP_POLICIES_QUERY = `
-  query GetShopPolicies {
+  query GetShopPolicies($language: LanguageCode) @inContext(language: $language) {
     shop {
       name
       description
@@ -473,9 +473,11 @@ export interface ShopPolicies {
   shippingPolicy: ShopifyPolicy | null;
 }
 
-export async function fetchShopPolicies(): Promise<ShopPolicies | null> {
+export async function fetchShopPolicies(localeCtx?: { language: string; country: string }): Promise<ShopPolicies | null> {
   try {
-    const data = await storefrontApiRequest(SHOP_POLICIES_QUERY);
+    const variables: Record<string, unknown> = {};
+    if (localeCtx) variables.language = localeCtx.language;
+    const data = await storefrontApiRequest(SHOP_POLICIES_QUERY, variables, localeCtx);
     return data?.data?.shop || null;
   } catch (error) {
     console.error('Error fetching shop policies:', error);
@@ -507,7 +509,7 @@ export const PAGES_QUERY = `
 `;
 
 export const PAGE_BY_HANDLE_QUERY = `
-  query GetPageByHandle($handle: String!) {
+  query GetPageByHandle($handle: String!, $language: LanguageCode) @inContext(language: $language) {
     pageByHandle(handle: $handle) {
       id
       title
@@ -527,9 +529,11 @@ export async function fetchPages(first: number = 20): Promise<ShopifyPage[]> {
   }
 }
 
-export async function fetchPageByHandle(handle: string): Promise<ShopifyPage | null> {
+export async function fetchPageByHandle(handle: string, localeCtx?: { language: string; country: string }): Promise<ShopifyPage | null> {
   try {
-    const data = await storefrontApiRequest(PAGE_BY_HANDLE_QUERY, { handle });
+    const variables: Record<string, unknown> = { handle };
+    if (localeCtx) variables.language = localeCtx.language;
+    const data = await storefrontApiRequest(PAGE_BY_HANDLE_QUERY, variables, localeCtx);
     return data?.data?.pageByHandle || null;
   } catch (error) {
     console.error('Error fetching page:', error);

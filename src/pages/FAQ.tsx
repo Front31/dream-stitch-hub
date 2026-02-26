@@ -5,6 +5,7 @@ import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import ShopifyHtmlContent from '@/components/ShopifyHtmlContent';
 import { useShopifyPage } from '@/hooks/useShopifyContent';
+import { useTranslation } from '@/hooks/useTranslation';
 import {
   Accordion,
   AccordionContent,
@@ -12,7 +13,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const fallbackFaqs = [
+const fallbackFaqsDe = [
   {
     category: 'Produkte',
     questions: [
@@ -41,8 +42,39 @@ const fallbackFaqs = [
   }
 ];
 
+const fallbackFaqsEn = [
+  {
+    category: 'Products',
+    questions: [
+      { q: 'Are all products really sealed?', a: 'Yes, absolutely! We only sell factory sealed products.' },
+      { q: 'Do you sell single cards?', a: 'No, we focus exclusively on sealed products.' },
+      { q: 'Where do you source your products?', a: 'We only work with authorized distributors.' },
+      { q: 'Which editions do you offer?', a: 'We carry current releases as well as selected older editions.' },
+    ]
+  },
+  {
+    category: 'Shipping & Delivery',
+    questions: [
+      { q: 'How fast will my order be shipped?', a: 'Orders placed before 2 PM are shipped the same business day.' },
+      { q: 'How are the products packaged?', a: 'We use special boxes with extra padding.' },
+      { q: 'Do you ship internationally?', a: 'Currently we ship to Germany, Austria, and Switzerland.' },
+      { q: 'How much does shipping cost?', a: 'Within Germany: €4.99. Free shipping on orders over €100!' },
+    ]
+  },
+  {
+    category: 'Payment & Returns',
+    questions: [
+      { q: 'Which payment methods do you accept?', a: 'Credit card, PayPal, Klarna, Apple Pay, Google Pay and SEPA direct debit.' },
+      { q: 'Can I return my order?', a: '14-day right of withdrawal. Products must be unopened and in original condition.' },
+      { q: 'What if my package arrives damaged?', a: 'Document the damage with photos and contact us immediately.' },
+    ]
+  }
+];
+
 const FAQ = () => {
   const { page, isLoading } = useShopifyPage('faq');
+  const { t, locale } = useTranslation();
+  const fallbackFaqs = locale === 'en' ? fallbackFaqsEn : fallbackFaqsDe;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -59,8 +91,8 @@ const FAQ = () => {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="min-h-screen">
       <SEO
-        title="Häufige Fragen – RiFa Cards TCG Shop"
-        description="Antworten auf häufige Fragen zu Bestellung, Versand, Produkten und Rückgabe bei RiFa Cards."
+        title={locale === 'en' ? 'FAQ – RiFa Cards TCG Shop' : 'Häufige Fragen – RiFa Cards TCG Shop'}
+        description={locale === 'en' ? 'Answers to frequently asked questions about orders, shipping, products and returns at RiFa Cards.' : 'Antworten auf häufige Fragen zu Bestellung, Versand, Produkten und Rückgabe bei RiFa Cards.'}
         canonical="/faq"
         jsonLd={jsonLd}
       />
@@ -69,11 +101,11 @@ const FAQ = () => {
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-6">
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl mx-auto text-center mb-16">
-            <span className="inline-block text-sm font-medium text-accent uppercase tracking-widest mb-4">FAQ</span>
+            <span className="inline-block text-sm font-medium text-accent uppercase tracking-widest mb-4">{t('page.faq.badge')}</span>
             <h1 className="font-display text-4xl md:text-6xl font-bold mb-6">
-              Häufig gestellte <span className="text-gradient-primary">Fragen</span>
+              {t('page.faq.title')} <span className="text-gradient-primary">{t('page.faq.title_highlight')}</span>
             </h1>
-            <p className="text-lg text-muted-foreground">Hier findest du Antworten auf die wichtigsten Fragen.</p>
+            <p className="text-lg text-muted-foreground">{t('page.faq.subtitle')}</p>
           </motion.div>
 
           {isLoading ? (
@@ -101,9 +133,9 @@ const FAQ = () => {
           )}
 
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="max-w-xl mx-auto text-center mt-16 p-8 bg-secondary/50 rounded-2xl">
-            <h3 className="font-display text-xl font-bold mb-3">Noch Fragen?</h3>
-            <p className="text-muted-foreground mb-6">Keine Sorge, wir helfen dir gerne persönlich weiter.</p>
-            <a href="/contact" className="btn-hero inline-flex"><span>Kontakt aufnehmen</span></a>
+            <h3 className="font-display text-xl font-bold mb-3">{t('page.faq.more_questions')}</h3>
+            <p className="text-muted-foreground mb-6">{t('page.faq.more_questions_sub')}</p>
+            <a href="/contact" className="btn-hero inline-flex"><span>{t('page.faq.contact_cta')}</span></a>
           </motion.div>
         </div>
       </main>
