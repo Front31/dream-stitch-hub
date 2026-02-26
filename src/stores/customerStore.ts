@@ -21,6 +21,7 @@ interface CustomerStore {
   expiresAt: string | null;
   customer: ShopifyCustomer | null;
   isLoading: boolean;
+  devMode: boolean;
 
   login: (email: string, password: string) => Promise<boolean>;
   register: (input: { email: string; password: string; firstName?: string; lastName?: string }) => Promise<boolean>;
@@ -33,6 +34,7 @@ interface CustomerStore {
   removeAddress: (id: string) => Promise<boolean>;
   setDefault: (addressId: string) => Promise<boolean>;
   isAuthenticated: () => boolean;
+  setDevMode: () => void;
 }
 
 export const useCustomerStore = create<CustomerStore>()(
@@ -42,11 +44,29 @@ export const useCustomerStore = create<CustomerStore>()(
       expiresAt: null,
       customer: null,
       isLoading: false,
+      devMode: false,
 
       isAuthenticated: () => {
-        const { accessToken, expiresAt } = get();
+        const { accessToken, expiresAt, devMode } = get();
+        if (devMode) return true;
         if (!accessToken || !expiresAt) return false;
         return new Date(expiresAt) > new Date();
+      },
+
+      setDevMode: () => {
+        set({
+          devMode: true,
+          customer: {
+            id: 'dev-customer',
+            email: 'dev@example.com',
+            firstName: 'Dev',
+            lastName: 'User',
+            phone: null,
+            defaultAddress: null,
+            addresses: { edges: [] },
+            orders: { edges: [] },
+          },
+        });
       },
 
       login: async (email, password) => {
@@ -91,7 +111,8 @@ export const useCustomerStore = create<CustomerStore>()(
       },
 
       refreshCustomer: async () => {
-        const { accessToken, isAuthenticated } = get();
+        const { accessToken, isAuthenticated, devMode } = get();
+        if (devMode) return;
         if (!accessToken || !isAuthenticated()) {
           set({ accessToken: null, expiresAt: null, customer: null });
           return;
