@@ -106,13 +106,19 @@ export const useCustomerStore = create<CustomerStore>()(
         if (accessToken) {
           try { await logoutCustomer(accessToken); } catch { /* ignore */ }
         }
-        set({ accessToken: null, expiresAt: null, customer: null });
+        set({ accessToken: null, expiresAt: null, customer: null, devMode: false });
         toast.success('Abgemeldet');
       },
 
       refreshCustomer: async () => {
         const { accessToken, isAuthenticated, devMode } = get();
-        if (devMode) return;
+        if (devMode) {
+          // Re-populate mock customer if missing
+          if (!get().customer) {
+            get().setDevMode();
+          }
+          return;
+        }
         if (!accessToken || !isAuthenticated()) {
           set({ accessToken: null, expiresAt: null, customer: null });
           return;
