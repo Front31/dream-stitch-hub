@@ -138,7 +138,13 @@ const ProductDetail = () => {
                   </>
                 )}
               </div>
-              <div className="absolute top-4 left-4 z-10"><Badge className="bg-accent text-accent-foreground px-3 py-1 text-sm"><Check className="w-3 h-3 mr-1" />Sealed</Badge></div>
+              <div className="absolute top-4 left-4 z-10">
+                {currentVariant?.availableForSale ? (
+                  <Badge className="bg-energy-grass text-white px-3 py-1 text-sm"><Check className="w-3 h-3 mr-1" />{t('products.in_stock')}</Badge>
+                ) : (
+                  <Badge className="bg-destructive text-destructive-foreground px-3 py-1 text-sm">{t('products.sold_out')}</Badge>
+                )}
+              </div>
               {mediaItems.length > 1 && (
                 <div className="flex gap-3 mt-4 justify-center flex-wrap">
                   {mediaItems.map((item, index) => (
