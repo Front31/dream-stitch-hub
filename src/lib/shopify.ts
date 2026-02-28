@@ -571,3 +571,91 @@ export async function fetchShopMetafields(identifiers: Array<{ namespace: string
     return [];
   }
 }
+
+// --- Shopify Menus ---
+export interface ShopifyMenuItem {
+  title: string;
+  url: string;
+  type: string;
+  items: ShopifyMenuItem[];
+}
+
+export interface ShopifyMenu {
+  handle: string;
+  title: string;
+  items: ShopifyMenuItem[];
+}
+
+export const MENU_QUERY = `
+  query GetMenu($handle: String!, $language: LanguageCode, $country: CountryCode) @inContext(language: $language, country: $country) {
+    menu(handle: $handle) {
+      handle
+      title
+      items {
+        title
+        url
+        type
+        items {
+          title
+          url
+          type
+          items {
+            title
+            url
+            type
+          }
+        }
+      }
+    }
+  }
+`;
+
+export async function fetchMenu(handle: string, localeCtx?: { language: string; country: string }): Promise<ShopifyMenu | null> {
+  try {
+    const variables: Record<string, unknown> = { handle };
+    if (localeCtx) {
+      variables.language = localeCtx.language;
+      variables.country = localeCtx.country;
+    }
+    const data = await storefrontApiRequest(MENU_QUERY, variables, localeCtx);
+    return data?.data?.menu || null;
+  } catch (error) {
+    console.error('Error fetching menu:', error);
+    return null;
+  }
+}
+
+/**
+ * Maps a Shopify menu item URL to a local React Router path.
+ * e.g. "https://store.myshopify.com/pages/about" → "/about"
+ *      "https://store.myshopify.com/collections/all" → "/collection"
+ *      "https://store.myshopify.com/collections/etb" → "/collection?type=etb"
+ *      "https://store.myshopify.com/products/some-product" → "/product/some-product"
+ */
+export function mapShopifyUrlToLocal(shopifyUrl: string): string {
+  try {
+    const url = new URL(shopifyUrl);
+    const path = url.pathname;
+
+    // /pages/X → /X
+    const pagesMatch = path.match(/^\/pages\/(.+)$/);
+    if (pagesMatch) return `/${pagesMatch[1]}`;
+
+    // /collections/all → /collection
+    if (path === '/collections' || path === '/collections/all') return '/collection';
+
+    // /collections/X → /collection?type=X
+    const collMatch = path.match(/^\/collections\/(.+)$/);
+    if (collMatch) return `/collection?type=${collMatch[1]}`;
+
+    // /products/X → /product/X
+    const prodMatch = path.match(/^\/products\/(.+)$/);
+    if (prodMatch) return `/product/${prodMatch[1]}`;
+
+    // fallback: use the path as-is
+    return path || '/';
+  } catch {
+    // If it's not a valid URL, try treating it as a relative path
+    return shopifyUrl.startsWith('/') ? shopifyUrl : `/${shopifyUrl}`;
+  }
+}

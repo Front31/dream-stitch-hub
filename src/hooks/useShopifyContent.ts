@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchShopPolicies, fetchPageByHandle, fetchShopMetafields, type ShopPolicies, type ShopifyPage, type ShopifyMetafield } from '@/lib/shopify';
+import { fetchShopPolicies, fetchPageByHandle, fetchShopMetafields, fetchMenu, mapShopifyUrlToLocal, type ShopPolicies, type ShopifyPage, type ShopifyMetafield, type ShopifyMenu } from '@/lib/shopify';
 import { useLocaleStore, localeToShopify } from '@/stores/localeStore';
 
 // Cache to avoid refetching on every page navigation
@@ -86,4 +86,40 @@ export function useShopMetafields(identifiers: Array<{ namespace: string; key: s
   }, [cacheKey]);
 
   return { metafields, isLoading };
+}
+
+export interface MenuNavItem {
+  label: string;
+  path: string;
+}
+
+export function useShopifyMenu(handle: string) {
+  const locale = useLocaleStore((s) => s.locale);
+  const localeCtx = localeToShopify[locale];
+  const cacheKey = `menu-${handle}-${locale}`;
+  const [menu, setMenu] = useState<ShopifyMenu | null>(getCached<ShopifyMenu>(cacheKey));
+  const [isLoading, setIsLoading] = useState(!menu);
+
+  useEffect(() => {
+    const cached = getCached<ShopifyMenu>(cacheKey);
+    if (cached) { setMenu(cached); setIsLoading(false); return; }
+    const load = async () => {
+      setIsLoading(true);
+      const data = await fetchMenu(handle, localeCtx);
+      if (data) {
+        setCache(cacheKey, data);
+        setMenu(data);
+      }
+      setIsLoading(false);
+    };
+    load();
+  }, [handle, locale, cacheKey]);
+
+  // Convert menu items to simple { label, path } array
+  const navItems: MenuNavItem[] = (menu?.items || []).map((item) => ({
+    label: item.title,
+    path: mapShopifyUrlToLocal(item.url),
+  }));
+
+  return { menu, navItems, isLoading };
 }
