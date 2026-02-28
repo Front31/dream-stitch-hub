@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Package } from 'lucide-react';
+import { ArrowRight, Package, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { fetchCollectionProducts, fetchProducts, type ShopifyProduct } from '@/lib/shopify';
 import { useCartStore } from '@/stores/cartStore';
@@ -96,7 +96,12 @@ const FeaturedSection = () => {
                       {product.node.variants.edges[0]?.node.availableForSale ? (
                         <button onClick={() => handleAddToCart(product)} className="px-4 py-2 bg-accent text-accent-foreground text-sm font-medium rounded-lg hover:bg-accent/90 transition-colors">{t('products.add_to_cart')}</button>
                       ) : (
-                        <span className="px-4 py-2 text-sm font-medium text-destructive">{t('products.sold_out')}</span>
+                        <div className="p-2.5 text-muted-foreground relative">
+                          <ShoppingCart className="w-5 h-5" />
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-[28px] h-[2px] bg-muted-foreground rotate-[-45deg] rounded-full" />
+                          </div>
+                        </div>
                       )}
                     </div>
                   </div>
