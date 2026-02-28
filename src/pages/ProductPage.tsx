@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import FloatingHeader from '@/components/FloatingHeader';
 import ProductDetail from '@/components/ProductDetail';
+import NewsletterBanner from '@/components/NewsletterBanner';
 import Footer from '@/components/Footer';
 
 const ProductPage = () => {
@@ -13,6 +14,7 @@ const ProductPage = () => {
     >
       <FloatingHeader />
       <ProductDetail />
+      <NewsletterBanner />
       <Footer />
     </motion.div>
   );

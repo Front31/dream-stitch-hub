@@ -10,6 +10,7 @@ import { toast } from 'sonner';
 import { Package, Loader2, ShoppingCart, Search, X } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { useShopifyMenu } from '@/hooks/useShopifyContent';
+import NewsletterBanner from '@/components/NewsletterBanner';
 
 const Collection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -179,6 +180,7 @@ const Collection = () => {
           )}
         </div>
       </main>
+      <NewsletterBanner />
       <Footer />
     </motion.div>
   );
