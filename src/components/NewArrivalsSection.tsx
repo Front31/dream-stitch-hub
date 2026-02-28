@@ -103,7 +103,12 @@ const NewArrivalsSection = () => {
                           <ShoppingCart className="w-5 h-5" />
                         </button>
                       ) : (
-                        <span className="px-4 py-2 text-sm font-medium text-destructive">{t('products.sold_out')}</span>
+                        <div className="p-2.5 text-muted-foreground relative">
+                          <ShoppingCart className="w-5 h-5" />
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-[28px] h-[2px] bg-muted-foreground rotate-[-45deg] rounded-full" />
+                          </div>
+                        </div>
                       )}
                     </div>
                   </div>
