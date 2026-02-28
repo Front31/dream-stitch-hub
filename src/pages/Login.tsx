@@ -82,12 +82,6 @@ const Login = () => {
               </motion.div>
             )}
           </AnimatePresence>
-
-          <div className="mt-8 pt-6 border-t border-dashed border-muted-foreground/20">
-            <Button variant="outline" className="w-full border-dashed border-destructive/50 text-destructive hover:bg-destructive/10" onClick={() => { useCustomerStore.getState().setDevMode(); navigate('/account'); }}>
-              {t('login.dev_dashboard')}
-            </Button>
-          </div>
         </motion.div>
       </div>
       <Footer />
