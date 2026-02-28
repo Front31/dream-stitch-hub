@@ -3,6 +3,7 @@ import { Instagram, Youtube } from 'lucide-react';
 import rifaLogo from '@/assets/rifa-logo.png';
 import { useCookieConsentStore } from '@/stores/cookieConsentStore';
 import { useTranslation } from '@/hooks/useTranslation';
+import { useShopifyMenu } from '@/hooks/useShopifyContent';
 import visaIcon from '@/assets/payments/visa.svg';
 import mastercardIcon from '@/assets/payments/mastercard.svg';
 import amexIcon from '@/assets/payments/amex.svg';
@@ -23,9 +24,43 @@ const paymentMethods = [
   { name: 'Google Pay', icon: googleIcon },
 ];
 
+// Fallback links grouped by section
+const FALLBACK_SHOP = [
+  { label: 'footer.all_products', path: '/collection' },
+  { label: 'footer.booster_displays', path: '/collection?type=display' },
+  { label: 'footer.etb', path: '/collection?type=etb' },
+  { label: 'footer.special_collections', path: '/collection?type=collection' },
+];
+
+const FALLBACK_INFO = [
+  { label: 'nav.about', path: '/about' },
+  { label: 'nav.faq', path: '/faq' },
+  { label: 'nav.shipping', path: '/shipping' },
+  { label: 'nav.contact', path: '/contact' },
+];
+
+const FALLBACK_LEGAL = [
+  { label: 'footer.impressum', path: '/impressum' },
+  { label: 'footer.datenschutz', path: '/datenschutz' },
+  { label: 'footer.agb', path: '/agb' },
+];
+
 const Footer = () => {
   const openBanner = useCookieConsentStore((s) => s.openBanner);
   const { t } = useTranslation();
+  const { navItems: footerItems } = useShopifyMenu('footer');
+
+  // Split footer items into info links and legal links based on known legal paths
+  const legalPaths = ['/impressum', '/datenschutz', '/agb', '/widerrufsbelehrung'];
+  const shopPaths = ['/collection'];
+  
+  const dynamicShopLinks = footerItems.filter((item) => shopPaths.some((p) => item.path.startsWith(p)));
+  const dynamicLegalLinks = footerItems.filter((item) => legalPaths.includes(item.path));
+  const dynamicInfoLinks = footerItems.filter((item) => !legalPaths.includes(item.path) && !shopPaths.some((p) => item.path.startsWith(p)));
+
+  const shopLinks = dynamicShopLinks.length > 0 ? dynamicShopLinks : FALLBACK_SHOP.map((i) => ({ label: t(i.label as any), path: i.path }));
+  const infoLinks = dynamicInfoLinks.length > 0 ? dynamicInfoLinks : FALLBACK_INFO.map((i) => ({ label: t(i.label as any), path: i.path }));
+  const legalLinks = dynamicLegalLinks.length > 0 ? dynamicLegalLinks : FALLBACK_LEGAL.map((i) => ({ label: t(i.label as any), path: i.path }));
 
   return (
     <footer className="bg-secondary/50 border-t border-border">
@@ -60,20 +95,18 @@ const Footer = () => {
           <div>
             <h4 className="font-display font-semibold mb-4 text-primary">{t('footer.shop')}</h4>
             <ul className="space-y-2">
-              <li><Link to="/collection" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('footer.all_products')}</Link></li>
-              <li><Link to="/collection?type=display" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('footer.booster_displays')}</Link></li>
-              <li><Link to="/collection?type=etb" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('footer.etb')}</Link></li>
-              <li><Link to="/collection?type=collection" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('footer.special_collections')}</Link></li>
+              {shopLinks.map((item) => (
+                <li key={item.path}><Link to={item.path} className="text-sm text-muted-foreground hover:text-foreground transition-colors">{item.label}</Link></li>
+              ))}
             </ul>
           </div>
 
           <div>
             <h4 className="font-display font-semibold mb-4 text-primary">{t('footer.info')}</h4>
             <ul className="space-y-2">
-              <li><Link to="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.about')}</Link></li>
-              <li><Link to="/faq" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.faq')}</Link></li>
-              <li><Link to="/shipping" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.shipping')}</Link></li>
-              <li><Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{t('nav.contact')}</Link></li>
+              {infoLinks.map((item) => (
+                <li key={item.path}><Link to={item.path} className="text-sm text-muted-foreground hover:text-foreground transition-colors">{item.label}</Link></li>
+              ))}
             </ul>
           </div>
 
@@ -101,9 +134,9 @@ const Footer = () => {
             {t('footer.rights', { year: new Date().getFullYear().toString() })}
           </p>
           <div className="flex items-center gap-4">
-            <Link to="/impressum" className="text-xs text-muted-foreground hover:text-foreground transition-colors">{t('footer.impressum')}</Link>
-            <Link to="/datenschutz" className="text-xs text-muted-foreground hover:text-foreground transition-colors">{t('footer.datenschutz')}</Link>
-            <Link to="/agb" className="text-xs text-muted-foreground hover:text-foreground transition-colors">{t('footer.agb')}</Link>
+            {legalLinks.map((item) => (
+              <Link key={item.path} to={item.path} className="text-xs text-muted-foreground hover:text-foreground transition-colors">{item.label}</Link>
+            ))}
             <button onClick={openBanner} className="text-xs text-muted-foreground hover:text-foreground transition-colors">{t('footer.cookie_settings')}</button>
           </div>
         </div>

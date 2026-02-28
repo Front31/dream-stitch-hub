@@ -7,6 +7,14 @@ import CartDrawer from './CartDrawer';
 import LocaleSwitcher from './LocaleSwitcher';
 import { useCustomerStore } from '@/stores/customerStore';
 import { useTranslation } from '@/hooks/useTranslation';
+import { useShopifyMenu } from '@/hooks/useShopifyContent';
+
+const FALLBACK_NAV = [
+  { label: 'nav.products', path: '/collection' },
+  { label: 'nav.about', path: '/about' },
+  { label: 'nav.faq', path: '/faq' },
+  { label: 'nav.contact', path: '/contact' },
+];
 
 const FloatingHeader = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -18,6 +26,7 @@ const FloatingHeader = () => {
   const headerOpacity = useTransform(scrollY, [0, 100], [0.95, 1]);
   const isLoggedIn = useCustomerStore((s) => s.isAuthenticated());
   const { t } = useTranslation();
+  const { navItems: shopifyNavItems, isLoading: menuLoading } = useShopifyMenu('main-menu');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,12 +37,10 @@ const FloatingHeader = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = [
-    { label: t('nav.products'), path: '/collection' },
-    { label: t('nav.about'), path: '/about' },
-    { label: t('nav.faq'), path: '/faq' },
-    { label: t('nav.contact'), path: '/contact' },
-  ];
+  // Use Shopify menu items if available, otherwise fallback to hardcoded with translations
+  const navItems = shopifyNavItems.length > 0
+    ? shopifyNavItems
+    : FALLBACK_NAV.map((item) => ({ label: t(item.label as any), path: item.path }));
 
   return (
     <>
