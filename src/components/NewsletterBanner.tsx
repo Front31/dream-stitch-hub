@@ -65,7 +65,7 @@ const NewsletterBanner = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="max-w-2xl mx-auto"
+          className="max-w-xl mx-auto"
         >
           <div className="bg-secondary/50 rounded-2xl p-6 md:p-8">
             {/* Text + Form in compact layout */}
