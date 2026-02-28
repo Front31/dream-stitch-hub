@@ -32,8 +32,9 @@ const Index = () => {
     const load = async () => {
       setCollectionsLoading(true);
       const data = await fetchCollections(10);
-      // Filter out "frontpage" (used for featured products)
-      setCollections(data.filter(c => c.node.handle !== 'frontpage'));
+      const targetHandles = ['pokemon', 'one-piece', 'magic'];
+      const filtered = data.filter(c => targetHandles.some(h => c.node.handle.toLowerCase().includes(h)));
+      setCollections(filtered.slice(0, 3));
       setCollectionsLoading(false);
     };
     load();
@@ -128,7 +129,7 @@ const Index = () => {
                       <div className="bg-gradient-to-br from-secondary/30 to-secondary/10 rounded-3xl p-8 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-card h-full">
                         {collection.node.image?.url ? (
                           <div className="w-14 h-14 rounded-2xl bg-background flex items-center justify-center mb-6 group-hover:scale-110 transition-transform overflow-hidden">
-                            <img src={collection.node.image.url} alt={collection.node.image.altText || collection.node.title} className="w-full h-full object-cover" />
+                            <img src={collection.node.image.url} alt={collection.node.image.altText || collection.node.title} className="w-full h-full object-contain p-1" />
                           </div>
                         ) : (
                           <div className="w-14 h-14 rounded-2xl bg-background flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
