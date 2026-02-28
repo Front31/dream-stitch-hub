@@ -182,15 +182,6 @@ const ProductDetail = () => {
                 {isAddingToCart ? <Loader2 className="w-5 h-5 animate-spin" /> : <><ShoppingBag className="w-5 h-5 mr-2" />{t('products.add_to_cart')}</>}
               </Button>
             </div>
-            <div className="bg-secondary/50 rounded-xl p-4 mb-8 border border-border">
-              <div className="flex items-start gap-3">
-                <Info className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium mb-1">{t('products.sealed_product')}</p>
-                  <p className="text-xs text-muted-foreground">{t('products.sealed_info')}</p>
-                </div>
-              </div>
-            </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="flex items-center gap-3 p-3 rounded-lg bg-secondary/30 border border-border"><Shield className="w-5 h-5 text-primary" /><span className="text-sm">{t('products.authentic')}</span></div>
               <div className="flex items-center gap-3 p-3 rounded-lg bg-secondary/30 border border-border"><Package className="w-5 h-5 text-primary" /><span className="text-sm">{t('products.secure_packaging')}</span></div>
