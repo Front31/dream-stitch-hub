@@ -94,7 +94,9 @@ const FeaturedSection = () => {
                     <div className="flex items-center justify-between">
                       <span className="text-sm sm:text-xl font-bold text-accent">{parseFloat(product.node.priceRange.minVariantPrice.amount).toFixed(2).replace('.', ',')} €</span>
                       {product.node.variants.edges[0]?.node.availableForSale ? (
-                        <button onClick={() => handleAddToCart(product)} className="px-4 py-2 bg-accent text-accent-foreground text-sm font-medium rounded-lg hover:bg-accent/90 transition-colors">{t('products.add_to_cart')}</button>
+                        <button onClick={() => handleAddToCart(product)} className="p-2.5 bg-accent text-accent-foreground rounded-lg hover:bg-accent/90 transition-colors" aria-label={t('products.add_to_cart')}>
+                          <ShoppingCart className="w-5 h-5" />
+                        </button>
                       ) : (
                         <div className="p-2.5 text-muted-foreground relative">
                           <ShoppingCart className="w-5 h-5" />
