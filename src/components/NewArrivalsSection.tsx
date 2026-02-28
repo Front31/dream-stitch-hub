@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Package, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { fetchCollectionProducts, fetchProducts, type ShopifyProduct } from '@/lib/shopify';
+import { fetchCollectionProducts, fetchCollections, type ShopifyProduct } from '@/lib/shopify';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import { useTranslation } from '@/hooks/useTranslation';
@@ -18,15 +18,23 @@ const NewArrivalsSection = () => {
   const y = useTransform(scrollYProgress, [0, 1], [100, -50]);
   const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0.5]);
 
+  const [collectionHandle, setCollectionHandle] = useState('neu-eingetroffen');
+
   useEffect(() => {
     const loadProducts = async () => {
       setIsLoading(true);
-      // Try "new-arrivals" collection first, fallback to latest products
-      let fetched = await fetchCollectionProducts('neu-eingetroffen', 6);
-      if (fetched.length === 0) {
-        fetched = await fetchCollectionProducts('new-arrivals', 6);
+      // Find the collection by title or known handles
+      const collections = await fetchCollections(20);
+      const match = collections.find(c =>
+        c.node.title.toLowerCase().includes('neu') ||
+        c.node.handle === 'neu-eingetroffen' ||
+        c.node.handle === 'new-arrivals'
+      );
+      if (match) {
+        setCollectionHandle(match.node.handle);
+        const fetched = await fetchCollectionProducts(match.node.handle, 6);
+        setProducts(fetched);
       }
-      setProducts(fetched);
       setIsLoading(false);
     };
     loadProducts();
@@ -106,7 +114,7 @@ const NewArrivalsSection = () => {
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mt-12">
-          <Link to="/collection?type=neu-eingetroffen" className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all">
+          <Link to={`/collection?type=${collectionHandle}`} className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all">
             {t('new_arrivals.view_all')} <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
