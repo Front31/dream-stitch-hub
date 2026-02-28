@@ -4,7 +4,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import FloatingHeader from '@/components/FloatingHeader';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
-import { fetchProducts, fetchCollectionProducts, type ShopifyProduct } from '@/lib/shopify';
+import { fetchProducts, fetchCollectionProducts, fetchCollections, type ShopifyProduct } from '@/lib/shopify';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import { Package, Loader2, ShoppingCart, Search, X } from 'lucide-react';
@@ -16,6 +16,7 @@ const Collection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeType = searchParams.get('type') || '';
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
+  const [collectionTitle, setCollectionTitle] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const addItem = useCartStore(state => state.addItem);
@@ -39,7 +40,18 @@ const Collection = () => {
     const loadProducts = async () => {
       setIsLoading(true);
       let fetchedProducts: ShopifyProduct[];
-      if (activeType) { fetchedProducts = await fetchCollectionProducts(activeType); } else { fetchedProducts = await fetchProducts(50); }
+      if (activeType) {
+        fetchedProducts = await fetchCollectionProducts(activeType);
+        // Fetch collection title if not available from filters
+        if (!activeFilter) {
+          const collections = await fetchCollections(50);
+          const match = collections.find(c => c.node.handle === activeType);
+          if (match) setCollectionTitle(match.node.title);
+        }
+      } else {
+        fetchedProducts = await fetchProducts(50);
+        setCollectionTitle('');
+      }
       setProducts(fetchedProducts);
       setIsLoading(false);
     };
@@ -82,7 +94,7 @@ const Collection = () => {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
             <span className="inline-block text-sm font-medium text-accent uppercase tracking-widest mb-4">{t('collection.badge')}</span>
              <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-              {activeType ? <span className="text-gradient-primary">{activeFilter?.label || activeType}</span> : <>{t('collection.title')} <span className="text-gradient-primary">{t('collection.title_highlight')}</span></>}
+              {activeType ? <span className="text-gradient-primary">{activeFilter?.label || collectionTitle || activeType}</span> : <>{t('collection.title')} <span className="text-gradient-primary">{t('collection.title_highlight')}</span></>}
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t('collection.default_desc')}</p>
           </motion.div>
