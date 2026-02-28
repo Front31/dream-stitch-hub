@@ -73,6 +73,7 @@ const de = {
   'products.authentic': '100% Authentisch',
   'products.secure_packaging': 'Sicher verpackt',
   'products.view_all': 'Alle Produkte ansehen',
+  'products.description_title': 'Beschreibung',
 
   // Collection page
   'collection.badge': 'Shop',

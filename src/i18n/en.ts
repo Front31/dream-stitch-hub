@@ -75,6 +75,7 @@ const en: Record<TranslationKey, string> = {
   'products.authentic': '100% Authentic',
   'products.secure_packaging': 'Securely packaged',
   'products.view_all': 'View all products',
+  'products.description_title': 'Description',
 
   // Collection page
   'collection.badge': 'Shop',
