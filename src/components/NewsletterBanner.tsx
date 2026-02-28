@@ -59,19 +59,15 @@ const NewsletterBanner = () => {
   };
 
   return (
-    <section className="py-10 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/10 to-accent/5" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary/[0.06] rounded-full blur-3xl" />
-
-      <div className="container mx-auto px-6 relative z-10">
+    <section className="py-10">
+      <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="max-w-2xl mx-auto"
         >
-          <div className="bg-card/80 backdrop-blur-xl rounded-3xl border border-border p-6 md:p-8 shadow-[var(--shadow-card)]">
+          <div className="bg-secondary/50 rounded-2xl p-6 md:p-8">
             {/* Text + Form in compact layout */}
             <div className="text-center mb-5">
               <div className="flex items-center justify-center gap-2 mb-2">
