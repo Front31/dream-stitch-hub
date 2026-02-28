@@ -80,6 +80,28 @@ const Index = () => {
         <TrustSection />
         <NewArrivalsSection />
 
+        {/* Why RiFa Section */}
+        <section className="py-24 md:py-32 bg-primary text-primary-foreground">
+          <div className="container mx-auto px-6">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+                <span className="inline-block text-sm font-medium uppercase tracking-widest mb-4 opacity-80">{t('index.why_badge')}</span>
+                <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">{t('index.why_title')}</h2>
+                <p className="text-lg opacity-90 mb-8">{t('index.why_desc')}</p>
+                <Link to="/about" className="btn-secondary inline-flex bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20">{t('index.more_about')}</Link>
+              </motion.div>
+              <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="grid sm:grid-cols-2 gap-6">
+                {stats.map((stat, index) => (
+                  <motion.div key={stat.label} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="bg-primary-foreground/10 backdrop-blur-sm rounded-2xl p-6 text-center">
+                    <div className="font-display text-4xl font-bold mb-2">{stat.number}</div>
+                    <div className="opacity-80 text-sm">{stat.label}</div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
         {/* Categories Section */}
         <section className="py-24 md:py-32">
           <div className="container mx-auto px-6">
@@ -137,45 +159,6 @@ const Index = () => {
                 ))}
               </div>
             )}
-          </div>
-        </section>
-
-        {/* Why RiFa Section */}
-        <section className="py-24 md:py-32 bg-primary text-primary-foreground">
-          <div className="container mx-auto px-6">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
-              <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-                <span className="inline-block text-sm font-medium uppercase tracking-widest mb-4 opacity-80">{t('index.why_badge')}</span>
-                <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">{t('index.why_title')}</h2>
-                <p className="text-lg opacity-90 mb-8">{t('index.why_desc')}</p>
-                <Link to="/about" className="btn-secondary inline-flex bg-primary-foreground/10 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/20">{t('index.more_about')}</Link>
-              </motion.div>
-              <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="grid sm:grid-cols-2 gap-6">
-                {stats.map((stat, index) => (
-                  <motion.div key={stat.label} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="bg-primary-foreground/10 backdrop-blur-sm rounded-2xl p-6 text-center">
-                    <div className="font-display text-4xl font-bold mb-2">{stat.number}</div>
-                    <div className="opacity-80 text-sm">{stat.label}</div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* Brand statement */}
-        <section className="py-24 md:py-32">
-          <div className="container mx-auto px-6 text-center">
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="max-w-3xl mx-auto">
-              <h2 className="font-display text-3xl md:text-5xl font-bold mb-6">{t('index.collectors_title')} <span className="text-gradient-accent">{t('index.collectors_highlight')}</span></h2>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-8">{t('index.collectors_desc')}</p>
-              <div className="flex items-center justify-center gap-8 text-sm text-muted-foreground">
-                <div className="text-center"><div className="font-display text-3xl font-bold text-primary mb-1">100%</div><div>Sealed</div></div>
-                <div className="w-px h-12 bg-border" />
-                <div className="text-center"><div className="font-display text-3xl font-bold text-primary mb-1">Premium</div><div>{t('index.shipping_label')}</div></div>
-                <div className="w-px h-12 bg-border" />
-                <div className="text-center"><div className="font-display text-3xl font-bold text-primary mb-1">24h</div><div>{t('index.delivery_label')}</div></div>
-              </div>
-            </motion.div>
           </div>
         </section>
 
