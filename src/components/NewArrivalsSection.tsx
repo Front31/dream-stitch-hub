@@ -119,7 +119,7 @@ const NewArrivalsSection = () => {
         </motion.div>
 
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mt-12">
-          <Link to={`/collection?type=${collectionHandle}`} className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all">
+          <Link to="/collection?type=neu-eingetroffen" className="inline-flex items-center gap-2 text-primary font-medium hover:gap-3 transition-all">
             {t('new_arrivals.view_all')} <ArrowRight className="w-4 h-4" />
           </Link>
         </motion.div>
