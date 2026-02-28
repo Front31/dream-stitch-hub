@@ -223,6 +223,14 @@ export const PRODUCT_BY_HANDLE_QUERY = `
         value
         type
       }
+      collections(first: 1) {
+        edges {
+          node {
+            title
+            handle
+          }
+        }
+      }
     }
   }
 `;

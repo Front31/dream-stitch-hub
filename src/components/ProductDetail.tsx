@@ -30,6 +30,7 @@ interface ProductNode {
   variants: { edges: Array<{ node: { id: string; title: string; price: { amount: string; currencyCode: string }; availableForSale: boolean; selectedOptions: Array<{ name: string; value: string }> } }> };
   options: Array<{ name: string; values: string[] }>;
   kurzbeschreibung?: { value: string; type: string } | null;
+  collections?: { edges: Array<{ node: { title: string; handle: string } }> };
 }
 
 function buildMediaItems(product: ProductNode): MediaItem[] {
@@ -161,9 +162,8 @@ const ProductDetail = () => {
 
           <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="flex flex-col">
             <div className="flex items-center gap-2 mb-4">
-              <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">{t('products.sealed_product')}</Badge>
-              {currentVariant?.availableForSale && (
-                <Badge variant="outline" className="bg-energy-grass/10 text-energy-grass border-energy-grass/20"><Check className="w-3 h-3 mr-1" />{t('products.in_stock')}</Badge>
+              {product.collections?.edges[0]?.node && (
+                <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">{product.collections.edges[0].node.title}</Badge>
               )}
             </div>
             <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">{product.title}</h1>
