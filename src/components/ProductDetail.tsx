@@ -159,8 +159,7 @@ const ProductDetail = () => {
                 <Badge variant="outline" className="bg-energy-grass/10 text-energy-grass border-energy-grass/20"><Check className="w-3 h-3 mr-1" />{t('products.in_stock')}</Badge>
               )}
             </div>
-            <h1 className="font-display text-3xl md:text-4xl font-bold mb-4">{product.title}</h1>
-            {product.description && <p className="text-muted-foreground mb-6 leading-relaxed">{product.description}</p>}
+            <h1 className="font-display text-3xl md:text-4xl font-bold mb-6">{product.title}</h1>
             <div className="flex items-baseline gap-3 mb-8">
               <span className="font-display text-4xl font-bold text-accent">{price.currencyCode} {parseFloat(price.amount).toFixed(2)}</span>
             </div>
@@ -194,6 +193,16 @@ const ProductDetail = () => {
             </div>
           </motion.div>
         </div>
+
+        {/* Description Section */}
+        {product.description && (
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mt-16">
+            <div className="bg-card rounded-3xl border border-border p-8 md:p-12">
+              <h2 className="font-display text-2xl font-bold mb-6">{t('products.description_title')}</h2>
+              <p className="text-muted-foreground leading-relaxed whitespace-pre-line">{product.description}</p>
+            </div>
+          </motion.div>
+        )}
       </div>
     </div>
   );
