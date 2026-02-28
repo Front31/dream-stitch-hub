@@ -1,84 +1,60 @@
 
-# SEO-Optimierung fur RiFa Cards
 
-## Aktueller Stand
+## Plan: Navigation dynamisch aus Shopify Menüs laden
 
-Die Seite hat nur minimale SEO-Grundlagen: einen einfachen `<title>`, eine kurze Meta-Description und Open Graph Tags in `index.html`. Es fehlen seitenspezifische Titles/Descriptions, strukturierte Daten, eine Sitemap, semantisches HTML und weitere wichtige SEO-Elemente.
+### Was du in Shopify hinterlegen musst
 
-## Geplante Massnahmen
+Die Shopify Storefront API hat eine `menu(handle:)` Query. Dein Screenshot zeigt drei Menüs. Damit die aktuelle Navigation bestehen bleibt, müssen die Menüs in Shopify so konfiguriert sein:
 
-### 1. Dynamische Meta-Tags pro Seite (React Helmet)
+**Hauptmenü** (Handle: `main-menu`) — für den Header:
 
-Installation von `react-helmet-async` und Einrichtung eines SEO-Wrappers, der auf jeder Seite individuelle `<title>` und `<meta>` Tags setzt:
+```text
+Menüpunkt          → Link-Typ        → Ziel
+─────────────────────────────────────────────
+Produkte           → Seite/Katalog   → /collections/all  (oder /collections)
+Über uns           → Seite           → /pages/about
+FAQ                → Seite           → /pages/faq
+Kontakt            → Seite           → /pages/contact
+```
 
-| Seite | Title | Description |
-|-------|-------|-------------|
-| Startseite | RiFa Cards - Premium Pokemon TCG Produkte | Factory Sealed | Dein Shop fuer factory sealed Pokemon TCG Produkte. Booster Displays, Elite Trainer Boxen und Special Collections. 100% authentisch, schneller Versand. |
-| Kollektion | Pokemon TCG Kollektion kaufen - RiFa Cards | Entdecke unser Sortiment an sealed Pokemon Booster Displays, Elite Trainer Boxen und Special Collections. Guenstige Preise, schneller Versand. |
-| Produkt (dynamisch) | {Produktname} kaufen - RiFa Cards | {Produktbeschreibung, gekuerzt auf 155 Zeichen} |
-| Ueber uns | Ueber RiFa Cards - Dein Pokemon TCG Haendler | Erfahre mehr ueber RiFa Cards: Von Sammlern fuer Sammler. 100% authentische, factory sealed Pokemon TCG Produkte. |
-| FAQ | Haeufige Fragen - RiFa Cards Pokemon TCG Shop | Antworten auf haeufige Fragen zu Bestellung, Versand, Produkten und Rueckgabe bei RiFa Cards. |
-| Kontakt | Kontakt - RiFa Cards | Nimm Kontakt mit RiFa Cards auf. Wir helfen dir gerne bei Fragen zu Bestellungen und Produkten. |
-| Versand | Versand und Rueckgabe - RiFa Cards | Informationen zu Versandkosten, Lieferzeiten und Rueckgabebedingungen bei RiFa Cards. |
-| Impressum | Impressum - RiFa Cards | Impressum und rechtliche Angaben von RiFa Cards. |
-| Datenschutz | Datenschutzerklaerung - RiFa Cards | Datenschutzerklaerung und Informationen zum Umgang mit deinen Daten bei RiFa Cards. |
-| AGB | AGB - RiFa Cards | Allgemeine Geschaeftsbedingungen von RiFa Cards fuer den Kauf von Pokemon TCG Produkten. |
+**Fußzeilenmenü** (Handle: `footer`) — für den Footer:
 
-### 2. index.html Verbesserungen
+```text
+Menüpunkt          → Link-Typ        → Ziel
+─────────────────────────────────────────────
+Alle Produkte      → Katalog         → /collections/all
+Über uns           → Seite           → /pages/about
+FAQ                → Seite           → /pages/faq
+Versand            → Seite           → /pages/shipping
+Kontakt            → Seite           → /pages/contact
+Impressum          → Seite           → /pages/impressum
+Datenschutz        → Seite           → /pages/datenschutz
+AGB                → Seite           → /pages/agb
+```
 
-- `<html lang="de">` statt `"en"` (die Seite ist deutsch)
-- Bessere Meta-Description mit Keywords
-- `author` auf "RiFa Cards" statt "Lovable"
-- `twitter:site` korrigieren (Lovable entfernen)
-- Canonical URL hinzufuegen
-- `theme-color` Meta-Tag
+Die Link-URLs aus Shopify werden dann auf interne React-Router-Pfade gemappt (z.B. `/pages/about` → `/about`, `/collections/all` → `/collection`).
 
-### 3. Strukturierte Daten (JSON-LD)
+### Technische Umsetzung
 
-- **Organization Schema** auf der Startseite (Name, Logo, URL)
-- **Product Schema** auf Produktseiten (Name, Preis, Verfuegbarkeit, Bilder)
-- **BreadcrumbList Schema** fuer Navigation
-- **FAQPage Schema** auf der FAQ-Seite
+1. **Neue Query + Fetch-Funktion in `src/lib/shopify.ts`**
+   - GraphQL `menu(handle: $handle)` Query mit `items { title, url, type, items { title, url, type } }`
+   - Funktion `fetchMenu(handle)` die das Menü abruft
 
-### 4. Semantisches HTML
+2. **Neuer Hook `useShopifyMenu` in `src/hooks/useShopifyContent.ts`**
+   - Gecached wie die bestehenden Hooks
+   - Nimmt den Menu-Handle als Parameter (z.B. `'main-menu'`, `'footer'`)
 
-- `<article>`, `<nav>`, `<main>`, `<section>` Tags pruefen und ergaenzen
-- Alt-Texte bei Bildern verbessern (bereits teilweise vorhanden)
-- Heading-Hierarchie sicherstellen (h1 > h2 > h3)
+3. **URL-Mapping-Utility**
+   - Funktion die Shopify-URLs (`https://store.myshopify.com/pages/about`) auf lokale React-Router-Pfade (`/about`) mappt
+   - Erkennt `/pages/X` → `/X`, `/collections/all` → `/collection`, `/collections/X` → `/collection?type=X`
 
-### 5. Sitemap und robots.txt
+4. **`FloatingHeader.tsx` anpassen**
+   - `useShopifyMenu('main-menu')` aufrufen
+   - `navItems` dynamisch aus der API-Antwort generieren statt hardcoded
+   - Fallback auf aktuelle hardcoded Items wenn API nicht erreichbar
 
-- `public/sitemap.xml` erstellen mit allen Seiten
-- `robots.txt` um Sitemap-Verweis ergaenzen
-- Disallow fuer irrelevante Pfade
+5. **`Footer.tsx` anpassen**
+   - `useShopifyMenu('footer')` aufrufen
+   - Footer-Links dynamisch rendern
+   - Fallback auf aktuelle hardcoded Links
 
-### 6. Performance-relevante SEO
-
-- Lazy Loading fuer Bilder sicherstellen (`loading="lazy"`)
-- `rel="noopener noreferrer"` bei externen Links (bereits vorhanden)
-
----
-
-## Technische Umsetzung
-
-### Neue Dateien
-- `src/components/SEO.tsx` - Wiederverwendbare SEO-Komponente mit react-helmet-async
-- `public/sitemap.xml` - Statische Sitemap
-
-### Geaenderte Dateien
-- `index.html` - lang="de", verbesserte Meta-Tags, Theme Color
-- `src/main.tsx` - HelmetProvider wrappen
-- `src/pages/Index.tsx` - SEO-Komponente + Organization JSON-LD
-- `src/pages/Collection.tsx` - SEO-Komponente
-- `src/pages/About.tsx` - SEO-Komponente
-- `src/pages/FAQ.tsx` - SEO-Komponente + FAQPage JSON-LD
-- `src/pages/Contact.tsx` - SEO-Komponente
-- `src/pages/Shipping.tsx` - SEO-Komponente
-- `src/pages/Impressum.tsx` - SEO-Komponente
-- `src/pages/Datenschutz.tsx` - SEO-Komponente
-- `src/pages/AGB.tsx` - SEO-Komponente
-- `src/components/ProductDetail.tsx` - SEO-Komponente + Product JSON-LD
-- `public/robots.txt` - Sitemap-Verweis hinzufuegen
-
-### Neue Dependency
-- `react-helmet-async` fuer dynamische Head-Tags
