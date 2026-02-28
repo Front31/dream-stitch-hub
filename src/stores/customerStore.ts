@@ -21,7 +21,7 @@ interface CustomerStore {
   expiresAt: string | null;
   customer: ShopifyCustomer | null;
   isLoading: boolean;
-  devMode: boolean;
+  
 
   login: (email: string, password: string) => Promise<boolean>;
   register: (input: { email: string; password: string; firstName?: string; lastName?: string }) => Promise<boolean>;
@@ -34,7 +34,7 @@ interface CustomerStore {
   removeAddress: (id: string) => Promise<boolean>;
   setDefault: (addressId: string) => Promise<boolean>;
   isAuthenticated: () => boolean;
-  setDevMode: () => void;
+  
 }
 
 export const useCustomerStore = create<CustomerStore>()(
@@ -44,30 +44,14 @@ export const useCustomerStore = create<CustomerStore>()(
       expiresAt: null,
       customer: null,
       isLoading: false,
-      devMode: false,
+      
 
       isAuthenticated: () => {
-        const { accessToken, expiresAt, devMode } = get();
-        if (devMode) return true;
+        const { accessToken, expiresAt } = get();
         if (!accessToken || !expiresAt) return false;
         return new Date(expiresAt) > new Date();
       },
 
-      setDevMode: () => {
-        set({
-          devMode: true,
-          customer: {
-            id: 'dev-customer',
-            email: 'dev@example.com',
-            firstName: 'Dev',
-            lastName: 'User',
-            phone: null,
-            defaultAddress: null,
-            addresses: { edges: [] },
-            orders: { edges: [] },
-          },
-        });
-      },
 
       login: async (email, password) => {
         set({ isLoading: true });
@@ -106,19 +90,12 @@ export const useCustomerStore = create<CustomerStore>()(
         if (accessToken) {
           try { await logoutCustomer(accessToken); } catch { /* ignore */ }
         }
-        set({ accessToken: null, expiresAt: null, customer: null, devMode: false });
+        set({ accessToken: null, expiresAt: null, customer: null });
         toast.success('Abgemeldet');
       },
 
       refreshCustomer: async () => {
-        const { accessToken, isAuthenticated, devMode } = get();
-        if (devMode) {
-          // Re-populate mock customer if missing
-          if (!get().customer) {
-            get().setDevMode();
-          }
-          return;
-        }
+        const { accessToken, isAuthenticated } = get();
         if (!accessToken || !isAuthenticated()) {
           set({ accessToken: null, expiresAt: null, customer: null });
           return;
@@ -240,8 +217,6 @@ export const useCustomerStore = create<CustomerStore>()(
       partialize: (state) => ({
         accessToken: state.accessToken,
         expiresAt: state.expiresAt,
-        devMode: state.devMode,
-        customer: state.devMode ? state.customer : null,
       }),
     }
   )
