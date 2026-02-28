@@ -8,6 +8,7 @@ import SEO from '@/components/SEO';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Star, Box, ShieldCheck, Zap } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
+import NewsletterBanner from '@/components/NewsletterBanner';
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -124,16 +125,8 @@ const Index = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-20 bg-secondary/50">
-          <div className="container mx-auto px-6 text-center">
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-              <h2 className="font-display text-3xl md:text-4xl font-bold mb-6">{t('index.cta_title')} <span className="text-gradient-primary">{t('index.cta_highlight')}</span></h2>
-              <p className="text-muted-foreground mb-8 max-w-lg mx-auto">{t('index.cta_desc')}</p>
-              <Link to="/collection" className="btn-hero inline-flex"><span className="flex items-center gap-2">{t('index.cta_button')} <ArrowRight className="w-5 h-5" /></span></Link>
-            </motion.div>
-          </div>
-        </section>
+        {/* Newsletter Section */}
+        <NewsletterBanner />
       </main>
 
       <Footer />

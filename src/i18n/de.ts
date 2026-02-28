@@ -204,6 +204,20 @@ const de = {
   'index.cta_desc': 'Entdecke jetzt unsere Produkte und finde das perfekte für dich.',
   'index.cta_button': 'Jetzt entdecken',
 
+  // Newsletter
+  'newsletter.badge': 'Newsletter',
+  'newsletter.title': 'Bleib auf dem',
+  'newsletter.title_highlight': 'Laufenden',
+  'newsletter.desc': 'Erhalte exklusive Angebote, neue Drops und Sammler-Tipps direkt in dein Postfach. Kein Spam – versprochen.',
+  'newsletter.placeholder': 'Deine E-Mail-Adresse',
+  'newsletter.button': 'Anmelden',
+  'newsletter.loading': 'Wird gesendet...',
+  'newsletter.success': 'Willkommen an Bord!',
+  'newsletter.success_desc': 'Du erhältst bald exklusive Updates von uns.',
+  'newsletter.error': 'Ein Fehler ist aufgetreten. Bitte versuche es erneut.',
+  'newsletter.invalid_email': 'Bitte gib eine gültige E-Mail-Adresse ein.',
+  'newsletter.privacy': 'Wir respektieren deine Privatsphäre. Abmeldung jederzeit möglich.',
+
   // Content Pages
   'page.faq.badge': 'FAQ',
   'page.faq.title': 'Häufig gestellte',
