@@ -181,7 +181,14 @@ const en: Record<TranslationKey, string> = {
   'featured.subtitle': 'Our hand-picked selection of the most sought-after sealed products. Every box a potential treasure.',
   'featured.view_all': 'View all products',
 
-  // Index page
+  // New Arrivals Section
+  'new_arrivals.badge': 'New Arrivals',
+  'new_arrivals.title': 'New',
+  'new_arrivals.title_highlight': 'Products',
+  'new_arrivals.subtitle': 'Just arrived – discover the latest sealed products in our collection.',
+  'new_arrivals.view_all': 'View all new products',
+  'new_arrivals.new_badge': 'New',
+
   'index.categories_badge': 'Categories',
   'index.categories_title': 'What are you looking for',
   'index.categories_title_highlight': 'today?',

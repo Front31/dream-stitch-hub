@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Star, Box, ShieldCheck, Zap, Package } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import NewsletterBanner from '@/components/NewsletterBanner';
+import NewArrivalsSection from '@/components/NewArrivalsSection';
 import { fetchCollections, type ShopifyCollection } from '@/lib/shopify';
 
 const organizationJsonLd = {
@@ -76,6 +77,7 @@ const Index = () => {
       <main>
         <HeroSection />
         <FeaturedSection />
+        <NewArrivalsSection />
         <TrustSection />
 
         {/* Categories Section */}
