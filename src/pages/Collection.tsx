@@ -146,7 +146,7 @@ const Collection = () => {
               <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-sm text-muted-foreground mb-8">
                 {t('products.found', { count: filteredProducts.length.toString() })}
               </motion.p>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
                 {filteredProducts.map((product, index) => (
                   <motion.div key={product.node.id} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.05 }}>
                     <div className="group bg-card rounded-2xl border border-border overflow-hidden hover:border-primary/30 transition-all duration-300 hover:shadow-card">
@@ -165,11 +165,11 @@ const Collection = () => {
                           </div>
                         </div>
                       </Link>
-                      <div className="p-6">
-                        <Link to={`/product/${product.node.handle}`}><h3 className="font-display font-semibold text-lg mb-2 group-hover:text-primary transition-colors line-clamp-2">{product.node.title}</h3></Link>
-                        <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{product.node.description || t('products.default_desc')}</p>
+                      <div className="p-3 sm:p-6">
+                        <Link to={`/product/${product.node.handle}`}><h3 className="font-display font-semibold text-sm sm:text-lg mb-1 sm:mb-2 group-hover:text-primary transition-colors line-clamp-2">{product.node.title}</h3></Link>
+                        <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 mb-2 sm:mb-4 hidden sm:block">{product.node.description || t('products.default_desc')}</p>
                         <div className="flex items-center justify-between">
-                          <span className="text-xl font-bold text-accent">{product.node.priceRange.minVariantPrice.currencyCode} {parseFloat(product.node.priceRange.minVariantPrice.amount).toFixed(2)}</span>
+                          <span className="text-sm sm:text-xl font-bold text-accent">{product.node.priceRange.minVariantPrice.currencyCode} {parseFloat(product.node.priceRange.minVariantPrice.amount).toFixed(2)}</span>
                           {product.node.variants.edges[0]?.node.availableForSale ? (
                             <button onClick={(e) => handleAddToCart(product, e)} disabled={isAddingToCart} className="p-2.5 bg-accent text-accent-foreground rounded-lg hover:bg-accent/90 transition-colors disabled:opacity-50" aria-label={t('products.add_to_cart')}>
                               <ShoppingCart className="w-5 h-5" />
