@@ -179,7 +179,14 @@ const de = {
   'featured.subtitle': 'Unsere handverlesene Auswahl der begehrtesten Sealed Produkte. Jede Box ein potenzieller Schatz.',
   'featured.view_all': 'Alle Produkte ansehen',
 
-  // Index page
+  // New Arrivals Section
+  'new_arrivals.badge': 'Neu eingetroffen',
+  'new_arrivals.title': 'Neue',
+  'new_arrivals.title_highlight': 'Produkte',
+  'new_arrivals.subtitle': 'Frisch eingetroffen – entdecke die neuesten Sealed Produkte in unserem Sortiment.',
+  'new_arrivals.view_all': 'Alle neuen Produkte ansehen',
+  'new_arrivals.new_badge': 'Neu',
+
   'index.categories_badge': 'Kategorien',
   'index.categories_title': 'Was suchst du',
   'index.categories_title_highlight': 'heute?',
