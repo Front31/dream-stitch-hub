@@ -66,8 +66,8 @@ const NewArrivalsSection = () => {
 
         <motion.div style={{ y }}>
           {isLoading ? (
-            <div className="grid md:grid-cols-3 gap-6">
-              {[1, 2, 3].map((i) => (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
+              {[1, 2, 3, 4].map((i) => (
                 <div key={i} className="bg-card rounded-2xl border border-border p-6 animate-pulse">
                   <div className="aspect-square bg-secondary/50 rounded-xl mb-4" />
                   <div className="h-6 bg-secondary/50 rounded mb-2" />
@@ -76,8 +76,8 @@ const NewArrivalsSection = () => {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-6">
-              {products.slice(0, 3).map((product, index) => (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
+              {products.slice(0, 4).map((product, index) => (
                 <motion.div key={product.node.id} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="group bg-card rounded-2xl border border-border overflow-hidden hover:border-primary/30 transition-all duration-300 hover:shadow-card">
                   <Link to={`/product/${product.node.handle}`}>
                     <div className="aspect-square bg-secondary/30 relative overflow-hidden">

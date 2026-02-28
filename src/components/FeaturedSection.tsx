@@ -21,7 +21,7 @@ const FeaturedSection = () => {
   useEffect(() => {
     const loadProducts = async () => {
       setIsLoading(true);
-      const fetchedProducts = await fetchCollectionProducts('frontpage', 6);
+      const fetchedProducts = await fetchCollectionProducts('frontpage', 8);
       setProducts(fetchedProducts);
       setIsLoading(false);
     };
@@ -52,8 +52,8 @@ const FeaturedSection = () => {
 
         <motion.div style={{ y }}>
           {isLoading ? (
-            <div className="grid md:grid-cols-3 gap-6">
-              {[1, 2, 3].map((i) => (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
+              {[1, 2, 3, 4].map((i) => (
                 <div key={i} className="bg-card rounded-2xl border border-border p-6 animate-pulse">
                   <div className="aspect-square bg-secondary/50 rounded-xl mb-4" />
                   <div className="h-6 bg-secondary/50 rounded mb-2" />
@@ -67,8 +67,8 @@ const FeaturedSection = () => {
               <h3 className="font-display text-xl font-semibold mb-2">{t('products.no_products')}</h3>
             </div>
           ) : (
-            <div className="grid md:grid-cols-3 gap-6">
-              {products.slice(0, 3).map((product, index) => (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
+              {products.slice(0, 4).map((product, index) => (
                 <motion.div key={product.node.id} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="group bg-card rounded-2xl border border-border overflow-hidden hover:border-primary/30 transition-all duration-300 hover:shadow-card">
                   <Link to={`/product/${product.node.handle}`}>
                     <div className="aspect-square bg-secondary/30 relative overflow-hidden">
@@ -86,13 +86,13 @@ const FeaturedSection = () => {
                       </div>
                     </div>
                   </Link>
-                  <div className="p-6">
+                  <div className="p-3 sm:p-6">
                     <Link to={`/product/${product.node.handle}`}>
-                      <h3 className="font-display font-semibold text-lg mb-2 group-hover:text-primary transition-colors">{product.node.title}</h3>
+                      <h3 className="font-display font-semibold text-sm sm:text-lg mb-1 sm:mb-2 group-hover:text-primary transition-colors line-clamp-2">{product.node.title}</h3>
                     </Link>
-                    <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{product.node.description || t('products.default_desc')}</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 mb-2 sm:mb-4 hidden sm:block">{product.node.description || t('products.default_desc')}</p>
                     <div className="flex items-center justify-between">
-                      <span className="text-xl font-bold text-accent">{product.node.priceRange.minVariantPrice.currencyCode} {parseFloat(product.node.priceRange.minVariantPrice.amount).toFixed(2)}</span>
+                      <span className="text-sm sm:text-xl font-bold text-accent">{product.node.priceRange.minVariantPrice.currencyCode} {parseFloat(product.node.priceRange.minVariantPrice.amount).toFixed(2)}</span>
                       {product.node.variants.edges[0]?.node.availableForSale ? (
                         <button onClick={() => handleAddToCart(product)} className="px-4 py-2 bg-accent text-accent-foreground text-sm font-medium rounded-lg hover:bg-accent/90 transition-colors">{t('products.add_to_cart')}</button>
                       ) : (
