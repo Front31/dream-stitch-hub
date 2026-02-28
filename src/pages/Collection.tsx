@@ -143,7 +143,13 @@ const Collection = () => {
                             <img src={product.node.images.edges[0].node.url} alt={product.node.images.edges[0].node.altText || product.node.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="eager" crossOrigin="anonymous" onError={(e) => { const target = e.currentTarget; target.style.display = 'none'; const fallback = target.nextElementSibling as HTMLElement; if (fallback) fallback.style.display = 'flex'; }} />
                           ) : null}
                           <div className={`w-full h-full items-center justify-center absolute inset-0 ${product.node.images.edges[0]?.node ? 'hidden' : 'flex'}`}><Package className="w-16 h-16 text-muted-foreground" /></div>
-                          <div className="absolute top-4 left-4"><span className="px-3 py-1 bg-accent text-accent-foreground text-xs font-semibold rounded-full">Sealed</span></div>
+                          <div className="absolute top-4 left-4">
+                            {product.node.variants.edges[0]?.node.availableForSale ? (
+                              <span className="px-3 py-1 bg-energy-grass text-white text-xs font-semibold rounded-full">{t('products.in_stock')}</span>
+                            ) : (
+                              <span className="px-3 py-1 bg-destructive text-destructive-foreground text-xs font-semibold rounded-full">{t('products.sold_out')}</span>
+                            )}
+                          </div>
                         </div>
                       </Link>
                       <div className="p-6">
