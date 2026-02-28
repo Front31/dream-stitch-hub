@@ -21,7 +21,7 @@ const FeaturedSection = () => {
   useEffect(() => {
     const loadProducts = async () => {
       setIsLoading(true);
-      const fetchedProducts = await fetchCollectionProducts('startseite', 6);
+      const fetchedProducts = await fetchCollectionProducts('frontpage', 6);
       setProducts(fetchedProducts);
       setIsLoading(false);
     };
