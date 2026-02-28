@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, ArrowRight, CheckCircle, Sparkles } from 'lucide-react';
+import { Mail, ArrowRight, CheckCircle } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import { storefrontApiRequest } from '@/lib/shopify';
 import { z } from 'zod';
@@ -75,11 +75,9 @@ const NewsletterBanner = () => {
             {/* Text + Form in compact layout */}
             <div className="text-center mb-5">
               <div className="flex items-center justify-center gap-2 mb-2">
-                <Sparkles className="w-4 h-4 text-accent" />
                 <span className="text-sm font-medium text-accent uppercase tracking-widest">
                   {t('newsletter.badge')}
                 </span>
-                <Sparkles className="w-4 h-4 text-accent" />
               </div>
               <h2 className="font-display text-2xl md:text-3xl font-bold mb-2">
                 {t('newsletter.title')}{' '}
