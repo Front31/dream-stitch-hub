@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import FloatingHeader from '@/components/FloatingHeader';
 import HeroSection from '@/components/HeroSection';
@@ -7,10 +6,9 @@ import TrustSection from '@/components/TrustSection';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Star, ShieldCheck, Zap, Package } from 'lucide-react';
+import { ArrowRight, Star, Box, ShieldCheck, Zap } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import NewsletterBanner from '@/components/NewsletterBanner';
-import { fetchCollections, type ShopifyCollection } from '@/lib/shopify';
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -23,18 +21,12 @@ const organizationJsonLd = {
 
 const Index = () => {
   const { t, locale } = useTranslation();
-  const [collections, setCollections] = useState<ShopifyCollection[]>([]);
-  const [collectionsLoading, setCollectionsLoading] = useState(true);
 
-  useEffect(() => {
-    const load = async () => {
-      setCollectionsLoading(true);
-      const data = await fetchCollections(10);
-      setCollections(data);
-      setCollectionsLoading(false);
-    };
-    load();
-  }, []);
+  const categories = [
+    { title: t('index.cat_displays'), description: t('index.cat_displays_desc'), icon: Box, link: '/collection?type=booster-displays' },
+    { title: t('index.cat_etb'), description: t('index.cat_etb_desc'), icon: Star, link: '/collection?type=elite-trainer-boxen' },
+    { title: t('index.cat_special'), description: t('index.cat_special_desc'), icon: Zap, link: '/collection?type=special-collections' },
+  ];
 
   const stats = [
     { number: '100%', label: t('page.about.stat_sealed'), icon: ShieldCheck },
@@ -77,48 +69,20 @@ const Index = () => {
               <span className="inline-block text-sm font-medium text-accent uppercase tracking-widest mb-4">{t('index.categories_badge')}</span>
               <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">{t('index.categories_title')} <span className="text-gradient-accent text-primary">{t('index.categories_title_highlight')}</span></h2>
             </motion.div>
-            {collectionsLoading ? (
-              <div className="grid md:grid-cols-3 gap-8">
-                {[1, 2, 3].map((i) => (
-                  <div key={i} className="bg-secondary/20 rounded-3xl p-8 border border-border animate-pulse">
-                    <div className="w-14 h-14 bg-secondary/40 rounded-2xl mb-6" />
-                    <div className="h-6 bg-secondary/40 rounded mb-3 w-3/4" />
-                    <div className="h-4 bg-secondary/30 rounded w-full mb-2" />
-                    <div className="h-4 bg-secondary/30 rounded w-2/3" />
-                  </div>
-                ))}
-              </div>
-            ) : collections.length === 0 ? (
-              <div className="text-center py-16 bg-card rounded-2xl border border-border">
-                <Package className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground">{t('products.no_products')}</p>
-              </div>
-            ) : (
-              <div className={`grid gap-8 ${collections.length === 1 ? 'md:grid-cols-1 max-w-md mx-auto' : collections.length === 2 ? 'md:grid-cols-2 max-w-3xl mx-auto' : 'md:grid-cols-3'}`}>
-                {collections.map((col, index) => (
-                  <motion.div key={col.node.id} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}>
-                    <Link to={`/collection?type=${col.node.handle}`} className="block group">
-                      <div className="bg-gradient-to-br from-secondary/30 to-secondary/10 rounded-3xl border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-card h-full overflow-hidden">
-                        {col.node.image?.url ? (
-                          <div className="aspect-[16/9] overflow-hidden">
-                            <img src={col.node.image.url} alt={col.node.image.altText || col.node.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                          </div>
-                        ) : (
-                          <div className="aspect-[16/9] bg-secondary/20 flex items-center justify-center">
-                            <Package className="w-12 h-12 text-muted-foreground" />
-                          </div>
-                        )}
-                        <div className="p-8">
-                          <h3 className="font-display text-xl font-bold mb-3">{col.node.title}</h3>
-                          {col.node.description && <p className="text-muted-foreground mb-4 line-clamp-2">{col.node.description}</p>}
-                          <span className="inline-flex items-center gap-2 text-primary font-medium group-hover:gap-3 transition-all">{t('index.discover')} <ArrowRight className="w-4 h-4" /></span>
-                        </div>
-                      </div>
-                    </Link>
-                  </motion.div>
-                ))}
-              </div>
-            )}
+            <div className="grid md:grid-cols-3 gap-8">
+              {categories.map((category, index) => (
+                <motion.div key={category.title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}>
+                  <Link to={category.link} className="block group">
+                    <div className="bg-gradient-to-br from-secondary/30 to-secondary/10 rounded-3xl p-8 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-card h-full">
+                      <div className="w-14 h-14 rounded-2xl bg-background flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><category.icon className="w-7 h-7 text-primary" /></div>
+                      <h3 className="font-display text-xl font-bold mb-3">{category.title}</h3>
+                      <p className="text-muted-foreground mb-4">{category.description}</p>
+                      <span className="inline-flex items-center gap-2 text-primary font-medium group-hover:gap-3 transition-all">{t('index.discover')} <ArrowRight className="w-4 h-4" /></span>
+                    </div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </section>
 
