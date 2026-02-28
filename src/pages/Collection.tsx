@@ -4,40 +4,35 @@ import { Link, useSearchParams } from 'react-router-dom';
 import FloatingHeader from '@/components/FloatingHeader';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
-import { fetchProducts, fetchCollectionProducts, fetchCollections, type ShopifyProduct, type ShopifyCollection } from '@/lib/shopify';
+import { fetchProducts, fetchCollectionProducts, type ShopifyProduct } from '@/lib/shopify';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import { Package, Loader2, ShoppingCart, Search, X } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
+import { useShopifyMenu } from '@/hooks/useShopifyContent';
 
 const Collection = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const activeType = searchParams.get('type') || '';
   const [products, setProducts] = useState<ShopifyProduct[]>([]);
-  const [collections, setCollections] = useState<ShopifyCollection[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const addItem = useCartStore(state => state.addItem);
   const isAddingToCart = useCartStore(state => state.isLoading);
   const { t, locale } = useTranslation();
 
-  const filteredProducts = useMemo(() => {
-    if (!searchQuery.trim()) return products;
-    const q = searchQuery.toLowerCase();
-    return products.filter(p =>
-      p.node.title.toLowerCase().includes(q) ||
-      (p.node.description && p.node.description.toLowerCase().includes(q))
-    );
-  }, [products, searchQuery]);
+  // Pull filter items from Shopify menu "produktfilter"
+  const { navItems: filterItems, isLoading: filtersLoading } = useShopifyMenu('produktfilter');
 
-  useEffect(() => {
-    const loadCollections = async () => {
-      const fetched = await fetchCollections(20);
-      const filtered = fetched.filter(c => c.node.handle !== 'rifa-cards-empfiehlt' && c.node.handle !== 'featured');
-      setCollections(filtered);
-    };
-    loadCollections();
-  }, []);
+  // Extract collection handle from path like "/collection?type=xyz"
+  const filters = useMemo(() => filterItems.map(item => {
+    const match = item.path.match(/[?&]type=([^&]+)/);
+    const handle = match ? match[1] : '';
+    return { label: item.label, handle };
+  }).filter(f => f.handle), [filterItems]);
+
+  // Find active filter for title/description
+  const activeFilter = filters.find(f => f.handle === activeType);
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -62,8 +57,16 @@ const Collection = () => {
     toast.success(t('products.added_to_cart'), { description: product.node.title });
   };
 
-  const activeCollection = collections.find(c => c.node.handle === activeType);
-  const pageTitle = activeCollection?.node.title || `${t('collection.title')} ${t('collection.title_highlight')}`;
+  const filteredProducts = useMemo(() => {
+    if (!searchQuery.trim()) return products;
+    const q = searchQuery.toLowerCase();
+    return products.filter(p =>
+      p.node.title.toLowerCase().includes(q) ||
+      (p.node.description && p.node.description.toLowerCase().includes(q))
+    );
+  }, [products, searchQuery]);
+
+  const pageTitle = activeFilter?.label || `${t('collection.title')} ${t('collection.title_highlight')}`;
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="min-h-screen">
@@ -77,20 +80,20 @@ const Collection = () => {
         <div className="container mx-auto px-6">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
             <span className="inline-block text-sm font-medium text-accent uppercase tracking-widest mb-4">{t('collection.badge')}</span>
-            <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-              {activeType ? <span className="text-gradient-primary">{activeCollection?.node.title}</span> : <>{t('collection.title')} <span className="text-gradient-primary">{t('collection.title_highlight')}</span></>}
+             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+              {activeType ? <span className="text-gradient-primary">{activeFilter?.label || activeType}</span> : <>{t('collection.title')} <span className="text-gradient-primary">{t('collection.title_highlight')}</span></>}
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{activeCollection?.node.description || t('collection.default_desc')}</p>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">{t('collection.default_desc')}</p>
           </motion.div>
 
-          {collections.length > 0 && (
+          {!filtersLoading && filters.length > 0 && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="flex flex-wrap justify-center gap-3 mb-6">
               <button onClick={() => setSearchParams({})} className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${!activeType ? 'bg-primary text-primary-foreground border-primary shadow-md' : 'bg-card text-muted-foreground border-border hover:border-primary/30 hover:text-foreground'}`}>
                 {t('footer.all_products')}
               </button>
-              {collections.map((collection) => (
-                <button key={collection.node.id} onClick={() => handleCategoryClick(collection.node.handle)} className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${activeType === collection.node.handle ? 'bg-primary text-primary-foreground border-primary shadow-md' : 'bg-card text-muted-foreground border-border hover:border-primary/30 hover:text-foreground'}`}>
-                  {collection.node.title}
+              {filters.map((filter) => (
+                <button key={filter.handle} onClick={() => handleCategoryClick(filter.handle)} className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 border ${activeType === filter.handle ? 'bg-primary text-primary-foreground border-primary shadow-md' : 'bg-card text-muted-foreground border-border hover:border-primary/30 hover:text-foreground'}`}>
+                  {filter.label}
                 </button>
               ))}
             </motion.div>
