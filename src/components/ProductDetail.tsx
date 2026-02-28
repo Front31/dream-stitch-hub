@@ -153,20 +153,23 @@ const ProductDetail = () => {
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }}>
+          <motion.div initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="flex flex-col">
             <div className="flex items-center gap-2 mb-4">
               <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">{t('products.sealed_product')}</Badge>
               {currentVariant?.availableForSale && (
                 <Badge variant="outline" className="bg-energy-grass/10 text-energy-grass border-energy-grass/20"><Check className="w-3 h-3 mr-1" />{t('products.in_stock')}</Badge>
               )}
             </div>
-            <h1 className="font-display text-3xl md:text-4xl font-bold mb-4">{product.title}</h1>
+            <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">{product.title}</h1>
+            <div className="mb-4">
+              <span className="font-display text-2xl md:text-3xl font-bold text-accent">{parseFloat(price.amount).toFixed(2).replace('.', ',')} €</span>
+              <p className="text-xs text-muted-foreground mt-1">
+                inkl. 19% USt., zzgl. <Link to="/shipping" className="text-primary hover:underline">Versand</Link>
+              </p>
+            </div>
             {product.kurzbeschreibung?.value && (
               <p className="text-muted-foreground mb-6 leading-relaxed">{product.kurzbeschreibung.value}</p>
             )}
-            <div className="flex items-baseline gap-3 mb-8">
-              <span className="font-display text-4xl font-bold text-accent">{price.currencyCode} {parseFloat(price.amount).toFixed(2)}</span>
-            </div>
             {product.variants.edges.length > 1 && (
               <div className="mb-6">
                 <label className="text-sm font-medium mb-2 block">{t('products.select_variant')}</label>
@@ -177,14 +180,14 @@ const ProductDetail = () => {
                 </div>
               </div>
             )}
-            <div className="space-y-4 mb-8">
+            <div className="mt-auto space-y-4">
               <Button size="lg" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-14 text-lg" disabled={!currentVariant?.availableForSale || isAddingToCart} onClick={handleAddToCart}>
                 {isAddingToCart ? <Loader2 className="w-5 h-5 animate-spin" /> : <><ShoppingBag className="w-5 h-5 mr-2" />{t('products.add_to_cart')}</>}
               </Button>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="flex items-center gap-3 p-3 rounded-lg bg-secondary/30 border border-border"><Shield className="w-5 h-5 text-primary" /><span className="text-sm">{t('products.authentic')}</span></div>
-              <div className="flex items-center gap-3 p-3 rounded-lg bg-secondary/30 border border-border"><Package className="w-5 h-5 text-primary" /><span className="text-sm">{t('products.secure_packaging')}</span></div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-secondary/30 border border-border"><Shield className="w-5 h-5 text-primary" /><span className="text-sm">{t('products.authentic')}</span></div>
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-secondary/30 border border-border"><Package className="w-5 h-5 text-primary" /><span className="text-sm">{t('products.secure_packaging')}</span></div>
+              </div>
             </div>
           </motion.div>
         </div>
