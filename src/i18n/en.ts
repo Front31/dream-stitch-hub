@@ -206,6 +206,20 @@ const en: Record<TranslationKey, string> = {
   'index.cta_desc': 'Discover our products now and find the perfect one for you.',
   'index.cta_button': 'Discover now',
 
+  // Newsletter
+  'newsletter.badge': 'Newsletter',
+  'newsletter.title': 'Stay in the',
+  'newsletter.title_highlight': 'Loop',
+  'newsletter.desc': 'Get exclusive deals, new drops and collector tips straight to your inbox. No spam – ever.',
+  'newsletter.placeholder': 'Your email address',
+  'newsletter.button': 'Subscribe',
+  'newsletter.loading': 'Sending...',
+  'newsletter.success': 'Welcome aboard!',
+  'newsletter.success_desc': 'You\'ll receive exclusive updates from us soon.',
+  'newsletter.error': 'Something went wrong. Please try again.',
+  'newsletter.invalid_email': 'Please enter a valid email address.',
+  'newsletter.privacy': 'We respect your privacy. Unsubscribe anytime.',
+
   // Content Pages
   'page.faq.badge': 'FAQ',
   'page.faq.title': 'Frequently Asked',
