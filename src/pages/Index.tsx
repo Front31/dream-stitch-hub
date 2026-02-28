@@ -104,7 +104,7 @@ const Index = () => {
         </section>
 
         {/* Categories Section */}
-        <section className="py-24 md:py-32">
+        <section className="py-16 md:py-20">
           <div className="container mx-auto px-6">
             <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
               <span className="inline-block text-sm font-medium text-accent uppercase tracking-widest mb-4">{t('index.categories_badge')}</span>
