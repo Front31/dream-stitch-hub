@@ -21,7 +21,7 @@ const FloatingHeader = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
-  const showLogo = !isHomePage || isScrolled;
+  const showLogo = true;
   const { scrollY } = useScroll();
   const headerOpacity = useTransform(scrollY, [0, 100], [0.95, 1]);
   const isLoggedIn = useCustomerStore((s) => s.isAuthenticated());
