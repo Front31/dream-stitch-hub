@@ -97,7 +97,7 @@ const NewArrivalsSection = () => {
                     </Link>
                     <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2 mb-2 sm:mb-4 hidden sm:block">{product.node.description || t('products.default_desc')}</p>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm sm:text-xl font-bold text-accent">{product.node.priceRange.minVariantPrice.currencyCode} {parseFloat(product.node.priceRange.minVariantPrice.amount).toFixed(2)}</span>
+                      <span className="text-sm sm:text-xl font-bold text-accent">{parseFloat(product.node.priceRange.minVariantPrice.amount).toFixed(2).replace('.', ',')} €</span>
                       {product.node.variants.edges[0]?.node.availableForSale ? (
                         <button onClick={() => handleAddToCart(product)} className="p-2.5 bg-accent text-accent-foreground rounded-lg hover:bg-accent/90 transition-colors" aria-label={t('products.add_to_cart')}>
                           <ShoppingCart className="w-5 h-5" />

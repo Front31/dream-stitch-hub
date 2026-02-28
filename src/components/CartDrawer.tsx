@@ -66,7 +66,7 @@ export const CartDrawer = () => {
                       <div className="flex-1 min-w-0">
                         <h4 className="font-medium truncate text-sm">{item.product.node.title}</h4>
                         <p className="text-xs text-muted-foreground">{item.selectedOptions.map(option => option.value).join(' • ')}</p>
-                        <p className="font-semibold text-accent">{item.price.currencyCode} {parseFloat(item.price.amount).toFixed(2)}</p>
+                        <p className="font-semibold text-accent">{parseFloat(item.price.amount).toFixed(2).replace('.', ',')} €</p>
                       </div>
                       <div className="flex flex-col items-end gap-2 flex-shrink-0">
                         <Button variant="ghost" size="icon" className="h-6 w-6" onClick={() => removeItem(item.variantId)}>
