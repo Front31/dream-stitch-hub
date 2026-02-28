@@ -59,7 +59,7 @@ const NewsletterBanner = () => {
   };
 
   return (
-    <section className="py-20 relative overflow-hidden">
+    <section className="py-10 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/10 to-accent/5" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary/[0.06] rounded-full blur-3xl" />
@@ -71,28 +71,21 @@ const NewsletterBanner = () => {
           viewport={{ once: true }}
           className="max-w-2xl mx-auto"
         >
-          <div className="bg-card/80 backdrop-blur-xl rounded-3xl border border-border p-8 md:p-12 shadow-[var(--shadow-card)]">
-            {/* Icon */}
-            <div className="flex justify-center mb-6">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg">
-                <Mail className="w-8 h-8 text-primary-foreground" />
-              </div>
-            </div>
-
-            {/* Text */}
-            <div className="text-center mb-8">
-              <div className="flex items-center justify-center gap-2 mb-3">
+          <div className="bg-card/80 backdrop-blur-xl rounded-3xl border border-border p-6 md:p-8 shadow-[var(--shadow-card)]">
+            {/* Text + Form in compact layout */}
+            <div className="text-center mb-5">
+              <div className="flex items-center justify-center gap-2 mb-2">
                 <Sparkles className="w-4 h-4 text-accent" />
                 <span className="text-sm font-medium text-accent uppercase tracking-widest">
                   {t('newsletter.badge')}
                 </span>
                 <Sparkles className="w-4 h-4 text-accent" />
               </div>
-              <h2 className="font-display text-3xl md:text-4xl font-bold mb-4">
+              <h2 className="font-display text-2xl md:text-3xl font-bold mb-2">
                 {t('newsletter.title')}{' '}
                 <span className="text-gradient-primary">{t('newsletter.title_highlight')}</span>
               </h2>
-              <p className="text-muted-foreground max-w-md mx-auto">
+              <p className="text-muted-foreground text-sm max-w-md mx-auto">
                 {t('newsletter.desc')}
               </p>
             </div>
@@ -102,12 +95,12 @@ const NewsletterBanner = () => {
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="flex flex-col items-center gap-3 py-4"
+                className="flex flex-col items-center gap-2 py-2"
               >
-                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center">
-                  <CheckCircle className="w-7 h-7 text-primary" />
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                  <CheckCircle className="w-6 h-6 text-primary" />
                 </div>
-                <p className="font-display font-semibold text-lg">{t('newsletter.success')}</p>
+                <p className="font-display font-semibold text-base">{t('newsletter.success')}</p>
                 <p className="text-muted-foreground text-sm">{t('newsletter.success_desc')}</p>
               </motion.div>
             ) : (
@@ -147,7 +140,7 @@ const NewsletterBanner = () => {
             )}
 
             {/* Trust note */}
-            <p className="text-xs text-muted-foreground text-center mt-6">
+            <p className="text-xs text-muted-foreground text-center mt-4">
               {t('newsletter.privacy')}
             </p>
           </div>

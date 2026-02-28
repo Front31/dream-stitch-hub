@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import FloatingHeader from '@/components/FloatingHeader';
 import HeroSection from '@/components/HeroSection';
@@ -6,9 +7,10 @@ import TrustSection from '@/components/TrustSection';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Star, Box, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowRight, Star, Box, ShieldCheck, Zap, Package } from 'lucide-react';
 import { useTranslation } from '@/hooks/useTranslation';
 import NewsletterBanner from '@/components/NewsletterBanner';
+import { fetchCollections, type ShopifyCollection } from '@/lib/shopify';
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
@@ -22,7 +24,21 @@ const organizationJsonLd = {
 const Index = () => {
   const { t, locale } = useTranslation();
 
-  const categories = [
+  const [collections, setCollections] = useState<ShopifyCollection[]>([]);
+  const [collectionsLoading, setCollectionsLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      setCollectionsLoading(true);
+      const data = await fetchCollections(10);
+      // Filter out "frontpage" (used for featured products)
+      setCollections(data.filter(c => c.node.handle !== 'frontpage'));
+      setCollectionsLoading(false);
+    };
+    load();
+  }, []);
+
+  const fallbackCategories = [
     { title: t('index.cat_displays'), description: t('index.cat_displays_desc'), icon: Box, link: '/collection?type=booster-displays' },
     { title: t('index.cat_etb'), description: t('index.cat_etb_desc'), icon: Star, link: '/collection?type=elite-trainer-boxen' },
     { title: t('index.cat_special'), description: t('index.cat_special_desc'), icon: Zap, link: '/collection?type=special-collections' },
@@ -69,20 +85,56 @@ const Index = () => {
               <span className="inline-block text-sm font-medium text-accent uppercase tracking-widest mb-4">{t('index.categories_badge')}</span>
               <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">{t('index.categories_title')} <span className="text-gradient-accent text-primary">{t('index.categories_title_highlight')}</span></h2>
             </motion.div>
-            <div className="grid md:grid-cols-3 gap-8">
-              {categories.map((category, index) => (
-                <motion.div key={category.title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}>
-                  <Link to={category.link} className="block group">
-                    <div className="bg-gradient-to-br from-secondary/30 to-secondary/10 rounded-3xl p-8 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-card h-full">
-                      <div className="w-14 h-14 rounded-2xl bg-background flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><category.icon className="w-7 h-7 text-primary" /></div>
-                      <h3 className="font-display text-xl font-bold mb-3">{category.title}</h3>
-                      <p className="text-muted-foreground mb-4">{category.description}</p>
-                      <span className="inline-flex items-center gap-2 text-primary font-medium group-hover:gap-3 transition-all">{t('index.discover')} <ArrowRight className="w-4 h-4" /></span>
-                    </div>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
+            {collectionsLoading ? (
+              <div className="grid md:grid-cols-3 gap-8">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="bg-gradient-to-br from-secondary/30 to-secondary/10 rounded-3xl p-8 border border-border animate-pulse">
+                    <div className="w-14 h-14 rounded-2xl bg-secondary/50 mb-6" />
+                    <div className="h-6 bg-secondary/50 rounded mb-3 w-2/3" />
+                    <div className="h-4 bg-secondary/30 rounded mb-2" />
+                    <div className="h-4 bg-secondary/30 rounded w-1/2" />
+                  </div>
+                ))}
+              </div>
+            ) : collections.length > 0 ? (
+              <div className={`grid gap-8 ${collections.length === 1 ? 'md:grid-cols-1 max-w-md mx-auto' : collections.length === 2 ? 'md:grid-cols-2 max-w-3xl mx-auto' : 'md:grid-cols-3'}`}>
+                {collections.map((collection, index) => (
+                  <motion.div key={collection.node.id} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}>
+                    <Link to={`/collection?type=${collection.node.handle}`} className="block group">
+                      <div className="bg-gradient-to-br from-secondary/30 to-secondary/10 rounded-3xl p-8 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-card h-full">
+                        {collection.node.image?.url ? (
+                          <div className="w-14 h-14 rounded-2xl bg-background flex items-center justify-center mb-6 group-hover:scale-110 transition-transform overflow-hidden">
+                            <img src={collection.node.image.url} alt={collection.node.image.altText || collection.node.title} className="w-full h-full object-cover" />
+                          </div>
+                        ) : (
+                          <div className="w-14 h-14 rounded-2xl bg-background flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <Package className="w-7 h-7 text-primary" />
+                          </div>
+                        )}
+                        <h3 className="font-display text-xl font-bold mb-3">{collection.node.title}</h3>
+                        <p className="text-muted-foreground mb-4 line-clamp-2">{collection.node.description || ''}</p>
+                        <span className="inline-flex items-center gap-2 text-primary font-medium group-hover:gap-3 transition-all">{t('index.discover')} <ArrowRight className="w-4 h-4" /></span>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-3 gap-8">
+                {fallbackCategories.map((category, index) => (
+                  <motion.div key={category.title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}>
+                    <Link to={category.link} className="block group">
+                      <div className="bg-gradient-to-br from-secondary/30 to-secondary/10 rounded-3xl p-8 border border-border hover:border-primary/30 transition-all duration-300 hover:shadow-card h-full">
+                        <div className="w-14 h-14 rounded-2xl bg-background flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><category.icon className="w-7 h-7 text-primary" /></div>
+                        <h3 className="font-display text-xl font-bold mb-3">{category.title}</h3>
+                        <p className="text-muted-foreground mb-4">{category.description}</p>
+                        <span className="inline-flex items-center gap-2 text-primary font-medium group-hover:gap-3 transition-all">{t('index.discover')} <ArrowRight className="w-4 h-4" /></span>
+                      </div>
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
 
