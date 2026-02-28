@@ -69,9 +69,9 @@ const NewsletterBanner = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="max-w-2xl mx-auto"
+          className="max-w-lg mx-auto"
         >
-          <div className="bg-card/80 backdrop-blur-xl rounded-3xl border border-border p-8 md:p-12 shadow-[var(--shadow-card)]">
+          <div className="bg-card/80 backdrop-blur-xl rounded-3xl border border-border p-6 md:p-10 shadow-[var(--shadow-card)]">
             {/* Icon */}
             <div className="flex justify-center mb-6">
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg">
