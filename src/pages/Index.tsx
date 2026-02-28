@@ -32,7 +32,7 @@ const Index = () => {
     const load = async () => {
       setCollectionsLoading(true);
       const data = await fetchCollections(10);
-      const targetHandles = ['pokemon', 'one-piece', 'magic'];
+      const targetHandles = ['pokemon', 'one-piece', 'magic-the-gathering'];
       const filtered = data.filter(c => targetHandles.some(h => c.node.handle.toLowerCase().includes(h)));
       setCollections(filtered.slice(0, 3));
       setCollectionsLoading(false);
