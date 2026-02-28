@@ -77,8 +77,8 @@ const Index = () => {
       <main>
         <HeroSection />
         <FeaturedSection />
-        <NewArrivalsSection />
         <TrustSection />
+        <NewArrivalsSection />
 
         {/* Categories Section */}
         <section className="py-24 md:py-32">
