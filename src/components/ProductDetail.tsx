@@ -29,6 +29,7 @@ interface ProductNode {
   media?: { edges: Array<{ node: { mediaContentType: string; alt: string | null; image?: { url: string; altText: string | null }; sources?: Array<{ url: string; mimeType: string }>; embeddedUrl?: string; host?: string } }> };
   variants: { edges: Array<{ node: { id: string; title: string; price: { amount: string; currencyCode: string }; availableForSale: boolean; selectedOptions: Array<{ name: string; value: string }> } }> };
   options: Array<{ name: string; values: string[] }>;
+  kurzbeschreibung?: { value: string; type: string } | null;
 }
 
 function buildMediaItems(product: ProductNode): MediaItem[] {
@@ -159,7 +160,10 @@ const ProductDetail = () => {
                 <Badge variant="outline" className="bg-energy-grass/10 text-energy-grass border-energy-grass/20"><Check className="w-3 h-3 mr-1" />{t('products.in_stock')}</Badge>
               )}
             </div>
-            <h1 className="font-display text-3xl md:text-4xl font-bold mb-6">{product.title}</h1>
+            <h1 className="font-display text-3xl md:text-4xl font-bold mb-4">{product.title}</h1>
+            {product.kurzbeschreibung?.value && (
+              <p className="text-muted-foreground mb-6 leading-relaxed">{product.kurzbeschreibung.value}</p>
+            )}
             <div className="flex items-baseline gap-3 mb-8">
               <span className="font-display text-4xl font-bold text-accent">{price.currencyCode} {parseFloat(price.amount).toFixed(2)}</span>
             </div>

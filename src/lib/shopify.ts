@@ -219,6 +219,10 @@ export const PRODUCT_BY_HANDLE_QUERY = `
         name
         values
       }
+      kurzbeschreibung: metafield(namespace: "custom", key: "kurzbeschreibung") {
+        value
+        type
+      }
     }
   }
 `;
